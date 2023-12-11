@@ -40,3 +40,47 @@
 .read-the-docs {
   color: #888;
 }
+
+form {
+  height: 8vh;
+  position: fixed;
+  bottom: 2px;
+  background-color: rgb(119, 105, 105);
+  width: 100%;
+  max-width: 600px;
+  min-width: 500px;
+  display: flex;
+  font-size: 1.5rem;
+}
+form button {
+  width: 20%;
+  background-color: rgb(56, 56, 143);
+}
+
+input {
+  line-height: 1.5;
+  width: 85%;
+  font-size: 1.2rem;
+  background: rgb(58, 58, 58);
+  color: white;
+  outline: none;
+  border: none;
+  padding: 0 10px;
+  height: 8vh;
+}
+
+header {
+  background-color: rgba(0, 0, 0, 0.404);
+  backdrop-filter: blur(5px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: fixed;
+  top: 0px;
+  max-width: 600px;
+  width: 100%;
+  min-width: 500px;
+  height: 5vh;
+  padding: 20px;
+  z-index: 10;
+}

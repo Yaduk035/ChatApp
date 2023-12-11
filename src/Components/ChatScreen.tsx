@@ -4,7 +4,7 @@ import { signOut } from "firebase/auth";
 import Cookies from "universal-cookie";
 import { onSnapshot, collection, query, orderBy } from "firebase/firestore";
 import { db, auth } from "../Config/Firebase";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 const cookie = new Cookies();
 
@@ -28,6 +28,7 @@ const ChatScreen = () => {
   };
 
   // const msgRef = collection(db, "messages");
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const q = query(collection(db, "messages"), orderBy("createdAt"));
@@ -40,35 +41,39 @@ const ChatScreen = () => {
     });
     return () => unsubscribe();
   }, []);
+
   return (
     <>
-      <div>
+      {/* <div>
         <Button variant="contained" color="primary" onClick={logOut}>
           Sign out
         </Button>
-      </div>
+      </div> */}
       <div style={{ display: "flex", flexDirection: "column" }}>
         <Container
           maxWidth="md"
           style={{
-            flex: 1,
             display: "flex",
             flexDirection: "column",
+            maxWidth: "600px",
+            minWidth: "600px",
           }}
         >
           <Container
             style={{
-              border: "1px solid gray",
+              // border: "1px solid gray",
               overflowY: "auto",
             }}
-            sx={{ width: "500px", padding: "10px" }}
+            sx={{ padding: "10px" }}
           >
+            <div style={{ height: "5.5vh" }}></div>
             {messages.map((msg, i) => (
               <div
                 key={msg.id}
                 style={{
                   display: "flex",
-                  justifyContent: msg.user === currentUser ? "right" : "left",
+                  justifyContent:
+                    msg.user === currentUser ? "flex-end" : "flex-start",
                 }}
               >
                 <span
@@ -77,17 +82,17 @@ const ChatScreen = () => {
                     margin: "1px",
                     borderRadius:
                       i === 0
-                        ? "0px 10px 10px 10px"
-                        : i + 1 === messages.length
-                        ? "10px 10px 0px 10px"
-                        : msg.user !== messages[i - 1]?.user &&
-                          msg.user !== messages[i + 1].user
-                        ? "0px 10px 0px 10px"
-                        : msg.user !== messages[i + 1].user
-                        ? "10px 10px 0px 10px"
+                        ? "2px 10px 10px 10px"
+                        : // : i + 1 === messages.length
+                        // ? "10px 10px 0px 10px"
+                        msg.user !== messages[i - 1]?.user &&
+                          msg.user !== messages[i + 1]?.user
+                        ? "2px 10px 2px 10px"
+                        : msg.user !== messages[i + 1]?.user
+                        ? "10px 10px 2px 10px"
                         : i > 0 && msg.user == messages[i - 1].user
                         ? "10px 10px 10px 10px"
-                        : "0px 10px 10px 10px",
+                        : "2px 10px 10px 10px",
                     paddingLeft: "8px",
                     paddingRight: "8px",
                     backgroundColor:
@@ -114,26 +119,10 @@ const ChatScreen = () => {
                 </span>
               </div>
             ))}
-            <div style={{ height: "70px" }}></div>
+            <div ref={scrollRef} style={{ height: "30px" }}></div>
           </Container>
-          <span
-            style={{
-              marginTop: "auto",
-              position: "fixed",
-              bottom: "10px",
-            }}
-          >
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                // translate: "-120px",
-              }}
-            >
-              <TextInput />
-            </div>
-          </span>
         </Container>
+        <TextInput scrollRef={scrollRef} />
       </div>
     </>
   );

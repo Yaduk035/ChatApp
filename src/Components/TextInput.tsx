@@ -1,11 +1,15 @@
 import { Send } from "@mui/icons-material";
-import { Button, CircularProgress, Box, TextField } from "@mui/material";
+import { Button, CircularProgress, Box } from "@mui/material";
 import React, { useState } from "react";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { db } from "../Config/Firebase";
 import { auth } from "../Config/Firebase";
 
-export default function InputWithIcon() {
+type ref = {
+  scrollRef: HTMLDivElement;
+};
+
+export default function InputWithIcon({ scrollRef }: ref) {
   const [inputMessage, setInputMessage] = useState<string | null>(null);
   const [spinner, setSpinner] = useState<boolean>(false);
 
@@ -23,54 +27,49 @@ export default function InputWithIcon() {
       });
       setInputMessage("");
       setSpinner(false);
+      scrollRef.current.scrollIntoView({ behaviour: "smooth" });
     } catch (error) {
       console.log(error);
       setSpinner(false);
     }
   };
   return (
-    <Box
-      sx={{ "& > :not(style)": { m: 1 }, maxWidth: "500px", minWidth: "400px" }}
-    >
+    <div className="inputDiv">
       <form onSubmit={handleSubmit}>
-        <Box sx={{ display: "flex", alignItems: "flex-end" }}>
-          <TextField
-            id="input-basic"
-            variant="outlined"
-            placeholder="Type you message here"
-            sx={{
-              color: "wheat",
-              width: "100%",
-              "& fieldset": { borderColor: "gray" }, // Border color for the TextField
-              "& input": { color: "white" }, // Text color for the TextField
-              "& .MuiInputLabel-root": { color: "white" }, // Text color for the label
-            }}
-            onChange={(e) => setInputMessage(e.target.value)}
-            value={inputMessage}
-          />
+        {/* <TextField
+              id="input-basic"
+              variant="outlined"
+              placeholder="Type you message here"
+              sx={{
+                color: "wheat",
+                "& fieldset": { borderColor: "gray" }, // Border color for the TextField
+                "& input": { color: "white" }, // Text color for the TextField
+                "& .MuiInputLabel-root": { color: "white" }, // Text color for the label
+              }}
+              onChange={(e) => setInputMessage(e.target.value)}
+              value={inputMessage}
+            /> */}
+        <input
+          onChange={(e) => setInputMessage(e.target.value)}
+          value={inputMessage}
+        />
 
-          <Button
-            variant="outlined"
-            onClick={handleSubmit}
-            sx={{ height: "3.5rem" }}
-            disabled={spinner}
-          >
-            {!spinner ? (
-              <Send
-                sx={{
-                  color: "wheat",
-                  mr: 1,
-                  my: 1.5,
-                  fontSize: "1.8rem",
-                  cursor: "pointer",
-                }}
-              />
-            ) : (
-              <CircularProgress />
-            )}
-          </Button>
-        </Box>
+        <button onClick={handleSubmit} disabled={spinner}>
+          {!spinner ? (
+            <Send
+              sx={{
+                color: "wheat",
+                mr: 1,
+                my: 1.5,
+                fontSize: "1.8rem",
+                cursor: "pointer",
+              }}
+            />
+          ) : (
+            <CircularProgress />
+          )}
+        </button>
       </form>
-    </Box>
+    </div>
   );
 }

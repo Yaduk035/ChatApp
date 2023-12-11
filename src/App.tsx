@@ -1,21 +1,20 @@
-import { useState } from "react";
 import "./App.css";
 import ChatScreen from "./Components/ChatScreen";
 import SignInpage from "./Components/SignInpage";
-import Cookies from "universal-cookie";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "./Config/Firebase";
-
-const cookie = new Cookies();
+import Header from "./Components/Header";
 
 function App() {
-  const [authToken, setAuthToken] = useState<string | null>(
-    cookie.get("refresh-token")
-  );
-
   const [user] = useAuthState(auth);
+  console.log(user);
 
-  return <>{user ? <ChatScreen /> : <SignInpage />}</>;
+  return (
+    <>
+      <Header user={user} />
+      {user && <ChatScreen />}
+    </>
+  );
 }
 
 export default App;
