@@ -1,12 +1,9 @@
-import { Container, Button } from "@mui/material";
+import { Container } from "@mui/material";
 import TextInput from "./TextInput";
-import { signOut } from "firebase/auth";
-import Cookies from "universal-cookie";
 import { onSnapshot, collection, query, orderBy } from "firebase/firestore";
 import { db, auth } from "../Config/Firebase";
 import { useEffect, useState, useRef } from "react";
-
-const cookie = new Cookies();
+import { useParams } from "react-router-dom";
 
 type msgType = {
   createdAt?: string;
@@ -18,29 +15,32 @@ type msgType = {
 const ChatScreen = () => {
   const currentUser = auth.currentUser?.email;
   const [messages, setMessages] = useState<msgType[]>([]);
-  const logOut = async () => {
-    try {
-      await signOut(auth);
-      cookie.remove("refresh-token");
-    } catch (error) {
-      console.log(error);
-    }
-  };
+
+  const { groupName } = useParams();
 
   // const msgRef = collection(db, "messages");
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const q = query(collection(db, "messages"), orderBy("createdAt"));
-    const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      let msgArray: object[] = [];
-      querySnapshot.forEach((doc) => {
-        msgArray.push({ ...doc.data(), id: doc.id });
+    try {
+      const q = query(collection(db, `${groupName}`), orderBy("createdAt"));
+      const unsubscribe = onSnapshot(q, (querySnapshot) => {
+        let msgArray: object[] = [];
+        querySnapshot.forEach((doc) => {
+          msgArray.push({ ...doc.data(), id: doc.id });
+        });
+        setMessages(msgArray);
       });
-      setMessages(msgArray);
-    });
-    return () => unsubscribe();
+      return () => {
+        unsubscribe();
+      };
+    } catch (error) {
+      console.log(error);
+    }
   }, []);
+  useEffect(() => {
+    scrollRef.current.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
   return (
     <>
@@ -73,15 +73,19 @@ const ChatScreen = () => {
                 style={{
                   display: "flex",
                   justifyContent:
-                    msg.user === currentUser ? "flex-end" : "flex-start",
+                    i === 0
+                      ? "center"
+                      : msg.user === currentUser
+                      ? "flex-end"
+                      : "flex-start",
                 }}
               >
                 <span
                   style={{
                     border: "1px solid gray",
-                    margin: "1px",
+                    margin: i === 0 ? "10px" : "1px",
                     borderRadius:
-                      i === 0
+                      i === 1
                         ? "2px 10px 10px 10px"
                         : // : i + 1 === messages.length
                         // ? "10px 10px 0px 10px"
@@ -96,12 +100,18 @@ const ChatScreen = () => {
                     paddingLeft: "8px",
                     paddingRight: "8px",
                     backgroundColor:
-                      msg.user === currentUser ? "cornflowerblue" : "cadetblue",
+                      i === 0
+                        ? "black"
+                        : msg.user === currentUser
+                        ? "cornflowerblue"
+                        : "cadetblue",
                     maxWidth: "380px",
                   }}
                 >
                   <p style={{ margin: "5px", fontSize: "0.9rem" }}>
-                    {i > 0 && msg.user == messages[i - 1].user ? (
+                    {i > 1 && msg.user == messages[i - 1].user ? (
+                      <div></div>
+                    ) : i === 0 ? (
                       <div></div>
                     ) : (
                       <div

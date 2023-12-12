@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { db } from "../Config/Firebase";
 import { auth } from "../Config/Firebase";
+import { useParams } from "react-router-dom";
 
 type ref = {
   scrollRef: HTMLDivElement;
@@ -12,8 +13,9 @@ type ref = {
 export default function InputWithIcon({ scrollRef }: ref) {
   const [inputMessage, setInputMessage] = useState<string | null>(null);
   const [spinner, setSpinner] = useState<boolean>(false);
+  const { groupName } = useParams();
 
-  const msgRef = collection(db, "messages");
+  const msgRef = collection(db, `${groupName}`);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
