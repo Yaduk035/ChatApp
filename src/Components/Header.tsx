@@ -4,7 +4,6 @@ import { signOut } from "firebase/auth";
 import { auth, provider } from "../Config/Firebase";
 import { signInWithPopup } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
-import { Share } from "@mui/icons-material";
 
 type userType = {
   user: object | undefined | null;
@@ -30,7 +29,6 @@ const Header = ({ user }: userType) => {
         <header>
           <RocketLaunchSharp fontSize="large" />
           <div>
-            <Share style={{ marginRight: "0.9rem" }} />
             {user && (
               <span style={{ marginRight: "0.9rem" }}>
                 <Link to={"/"}>
