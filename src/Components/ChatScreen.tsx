@@ -4,6 +4,7 @@ import { onSnapshot, collection, query, orderBy } from "firebase/firestore";
 import { db, auth } from "../Config/Firebase";
 import { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
+import Header from "./Header";
 
 type msgType = {
   createdAt?: string;
@@ -12,7 +13,11 @@ type msgType = {
   user?: string;
 };
 
-const ChatScreen = () => {
+type userType = {
+  user: object | undefined | null;
+};
+
+const ChatScreen = ({ user }: userType) => {
   const currentUser = auth.currentUser?.email;
   const [messages, setMessages] = useState<msgType[]>([]);
 
@@ -49,6 +54,7 @@ const ChatScreen = () => {
           Sign out
         </Button>
       </div> */}
+      <Header user={user} />
       <div style={{ display: "flex", flexDirection: "column" }}>
         <Container
           maxWidth="md"

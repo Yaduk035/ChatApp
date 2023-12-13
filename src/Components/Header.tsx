@@ -4,6 +4,7 @@ import { signOut } from "firebase/auth";
 import { auth, provider } from "../Config/Firebase";
 import { signInWithPopup } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
+import ChatMenu from "./ChatMenu";
 
 type userType = {
   user: object | undefined | null;
@@ -27,9 +28,11 @@ const Header = ({ user }: userType) => {
     <>
       <div style={{ display: "flex", justifyContent: "center" }}>
         <header>
-          <RocketLaunchSharp fontSize="large" />
+          <Link to={"/"}>
+            <RocketLaunchSharp fontSize="large" />
+          </Link>
           <div>
-            {user && (
+            {/* {user && (
               <span style={{ marginRight: "0.9rem" }}>
                 <Link to={"/"}>
                   <Button color="inherit" variant="outlined">
@@ -37,17 +40,18 @@ const Header = ({ user }: userType) => {
                   </Button>
                 </Link>
               </span>
-            )}
+            )} */}
             {user ? (
-              <Button
-                variant="outlined"
-                size="large"
-                color="inherit"
-                onClick={logOut}
-              >
-                Log Out
-              </Button>
+              <ChatMenu user={user} />
             ) : (
+              // <Button
+              //   variant="outlined"
+              //   size="large"
+              //   color="inherit"
+              //   onClick={logOut}
+              // >
+              //   Log Out
+              // </Button>
               <Button
                 variant="outlined"
                 size="large"

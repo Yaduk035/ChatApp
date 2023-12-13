@@ -13,12 +13,17 @@ function App() {
 
   return (
     <>
-      <Header user={user} />
+      {!user && <Header user={user} />}
       {/* {user && <ChatScreen />} */}
       <Routes>
         <Route path="/" element={<Layout />}>
-          {user && <Route path="/" element={<AddGroup />} />}
-          {user && <Route path="/groups/:groupName" element={<ChatScreen />} />}
+          {user && <Route path="/" element={<AddGroup user={user} />} />}
+          {user && (
+            <Route
+              path="/groups/:groupName"
+              element={<ChatScreen user={user} />}
+            />
+          )}
           <Route path="/*" element={<PageNotFound />} />
         </Route>
       </Routes>
