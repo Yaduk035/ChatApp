@@ -14,7 +14,7 @@ type msgType = {
 };
 
 type userType = {
-  user: object | undefined | null;
+  user?: object | undefined | null;
 };
 
 const ChatScreen = ({ user }: userType) => {

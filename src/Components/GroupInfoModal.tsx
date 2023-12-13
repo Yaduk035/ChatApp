@@ -2,9 +2,11 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
-import { doc, getDoc } from "firebase/firestore";
-import { db } from "../Config/Firebase";
+import { doc, getDoc, updateDoc, deleteDoc } from "firebase/firestore";
+import { auth, db } from "../Config/Firebase";
 import { useParams } from "react-router-dom";
+import { Delete, Share } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 
 const style = {
   position: "absolute" as "absolute",
@@ -31,15 +33,36 @@ type groupType = {
   users?: string[];
   name: string;
   private?: boolean;
+  inviteLink?: string;
 };
 
-function AddUsersModal() {
+type adduserType = {
+  addUsers: ReturnType;
+  getGroupData: ReturnType;
+};
+
+type shareModal = {
+  inviteLink?: string;
+};
+type deleteGpModal = {
+  gpName?: string;
+};
+
+function AddUsersModal(props: adduserType) {
   const [open, setOpen] = React.useState(false);
+  const [newUser, setNewUser] = React.useState<string | null>(null);
   const handleOpen = () => {
     setOpen(true);
   };
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const addUser = () => {
+    if (!newUser) return;
+    props.addUsers(newUser);
+    props.getGroupData();
+    handleClose();
   };
 
   return (
@@ -67,11 +90,12 @@ function AddUsersModal() {
                 color: "white",
               }}
               placeholder="Enter gmail id here"
+              onChange={(e) => setNewUser(e.target.value)}
             />
           </form>
           <br />
           <div style={{ display: "flex", justifyContent: "space-around" }}>
-            <Button variant="contained" color="error" onClick={handleClose}>
+            <Button variant="contained" color="error" onClick={addUser}>
               Add user
             </Button>
             <Button variant="outlined" color="inherit" onClick={handleClose}>
@@ -84,7 +108,7 @@ function AddUsersModal() {
   );
 }
 
-function ShareGroup() {
+function ShareGroup({ inviteLink }: shareModal) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => {
     setOpen(true);
@@ -97,6 +121,7 @@ function ShareGroup() {
   return (
     <React.Fragment>
       <Button variant="contained" onClick={handleOpen}>
+        <Share />
         Share
       </Button>
       <Modal
@@ -118,13 +143,83 @@ function ShareGroup() {
                 height: "6vh",
                 color: "white",
               }}
-              value={path}
+              value={inviteLink || path}
             />
           </form>
           <br />
           <div style={{ display: "flex", justifyContent: "space-around" }}>
             <Button variant="outlined" color="inherit" onClick={handleClose}>
               Close
+            </Button>
+          </div>
+        </Box>
+      </Modal>
+    </React.Fragment>
+  );
+}
+
+function DeleteGroup({ gpName }: deleteGpModal) {
+  const [open, setOpen] = React.useState(false);
+  const [value, setValue] = React.useState("");
+  const navigate = useNavigate();
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+    setValue("");
+  };
+
+  const deleteGroup = async () => {
+    if (value !== gpName) return;
+    try {
+      await deleteDoc(doc(db, "groupNames", `${gpName}`));
+
+      handleClose();
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  return (
+    <React.Fragment>
+      <Button variant="outlined" color="error" onClick={handleOpen}>
+        <Delete />
+      </Button>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="child-modal-title"
+        aria-describedby="child-modal-description"
+      >
+        <Box sx={{ ...style, width: 200, backgroundColor: "rgb(40,40,40)" }}>
+          <h2 id="child-modal-title">Delete group {gpName}?</h2>
+          <p>Type the group name</p>
+          <form style={{ fontSize: "1.5rem" }}>
+            <input
+              style={{
+                lineHeight: "1.5",
+                background: "rgb(80,80,80)",
+                outline: "none",
+                border: "none",
+                padding: "0 10px",
+                height: "6vh",
+                color: "white",
+              }}
+              value={value}
+              onChange={(e) => setValue(e.target.value)}
+              placeholder={gpName}
+            />
+          </form>
+          <br />
+          <div style={{ display: "flex", justifyContent: "space-around" }}>
+            <Button variant="outlined" color="inherit" onClick={handleClose}>
+              Close
+            </Button>
+            <Button variant="contained" color="error" onClick={deleteGroup}>
+              Delete
             </Button>
           </div>
         </Box>
@@ -156,6 +251,28 @@ export default function GroupInfoModal(props: modalType) {
     getGroupData();
   }, []);
 
+  const addUsers = async (value: string) => {
+    if (!value) return;
+    const currentUserArr = groupData?.users;
+    if (currentUserArr?.includes(value)) {
+      console.log("already exists");
+      return;
+    }
+    const newUser = [value];
+    const updatedArr = currentUserArr?.concat(newUser);
+    console.log(updatedArr);
+
+    try {
+      const docRef = doc(db, "groupNames", `${groupName}`);
+      await updateDoc(docRef, {
+        users: updatedArr,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  // addUsers("new");
+
   return (
     <div>
       <Modal
@@ -163,6 +280,7 @@ export default function GroupInfoModal(props: modalType) {
         onClose={handleClose}
         aria-labelledby="parent-modal-title"
         aria-describedby="parent-modal-description"
+        disableEscapeKeyDown
       >
         <Box
           sx={{ ...style, width: 400 }}
@@ -179,9 +297,13 @@ export default function GroupInfoModal(props: modalType) {
               <p>{groupData?.private ? "Private group" : "Public group"}</p>
             </span>
             <p id="parent-modal-title" style={{ color: "gray" }}>
-              {" "}
               Created by: {groupData?.createdBy}
             </p>
+            {/* {groupData?.inviteLink && (
+              <p id="parent-modal-title" style={{ color: "gray" }}>
+                Invite link: {groupData?.inviteLink}
+              </p>
+            )} */}
           </span>
           {groupData?.users && (
             <div>
@@ -194,8 +316,21 @@ export default function GroupInfoModal(props: modalType) {
             </div>
           )}
           <div style={{ display: "flex", justifyContent: "space-around" }}>
-            {groupData?.private && <AddUsersModal />}
-            <ShareGroup />
+            {groupData?.private &&
+              groupData.createdBy === auth.currentUser?.email && (
+                <DeleteGroup gpName={groupName} />
+              )}
+            {groupData?.private &&
+              groupData.createdBy === auth.currentUser?.email && (
+                <AddUsersModal
+                  addUsers={addUsers}
+                  getGroupData={getGroupData}
+                />
+              )}
+            <ShareGroup inviteLink={groupData?.inviteLink} />
+            <Button variant="outlined" size="small" onClick={handleClose}>
+              Close info
+            </Button>
           </div>
         </Box>
       </Modal>

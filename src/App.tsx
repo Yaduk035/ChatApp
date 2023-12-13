@@ -7,6 +7,7 @@ import { Routes, Route } from "react-router-dom";
 import AddGroup from "./Components/AddGroup";
 import Layout from "./Components/Layout";
 import PageNotFound from "./Components/PageNotFound";
+import InvitePage from "./Components/InvitePage";
 
 function App() {
   const [user] = useAuthState(auth);
@@ -24,6 +25,10 @@ function App() {
               element={<ChatScreen user={user} />}
             />
           )}
+          <Route
+            path="/invite/:groupName/:invId"
+            element={<InvitePage user={user} />}
+          />
           <Route path="/*" element={<PageNotFound />} />
         </Route>
       </Routes>

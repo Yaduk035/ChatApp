@@ -1,15 +1,6 @@
 import { useEffect, useState } from "react";
 import { db, auth } from "../Config/Firebase";
-import {
-  collection,
-  query,
-  orderBy,
-  onSnapshot,
-  doc,
-  setDoc,
-  addDoc,
-  serverTimestamp,
-} from "firebase/firestore";
+import { collection, query, orderBy, onSnapshot } from "firebase/firestore";
 import GroupCard from "./GroupCard";
 import { Button, Container, Grid, Stack } from "@mui/material";
 import AddgroupModal from "./AddgroupsModal";
@@ -29,7 +20,6 @@ type userType = {
 
 const AddGroup = ({ user }: userType) => {
   const [groupNames, setGroupNames] = useState<grpType[]>([]);
-  const [newGroup, setNewGroup] = useState<string | null>();
   const [openModal, setOpenModal] = useState<boolean>(false);
 
   useEffect(() => {
@@ -61,26 +51,6 @@ const AddGroup = ({ user }: userType) => {
   //       console.log(error);
   //     }
   //   };
-  const createGroup = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      const msgref = collection(db, `${newGroup}`);
-      await addDoc(msgref, {
-        text: `New group ${newGroup} created by ${auth.currentUser?.email}`,
-        user: auth.currentUser?.email,
-        createdAt: serverTimestamp(),
-      });
-
-      const groupIndexRef = doc(db, "groupNames", `${newGroup}`);
-      await setDoc(groupIndexRef, {
-        name: `${newGroup}`,
-        createdAt: serverTimestamp(),
-        createdBy: auth.currentUser?.email,
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   const closeModal = (): void => {
     setOpenModal(false);

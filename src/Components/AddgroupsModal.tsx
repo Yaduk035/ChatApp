@@ -3,6 +3,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
+import { useNavigate } from "react-router-dom";
 
 import { db, auth } from "../Config/Firebase";
 import {
@@ -39,6 +40,9 @@ export default function AddgroupModal(props: modalType) {
   const [spinner, setSpinner] = React.useState<boolean>(false);
   const [newGroup, setNewGroup] = React.useState<string | null>();
   const [groupType, setGroupType] = React.useState<boolean>(false);
+  const navigate = useNavigate();
+
+  const path = window.location.href;
 
   //   const handleChange = (event: SelectChangeEvent) => {
   //     setGroupType(event.target.);
@@ -55,6 +59,7 @@ export default function AddgroupModal(props: modalType) {
 
   const createGroup = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!newGroup) return;
     setSpinner(true);
     try {
       const msgref = collection(db, `${newGroup}`);
@@ -66,15 +71,19 @@ export default function AddgroupModal(props: modalType) {
       });
 
       const groupIndexRef = doc(db, "groupNames", `${newGroup}`);
+      const newId = Math.floor(Math.random() * 10000000000);
+      const newInviteLink = `${path}invite/${newGroup}/${newId}`;
       await setDoc(groupIndexRef, {
         name: `${newGroup}`,
         createdAt: serverTimestamp(),
         createdBy: auth.currentUser?.email,
         private: groupType,
         users: [auth.currentUser?.email],
+        inviteLink: groupType ? newInviteLink : path,
       });
       setSpinner(false);
       props.closeModal();
+      navigate(`/groups/${newGroup}`);
     } catch (error) {
       console.log(error);
       setSpinner(false);
