@@ -5,7 +5,7 @@ import Button from "@mui/material/Button";
 import { doc, getDoc, updateDoc, deleteDoc } from "firebase/firestore";
 import { auth, db } from "../Config/Firebase";
 import { useParams } from "react-router-dom";
-import { Delete, Share } from "@mui/icons-material";
+import { Delete, Share, Close } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 
 const style = {
@@ -76,8 +76,8 @@ function AddUsersModal(props: adduserType) {
         aria-labelledby="child-modal-title"
         aria-describedby="child-modal-description"
       >
-        <Box sx={{ ...style, width: 200, backgroundColor: "rgb(40,40,40)" }}>
-          <h2 id="child-modal-title">Add users</h2>
+        <Box sx={{ ...style, width: 250, backgroundColor: "rgb(40,40,40)" }}>
+          <h3 id="child-modal-title">Add users</h3>
           <form>
             <input
               style={{
@@ -86,8 +86,9 @@ function AddUsersModal(props: adduserType) {
                 outline: "none",
                 border: "none",
                 padding: "0 10px",
-                height: "4vh",
+                height: "6vh",
                 color: "white",
+                fontSize: "1.1rem",
               }}
               placeholder="Enter gmail id here"
               onChange={(e) => setNewUser(e.target.value)}
@@ -95,11 +96,11 @@ function AddUsersModal(props: adduserType) {
           </form>
           <br />
           <div style={{ display: "flex", justifyContent: "space-around" }}>
-            <Button variant="contained" color="error" onClick={addUser}>
-              Add user
-            </Button>
             <Button variant="outlined" color="inherit" onClick={handleClose}>
               Close
+            </Button>
+            <Button variant="contained" color="error" onClick={addUser}>
+              Add user
             </Button>
           </div>
         </Box>
@@ -110,6 +111,7 @@ function AddUsersModal(props: adduserType) {
 
 function ShareGroup({ inviteLink }: shareModal) {
   const [open, setOpen] = React.useState(false);
+  const [text, setText] = React.useState("");
   const handleOpen = () => {
     setOpen(true);
   };
@@ -117,6 +119,11 @@ function ShareGroup({ inviteLink }: shareModal) {
     setOpen(false);
   };
   const path = window.location.href;
+
+  const copyText = async () => {
+    await navigator.clipboard.writeText(inviteLink || path);
+    alert("Link copied");
+  };
 
   return (
     <React.Fragment>
@@ -130,7 +137,7 @@ function ShareGroup({ inviteLink }: shareModal) {
         aria-labelledby="child-modal-title"
         aria-describedby="child-modal-description"
       >
-        <Box sx={{ ...style, width: 200, backgroundColor: "rgb(40,40,40)" }}>
+        <Box sx={{ ...style, width: 250, backgroundColor: "rgb(40,40,40)" }}>
           <h2 id="child-modal-title">Share group</h2>
           <form>
             <input
@@ -142,6 +149,7 @@ function ShareGroup({ inviteLink }: shareModal) {
                 padding: "0 10px",
                 height: "6vh",
                 color: "white",
+                fontSize: "1.1rem",
               }}
               value={inviteLink || path}
             />
@@ -150,6 +158,9 @@ function ShareGroup({ inviteLink }: shareModal) {
           <div style={{ display: "flex", justifyContent: "space-around" }}>
             <Button variant="outlined" color="inherit" onClick={handleClose}>
               Close
+            </Button>
+            <Button variant="outlined" color="inherit" onClick={copyText}>
+              Copy link
             </Button>
           </div>
         </Box>
@@ -194,9 +205,8 @@ function DeleteGroup({ gpName }: deleteGpModal) {
         aria-labelledby="child-modal-title"
         aria-describedby="child-modal-description"
       >
-        <Box sx={{ ...style, width: 200, backgroundColor: "rgb(40,40,40)" }}>
-          <h2 id="child-modal-title">Delete group {gpName}?</h2>
-          <p>Type the group name</p>
+        <Box sx={{ ...style, width: 250, backgroundColor: "rgb(40,40,40)" }}>
+          <h3 id="child-modal-title">Delete group {gpName}?</h3>
           <form style={{ fontSize: "1.5rem" }}>
             <input
               style={{
@@ -207,12 +217,16 @@ function DeleteGroup({ gpName }: deleteGpModal) {
                 padding: "0 10px",
                 height: "6vh",
                 color: "white",
+                fontSize: "1.1rem",
               }}
               value={value}
               onChange={(e) => setValue(e.target.value)}
               placeholder={gpName}
             />
           </form>
+          <p style={{ marginTop: "5px", color: "gray", fontSize: "0.8rem" }}>
+            Type group name here
+          </p>
           <br />
           <div style={{ display: "flex", justifyContent: "space-around" }}>
             <Button variant="outlined" color="inherit" onClick={handleClose}>
@@ -305,7 +319,7 @@ export default function GroupInfoModal(props: modalType) {
               </p>
             )} */}
           </span>
-          {groupData?.users && (
+          {groupData?.users && groupData.private && (
             <div>
               <ul>
                 <h4>Group members</h4>
@@ -315,11 +329,10 @@ export default function GroupInfoModal(props: modalType) {
               </ul>
             </div>
           )}
-          <div style={{ display: "flex", justifyContent: "space-around" }}>
-            {groupData?.private &&
-              groupData.createdBy === auth.currentUser?.email && (
-                <DeleteGroup gpName={groupName} />
-              )}
+          <div style={{ display: "flex", justifyContent: "space-evenly" }}>
+            {groupData?.createdBy === auth.currentUser?.email && (
+              <DeleteGroup gpName={groupName} />
+            )}
             {groupData?.private &&
               groupData.createdBy === auth.currentUser?.email && (
                 <AddUsersModal
@@ -328,8 +341,13 @@ export default function GroupInfoModal(props: modalType) {
                 />
               )}
             <ShareGroup inviteLink={groupData?.inviteLink} />
-            <Button variant="outlined" size="small" onClick={handleClose}>
-              Close info
+            <Button
+              variant="outlined"
+              size="small"
+              color="warning"
+              onClick={handleClose}
+            >
+              <Close />
             </Button>
           </div>
         </Box>

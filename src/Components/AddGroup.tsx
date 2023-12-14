@@ -80,13 +80,13 @@ const AddGroup = ({ user }: userType) => {
           </Button>
         </div>
         <div>
-          <h2>Public groups</h2>
+          <h2 style={{ fontFamily: "monospace" }}>Public groups</h2>
           <Stack direction={{ sm: "column", md: "row" }} spacing={2}>
             <Grid container spacing={2}>
               {groupNames?.map(
                 (doc) =>
                   !doc.private && (
-                    <Grid item xs={12} sm={6} md={6} lg={4}>
+                    <Grid item xs={12} sm={6} md={6} lg={4} xl={3}>
                       <GroupCard
                         key={doc.id}
                         groupName={doc.name}
@@ -98,14 +98,15 @@ const AddGroup = ({ user }: userType) => {
               )}
             </Grid>
           </Stack>
-          <h2>Private groups</h2>
+          <br />
+          <h2 style={{ fontFamily: "monospace" }}>Private groups</h2>
           <Stack direction={{ sm: "column", md: "row" }} spacing={2}>
             <Grid container spacing={2}>
               {groupNames?.map(
                 (doc) =>
                   doc.private &&
                   doc.users?.includes(auth.currentUser?.email) && (
-                    <Grid item xs={12} sm={6} md={6} lg={4}>
+                    <Grid item xs={12} sm={6} md={6} lg={4} xl={3}>
                       <GroupCard
                         key={doc.id}
                         groupName={doc.name}

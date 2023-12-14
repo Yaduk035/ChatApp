@@ -56,7 +56,7 @@ export default function ChatMenu({ user }: userType) {
             aria-haspopup="true"
             aria-expanded={open ? "true" : undefined}
             onClick={handleClick}
-            style={{ outline: "none", color: "wheat" }}
+            style={{ outline: "none", color: "wheat", fontFamily: "monospace" }}
           >
             <MoreVert />
           </Button>
@@ -72,8 +72,15 @@ export default function ChatMenu({ user }: userType) {
             {path !== "/" && (
               <MenuItem onClick={handleModalOpen}>Group Info</MenuItem>
             )}
-            <MenuItem onClick={logOut}>Logout</MenuItem>
-            <MenuItem onClick={handleClose}>About app</MenuItem>
+            <MenuItem onClick={logOut} style={{ color: "red" }}>
+              Logout
+            </MenuItem>
+            <MenuItem
+              onClick={handleClose}
+              style={{ fontSize: "0.8rem", color: "GrayText" }}
+            >
+              About app
+            </MenuItem>
           </Menu>
         </div>
       ) : (

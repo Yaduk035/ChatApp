@@ -55,15 +55,18 @@ const ChatScreen = ({ user }: userType) => {
         </Button>
       </div> */}
       <Header user={user} />
+      <div style={{ height: "4vh" }}></div>
+
       <div style={{ display: "flex", flexDirection: "column" }}>
         <Container
           maxWidth="md"
           style={{
             display: "flex",
             flexDirection: "column",
-            maxWidth: "600px",
-            minWidth: "600px",
+            margin: "0px",
+            padding: "0px",
           }}
+          className="chatDiv"
         >
           <Container
             style={{
@@ -87,9 +90,10 @@ const ChatScreen = ({ user }: userType) => {
                 }}
               >
                 <span
+                  className="msgDiv"
                   style={{
                     border: "1px solid gray",
-                    margin: i === 0 ? "10px" : "1px",
+                    margin: i === 0 ? "10px 0px 10px 0px" : "1px",
                     borderRadius:
                       i === 1
                         ? "2px 10px 10px 10px"
@@ -111,7 +115,6 @@ const ChatScreen = ({ user }: userType) => {
                         : msg.user === currentUser
                         ? "cornflowerblue"
                         : "cadetblue",
-                    maxWidth: "380px",
                   }}
                 >
                   <p style={{ margin: "5px", fontSize: "0.9rem" }}>
@@ -137,8 +140,9 @@ const ChatScreen = ({ user }: userType) => {
             ))}
             <div ref={scrollRef} style={{ height: "30px" }}></div>
           </Container>
+          <div style={{ height: "4vh" }}></div>
+          <TextInput scrollRef={scrollRef} />
         </Container>
-        <TextInput scrollRef={scrollRef} />
       </div>
     </>
   );

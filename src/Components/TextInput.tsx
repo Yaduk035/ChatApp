@@ -58,15 +58,21 @@ export default function InputWithIcon({ scrollRef }: ref) {
 
         <button onClick={handleSubmit} disabled={spinner}>
           {!spinner ? (
-            <Send
-              sx={{
-                color: "wheat",
-                mr: 1,
-                my: 1.5,
-                fontSize: "1.8rem",
-                cursor: "pointer",
+            <span
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
               }}
-            />
+            >
+              <Send
+                sx={{
+                  color: "wheat",
+                  fontSize: "2rem",
+                  cursor: "pointer",
+                }}
+              />
+            </span>
           ) : (
             <CircularProgress />
           )}
