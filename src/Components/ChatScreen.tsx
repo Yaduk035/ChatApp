@@ -1,10 +1,18 @@
 import { Container } from "@mui/material";
 import TextInput from "./TextInput";
-import { onSnapshot, collection, query, orderBy } from "firebase/firestore";
+import {
+  onSnapshot,
+  collection,
+  query,
+  orderBy,
+  doc,
+  getDoc,
+} from "firebase/firestore";
 import { db, auth } from "../Config/Firebase";
 import { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import Header from "./Header";
+import LoadingScreen from "./LoadingScreen";
 
 type msgType = {
   createdAt?: string;
@@ -17,14 +25,67 @@ type userType = {
   user?: object | undefined | null;
 };
 
+type groupType = {
+  createdAt?: string;
+  createdBy?: string;
+  users?: string[];
+  name: string;
+  private?: boolean;
+  inviteLink?: string;
+};
+
 const ChatScreen = ({ user }: userType) => {
-  const currentUser = auth.currentUser?.email;
+  const currentUser: string | null | undefined = auth.currentUser?.email;
   const [messages, setMessages] = useState<msgType[]>([]);
+  const [groupData, setGroupData] = useState<groupType>();
+
+  const [userExists, setUserExists] = useState<boolean | undefined>(false);
+  const [privateGp, setPrivateGp] = useState<boolean>(false);
+  const [showChats, setShowChats] = useState<boolean>(false);
 
   const { groupName } = useParams();
 
   // const msgRef = collection(db, "messages");
   const scrollRef = useRef<HTMLDivElement>(null);
+
+  const getGroupData = async () => {
+    const docRef = doc(db, "groupNames", `${groupName}`);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      setGroupData(docSnap.data());
+    } else {
+      console.log("error");
+    }
+  };
+  useEffect(() => {
+    getGroupData();
+  }, []);
+
+  useEffect(() => {
+    // console.log(groupData);
+    if (groupData?.private) {
+      setPrivateGp(true);
+      const userFromDb = groupData.users?.includes(currentUser);
+      setUserExists(userFromDb);
+      console.log(userFromDb);
+    } else {
+      setPrivateGp(false);
+    }
+  }, [groupData, currentUser]);
+
+  useEffect(() => {
+    if (userExists && privateGp) {
+      setShowChats(true);
+      console.log("private and user exists");
+    } else if (!userExists && privateGp) {
+      setShowChats(false);
+      console.log("private and no user exists");
+    } else if (!privateGp) {
+      setShowChats(true);
+      console.log("public group");
+    }
+  }, [userExists, privateGp]);
 
   useEffect(() => {
     try {
@@ -144,6 +205,7 @@ const ChatScreen = ({ user }: userType) => {
           <TextInput scrollRef={scrollRef} />
         </Container>
       </div>
+      <LoadingScreen showModal={showChats} />
     </>
   );
 };
