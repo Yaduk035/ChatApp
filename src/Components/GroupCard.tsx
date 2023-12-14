@@ -62,7 +62,9 @@ export default function GroupCard(props: cardType) {
             {props.groupName}
           </Typography>
           <Typography sx={{ fontSize: 10 }}>Created by:</Typography>
-          <Typography sx={{ mb: 1.5 }}>{props.createdBy}</Typography>
+          <Typography sx={{ mb: 1.5, fontSize: 13 }}>
+            {props.createdBy}
+          </Typography>
           {/* <Typography variant="body2">
           well meaning and kindly.
           <br />

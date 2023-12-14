@@ -68,7 +68,6 @@ const ChatScreen = ({ user }: userType) => {
       setPrivateGp(true);
       const userFromDb = groupData.users?.includes(currentUser);
       setUserExists(userFromDb);
-      console.log(userFromDb);
     } else {
       setPrivateGp(false);
     }
@@ -77,13 +76,10 @@ const ChatScreen = ({ user }: userType) => {
   useEffect(() => {
     if (userExists && privateGp) {
       setShowChats(true);
-      console.log("private and user exists");
     } else if (!userExists && privateGp) {
       setShowChats(false);
-      console.log("private and no user exists");
     } else if (!privateGp) {
       setShowChats(true);
-      console.log("public group");
     }
   }, [userExists, privateGp]);
 

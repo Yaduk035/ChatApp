@@ -61,6 +61,8 @@ const AddGroup = ({ user }: userType) => {
   return (
     <>
       <Header user={user} />
+      <div style={{ height: "4vh" }}></div>
+
       <Container maxWidth="xl">
         <div
           style={{
@@ -125,6 +127,7 @@ const AddGroup = ({ user }: userType) => {
           />
         </div>
       </Container>
+      <div style={{ height: "4vh" }}></div>
     </>
   );
 };

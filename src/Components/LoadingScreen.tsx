@@ -52,7 +52,11 @@ export default function LoadingScreen({ showModal }: inpProps) {
           </Typography>
           <br />
           <div style={{ display: "flex", justifyContent: "right" }}>
-            <Button onClick={() => navigate("/")} variant="outlined">
+            <Button
+              onClick={() => navigate("/")}
+              variant="outlined"
+              color="inherit"
+            >
               Go home
             </Button>
           </div>
