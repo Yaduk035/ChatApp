@@ -2,7 +2,7 @@ import * as React from "react";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import { MoreVert } from "@mui/icons-material";
+import { Menu as Menuicon } from "@mui/icons-material";
 import { signOut } from "firebase/auth";
 import { auth, provider } from "../Config/Firebase";
 import { signInWithPopup } from "firebase/auth";
@@ -58,7 +58,7 @@ export default function ChatMenu({ user }: userType) {
             onClick={handleClick}
             style={{ outline: "none", color: "wheat", fontFamily: "monospace" }}
           >
-            <MoreVert />
+            <Menuicon style={{ fontSize: "2rem" }} />
           </Button>
           <Menu
             id="basic-menu"

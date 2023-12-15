@@ -2,11 +2,21 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
-import { doc, getDoc, updateDoc, deleteDoc } from "firebase/firestore";
+import {
+  doc,
+  getDoc,
+  updateDoc,
+  deleteDoc,
+  collection,
+  addDoc,
+  serverTimestamp,
+} from "firebase/firestore";
 import { auth, db } from "../Config/Firebase";
 import { useParams } from "react-router-dom";
 import { Delete, Share, Close } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
 
 const style = {
   position: "absolute" as "absolute",
@@ -39,6 +49,12 @@ type groupType = {
 type adduserType = {
   addUsers: (value: string) => void;
   getGroupData: () => void;
+};
+
+type deluserType = {
+  deleteUsers: (value: string) => void;
+  getGroupData: () => void;
+  userName: string;
 };
 
 type shareModal = {
@@ -188,6 +204,7 @@ function DeleteGroup({ gpName }: deleteGpModal) {
 
       handleClose();
       navigate("/");
+      alert("Group deleted");
     } catch (error) {
       console.log(error);
     }
@@ -241,6 +258,54 @@ function DeleteGroup({ gpName }: deleteGpModal) {
   );
 }
 
+//////////////////////////////////////////////////
+
+function DelMenu(props: deluserType) {
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  return (
+    <div>
+      <span
+        id="basic-button"
+        aria-controls={open ? "basic-menu" : undefined}
+        aria-haspopup="true"
+        aria-expanded={open ? "true" : undefined}
+        onClick={handleClick}
+      >
+        <Delete sx={{ color: "wheat" }} />
+      </span>
+      <Menu
+        id="basic-menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        MenuListProps={{
+          "aria-labelledby": "basic-button",
+        }}
+      >
+        <MenuItem
+          onClick={() => {
+            props.deleteUsers(props.userName);
+            props.getGroupData();
+          }}
+        >
+          Delete user
+        </MenuItem>
+        <MenuItem onClick={handleClose}>Cancel</MenuItem>
+      </Menu>
+    </div>
+  );
+}
+
+//////////////////////////////////////////////////
+
 export default function GroupInfoModal(props: modalType) {
   const [open, setOpen] = React.useState(false);
   const { groupName } = useParams();
@@ -277,14 +342,50 @@ export default function GroupInfoModal(props: modalType) {
 
     try {
       const docRef = doc(db, "groupNames", `${groupName}`);
+      const msgRef = collection(db, `${groupName}`);
       await updateDoc(docRef, {
         users: updatedArr,
       });
+      await addDoc(msgRef, {
+        text: `${auth.currentUser.email} added ${newUser}`,
+        createdAt: serverTimestamp(),
+        user: auth.currentUser?.email,
+      });
+      alert(`${newUser} added to the group`);
     } catch (error) {
       console.log(error);
     }
   };
-  // addUsers("new");
+
+  const deleteUsers = async (value: string) => {
+    if (!value) return;
+    const currentUserArr = groupData?.users;
+    console.log(currentUserArr);
+    if (currentUserArr?.includes(value)) {
+      const removeUser = value;
+      const updatedArr = currentUserArr?.filter((item) => item !== removeUser);
+      console.log(updatedArr);
+
+      try {
+        const docRef = doc(db, "groupNames", `${groupName}`);
+        const msgRef = collection(db, `${groupName}`);
+        await updateDoc(docRef, {
+          users: updatedArr,
+        });
+        await addDoc(msgRef, {
+          text: `${auth.currentUser.email} added ${removeUser}`,
+          createdAt: serverTimestamp(),
+          user: auth.currentUser?.email,
+        });
+        alert(`${removeUser} removed from ${groupName}`);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
+  // addUsers("test");
+  // deleteUsers("test");
 
   return (
     <div>
@@ -319,13 +420,39 @@ export default function GroupInfoModal(props: modalType) {
             )} */}
           </span>
           {groupData?.users && groupData.private && (
-            <div>
-              <ul>
-                <h4>Group members</h4>
+            <div style={{ margin: "5px 0px 20px 0px" }}>
+              <div>
+                <h4 style={{ marginBottom: "10px" }}>Group members</h4>
                 {groupData?.users.map((data) => (
-                  <li>{data}</li>
+                  <div
+                    style={{
+                      margin: "2px",
+                      borderRadius: "5px",
+                      backgroundColor: "rgb(30,30,30)",
+                      padding: "5px 25px 5px 25px",
+                      display: "flex",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <span>
+                      {data} {data === groupData.createdBy && " (admin)"}{" "}
+                    </span>{" "}
+                    {groupData.createdBy === auth.currentUser.email &&
+                      data !== groupData.createdBy && (
+                        <span
+                          style={{ cursor: "pointer" }}
+                          // onClick={() => deleteUsers(`${data}`)}
+                        >
+                          <DelMenu
+                            deleteUsers={deleteUsers}
+                            getGroupData={getGroupData}
+                            userName={data}
+                          />
+                        </span>
+                      )}
+                  </div>
                 ))}
-              </ul>
+              </div>
             </div>
           )}
           <div style={{ display: "flex", justifyContent: "space-evenly" }}>

@@ -3,7 +3,14 @@ import { auth, provider } from "../Config/Firebase";
 import { signInWithPopup } from "firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate, useParams } from "react-router-dom";
-import { doc, getDoc, updateDoc } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  getDoc,
+  serverTimestamp,
+  updateDoc,
+} from "firebase/firestore";
 import { db } from "../Config/Firebase";
 import { useEffect, useState } from "react";
 import { CircularProgress } from "@mui/material";
@@ -73,8 +80,14 @@ const InvitePage = () => {
 
     try {
       const docRef = doc(db, "groupNames", `${groupName}`);
+      const msgRef = collection(db, `${groupName}`);
       await updateDoc(docRef, {
         users: updatedArr,
+      });
+      await addDoc(msgRef, {
+        text: `${auth.currentUser.email} has joined the group through invite link`,
+        createdAt: serverTimestamp(),
+        user: auth.currentUser?.email,
       });
       navigate(`/groups/${groupName}`);
       setSpinner(false);
