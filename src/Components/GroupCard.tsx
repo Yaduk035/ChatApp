@@ -52,7 +52,7 @@ export default function GroupCard(props: cardType) {
                 cursor: "pointer",
               }
         }
-        sx={{ minWidth: 200 }}
+        sx={{ minWidth: 190 }}
       >
         <CardContent>
           {/* <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>

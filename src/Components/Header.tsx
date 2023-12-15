@@ -4,6 +4,7 @@ import { auth, provider } from "../Config/Firebase";
 import { signInWithPopup } from "firebase/auth";
 import { Link } from "react-router-dom";
 import ChatMenu from "./ChatMenu";
+import { Google } from "@mui/icons-material";
 
 type userType = {
   user: object | undefined | null;
@@ -44,10 +45,11 @@ const Header = ({ user }: userType) => {
               <Button
                 variant="outlined"
                 size="large"
-                color="inherit"
+                color="warning"
                 onClick={signIn}
               >
-                Log In
+                <Google style={{ margin: "0 8px 0 0", fontSize: "1.3rem" }} />
+                Sign In
               </Button>
             )}
           </div>

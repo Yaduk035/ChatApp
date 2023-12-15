@@ -5,6 +5,7 @@ import GroupCard from "./GroupCard";
 import { Button, Container, Grid, Stack } from "@mui/material";
 import AddgroupModal from "./AddgroupsModal";
 import Header from "./Header";
+import { GroupAddTwoTone } from "@mui/icons-material";
 
 type grpType = {
   createdAt?: string;
@@ -22,6 +23,10 @@ const AddGroup = ({ user }: userType) => {
   const [groupNames, setGroupNames] = useState<grpType[]>();
   const [openModal, setOpenModal] = useState<boolean>(false);
   const userEmail: string = auth.currentUser.email;
+
+  useEffect(() => {
+    document.title = "ChatApp-Home";
+  }, []);
 
   useEffect(() => {
     const q = query(collection(db, "groupNames"), orderBy("createdAt"));
@@ -46,7 +51,16 @@ const AddGroup = ({ user }: userType) => {
   return (
     <>
       <Header user={user} />
-      <div style={{ height: "4vh" }}></div>
+      <div style={{ height: "12vh" }}></div>
+      <Button
+        variant="outlined"
+        color="warning"
+        size="large"
+        onClick={() => setOpenModal(true)}
+      >
+        <GroupAddTwoTone style={{ fontSize: "2rem", margin: "0 3px 3px 0" }} />
+        Create Group
+      </Button>
 
       <Container maxWidth="xl">
         <div
@@ -54,18 +68,9 @@ const AddGroup = ({ user }: userType) => {
             display: "flex",
             alignItems: "start",
             justifyContent: "center",
-            margin: "8vh",
           }}
           className="addGp"
-        >
-          <Button
-            variant="outlined"
-            color="warning"
-            onClick={() => setOpenModal(true)}
-          >
-            Create Group
-          </Button>
-        </div>
+        ></div>
         <div>
           <h2 style={{ fontFamily: "monospace" }}>Public groups</h2>
           <Stack direction={{ sm: "column", md: "row" }} spacing={2}>

@@ -135,6 +135,12 @@ header {
     box-sizing: border-box;
     max-width: 95%;
   }
+  .inputDiv form {
+    height: 10vh;
+  }
+  .inputDiv input {
+    height: 10vh;
+  }
 }
 @media screen and (min-width: 481px) {
   header {
@@ -148,6 +154,12 @@ header {
   .msgDiv {
     box-sizing: border-box;
     max-width: 90%;
+  }
+  .inputDiv form {
+    height: 9vh;
+  }
+  .inputDiv input {
+    height: 9vh;
   }
 }
 @media screen and (min-width: 769px) {
@@ -163,6 +175,12 @@ header {
     box-sizing: border-box;
     max-width: 85%;
   }
+  .inputDiv form {
+    height: 8vh;
+  }
+  .inputDiv input {
+    height: 8vh;
+  }
 }
 @media screen and (min-width: 1025px) {
   header {
@@ -176,5 +194,11 @@ header {
   .msgDiv {
     box-sizing: border-box;
     max-width: 80%;
+  }
+  .inputDiv form {
+    height: 8vh;
+  }
+  .inputDiv input {
+    height: 8vh;
   }
 }

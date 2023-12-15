@@ -4,6 +4,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { useNavigate } from "react-router-dom";
+import { Tooltip } from "@mui/material";
 
 import { db, auth } from "../Config/Firebase";
 import {
@@ -43,10 +44,28 @@ export default function AddgroupModal(props: modalType) {
   const navigate = useNavigate();
 
   const path = window.location.href;
+  const [tooltipOpen, setTooltipOpen] = React.useState(false);
 
-  //   const handleChange = (event: SelectChangeEvent) => {
-  //     setGroupType(event.target.);
-  //   };
+  const handleTooltipOpen = () => {
+    setOpen(true);
+  };
+
+  const checkGroupName = (name: string): void => {
+    if (name === "") setTooltipOpen(false);
+    if (!name) return;
+    const hasSpace = name.includes(" ");
+    setTooltipOpen(hasSpace);
+    console.log(hasSpace);
+    if (hasSpace) {
+      const convertSpace = name.replace(/ /g, "_");
+      console.log(convertSpace);
+      setNewGroup(convertSpace);
+    } else {
+      setNewGroup(name);
+      setTooltipOpen(hasSpace);
+    }
+  };
+  // checkGroupName("sd sdf");
 
   const handleClose = () => {
     setOpen(false);
@@ -64,7 +83,7 @@ export default function AddgroupModal(props: modalType) {
     try {
       const msgref = collection(db, `${newGroup}`);
       await addDoc(msgref, {
-        text: `New group ${newGroup} created by ${auth.currentUser?.email}`,
+        text: `New group ${newGroup} was created by ${auth.currentUser?.email}`,
         user: auth.currentUser?.email,
         createdAt: serverTimestamp(),
         private: groupType,
@@ -73,13 +92,14 @@ export default function AddgroupModal(props: modalType) {
       const groupIndexRef = doc(db, "groupNames", `${newGroup}`);
       const newId = Math.floor(Math.random() * 10000000000);
       const newInviteLink = `${path}invite/${newGroup}/${newId}`;
+      const publicLink = `${path}groups/${newGroup}`;
       await setDoc(groupIndexRef, {
         name: `${newGroup}`,
         createdAt: serverTimestamp(),
         createdBy: auth.currentUser?.email,
         private: groupType,
         users: [auth.currentUser?.email],
-        inviteLink: groupType ? newInviteLink : path,
+        inviteLink: groupType ? newInviteLink : publicLink,
       });
       setSpinner(false);
       props.closeModal();
@@ -113,21 +133,36 @@ export default function AddgroupModal(props: modalType) {
               >
                 Create new group
               </Typography>
-              <input
-                type="text"
-                placeholder="Type group name"
-                onChange={(e) => setNewGroup(e.target.value)}
-                style={{
-                  lineHeight: "1.5",
-                  backgroundColor: "rgb(58,58,58",
-                  outline: "none",
-                  border: "none",
-                  height: "8vh",
-                  padding: "0 10px",
-                  borderRadius: "5px",
-                  fontSize: "1.2rem",
-                }}
-              />
+              <Tooltip
+                open={tooltipOpen}
+                // onClose={handleTooltipClose}
+                onOpen={handleTooltipOpen}
+                title={`Groupname must not contain spaces. The groupname will be converted to ${newGroup}`}
+                placement="bottom"
+                arrow
+                style={{ fontSize: "50px" }}
+              >
+                <input
+                  type="text"
+                  placeholder="Type group name"
+                  onChange={(e) => checkGroupName(e.target.value)}
+                  style={{
+                    lineHeight: "1.5",
+                    backgroundColor: "rgb(58,58,58",
+                    outline: "none",
+                    border: "none",
+                    height: "8vh",
+                    padding: "0 10px",
+                    borderRadius: "5px",
+                    fontSize: "1.2rem",
+                  }}
+                />
+              </Tooltip>
+              {tooltipOpen && (
+                <span>
+                  <br />
+                </span>
+              )}
               <FormGroup>
                 <FormControlLabel
                   control={<Switch />}

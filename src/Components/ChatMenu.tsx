@@ -41,7 +41,6 @@ export default function ChatMenu({ user }: userType) {
   const signIn = async () => {
     await signInWithPopup(auth, provider);
   };
-
   const handleModalOpen = (): void => {
     setOpenModal(true);
   };
@@ -50,6 +49,16 @@ export default function ChatMenu({ user }: userType) {
     <>
       {user ? (
         <div>
+          {path !== "/" && (
+            <Button
+              variant="outlined"
+              color="warning"
+              size="small"
+              onClick={() => navigate("/")}
+            >
+              More groups
+            </Button>
+          )}
           <Button
             id="basic-button"
             aria-controls={open ? "basic-menu" : undefined}

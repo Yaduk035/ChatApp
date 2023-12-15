@@ -44,7 +44,9 @@ const ChatScreen = ({ user }: userType) => {
   const [showChats, setShowChats] = useState<boolean>(false);
 
   const { groupName } = useParams();
-
+  useEffect(() => {
+    document.title = groupName;
+  }, []);
   // const msgRef = collection(db, "messages");
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -197,7 +199,7 @@ const ChatScreen = ({ user }: userType) => {
             ))}
             <div ref={scrollRef} style={{ height: "30px" }}></div>
           </Container>
-          <div style={{ height: "4vh" }}></div>
+          <div style={{ height: "5vh" }}></div>
           <TextInput scrollRef={scrollRef} />
         </Container>
       </div>
