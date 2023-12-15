@@ -1,5 +1,5 @@
 import { Send } from "@mui/icons-material";
-import { Button, CircularProgress, Box } from "@mui/material";
+import { CircularProgress } from "@mui/material";
 import React, { useState } from "react";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { db } from "../Config/Firebase";
@@ -7,10 +7,10 @@ import { auth } from "../Config/Firebase";
 import { useParams } from "react-router-dom";
 
 type ref = {
-  scrollRef: HTMLDivElement;
+  scrollRef: React.RefObject<HTMLDivElement>;
 };
 
-export default function InputWithIcon({ scrollRef }: ref) {
+export default function TextInput({ scrollRef }: ref) {
   const [inputMessage, setInputMessage] = useState<string | null>(null);
   const [spinner, setSpinner] = useState<boolean>(false);
   const { groupName } = useParams();
@@ -29,7 +29,7 @@ export default function InputWithIcon({ scrollRef }: ref) {
       });
       setInputMessage("");
       setSpinner(false);
-      scrollRef.current.scrollIntoView({ behaviour: "smooth" });
+      scrollRef.current?.scrollIntoView({ behavior: "smooth" });
     } catch (error) {
       console.log(error);
       setSpinner(false);

@@ -11,7 +11,7 @@ type groupType = {
   createdAt?: string;
   createdBy?: string;
   users?: string[];
-  name: string;
+  name?: string;
   private?: boolean;
   inviteLink?: string;
 };
@@ -24,8 +24,15 @@ const InvitePage = () => {
   const [ErrMsg, setErrMsg] = useState<string | undefined | null>("");
   const currentUser: string | null | undefined = user?.email;
   const [spinner, setSpinner] = useState<boolean>(false);
+  const [userExists, setUserExists] = useState<boolean>(false);
 
-  const userExists = groupData?.users?.includes(currentUser);
+  useEffect(() => {
+    if (currentUser) {
+      const exists: boolean | undefined =
+        groupData?.users?.includes(currentUser);
+      setUserExists(!!exists);
+    }
+  }, [groupData]);
 
   const signIn = async () => {
     await signInWithPopup(auth, provider);
@@ -51,9 +58,10 @@ const InvitePage = () => {
 
   useEffect(() => {
     if (userExists) setErrMsg(`You are already a member of group ${groupName}`);
-  }, [userExists]);
+  }, [userExists, groupData]);
 
   const addUsers = async (value: string | null | undefined) => {
+    if (!value) return;
     setSpinner(true);
     const currentUserArr = groupData?.users;
     if (currentUserArr?.includes(value)) {

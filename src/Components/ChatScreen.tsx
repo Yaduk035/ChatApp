@@ -29,7 +29,7 @@ type groupType = {
   createdAt?: string;
   createdBy?: string;
   users?: string[];
-  name: string;
+  name?: string;
   private?: boolean;
   inviteLink?: string;
 };

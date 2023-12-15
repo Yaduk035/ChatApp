@@ -12,15 +12,16 @@ type grpType = {
   createdBy?: string;
   id?: string;
   private?: boolean;
-  users?: [] | null | undefined | string;
+  users?: [];
 };
 type userType = {
-  user: object | undefined | null;
+  user: object;
 };
 
 const AddGroup = ({ user }: userType) => {
-  const [groupNames, setGroupNames] = useState<grpType[]>([]);
+  const [groupNames, setGroupNames] = useState<grpType[]>();
   const [openModal, setOpenModal] = useState<boolean>(false);
+  const userEmail: string = auth.currentUser.email;
 
   useEffect(() => {
     const q = query(collection(db, "groupNames"), orderBy("createdAt"));
@@ -34,27 +35,11 @@ const AddGroup = ({ user }: userType) => {
     return () => unSub();
   }, []);
 
-  //   const getGroupData = async (value: string | undefined) => {
-  //     try {
-  //       const docRef = doc(db, "groupNames", `${value}`);
-  //       const docSnap = await getDoc(docRef);
-
-  //       if (docSnap.exists()) {
-  //         console.log("Document data:", docSnap.data());
-  //         navigate(`/groups/${value}`);
-  //       } else {
-  //         // docSnap.data() will be undefined in this case
-  //         console.log("No such document!");
-  //         navigate("notfound");
-  //       }
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-
   const closeModal = (): void => {
     setOpenModal(false);
   };
+
+  // console.log(groupNames[1].users.includes("skdjfh"));
 
   // const ob = groupNames[1]?.users?.includes("yduneduvannoor@gmail.com");
   // console.log(ob);
@@ -85,19 +70,20 @@ const AddGroup = ({ user }: userType) => {
           <h2 style={{ fontFamily: "monospace" }}>Public groups</h2>
           <Stack direction={{ sm: "column", md: "row" }} spacing={2}>
             <Grid container spacing={2}>
-              {groupNames?.map(
-                (doc) =>
-                  !doc.private && (
-                    <Grid item xs={12} sm={6} md={6} lg={4} xl={3}>
-                      <GroupCard
-                        key={doc.id}
-                        groupName={doc.name}
-                        createdBy={doc.createdBy}
-                        private={doc.private}
-                      />
-                    </Grid>
-                  )
-              )}
+              {groupNames &&
+                groupNames.map(
+                  (doc) =>
+                    !doc.private && (
+                      <Grid item xs={12} sm={6} md={6} lg={4} xl={3}>
+                        <GroupCard
+                          key={doc.id}
+                          groupName={doc.name}
+                          createdBy={doc.createdBy}
+                          private={doc.private}
+                        />
+                      </Grid>
+                    )
+                )}
             </Grid>
           </Stack>
           <br />
@@ -107,7 +93,8 @@ const AddGroup = ({ user }: userType) => {
               {groupNames?.map(
                 (doc) =>
                   doc.private &&
-                  doc.users?.includes(auth.currentUser?.email) && (
+                  doc.users &&
+                  (doc.users as string[]).includes(userEmail) && (
                     <Grid item xs={12} sm={6} md={6} lg={4} xl={3}>
                       <GroupCard
                         key={doc.id}

@@ -6,7 +6,7 @@ import { MoreVert } from "@mui/icons-material";
 import { signOut } from "firebase/auth";
 import { auth, provider } from "../Config/Firebase";
 import { signInWithPopup } from "firebase/auth";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import GroupInfoModal from "./GroupInfoModal";
 
 type userType = {

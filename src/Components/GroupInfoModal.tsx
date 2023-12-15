@@ -23,7 +23,7 @@ const style = {
 };
 
 type modalType = {
-  setOpenModal: ReturnType;
+  setOpenModal: (value: boolean) => void;
   openModal: boolean;
 };
 
@@ -31,14 +31,14 @@ type groupType = {
   createdAt?: string;
   createdBy?: string;
   users?: string[];
-  name: string;
+  name?: string;
   private?: boolean;
   inviteLink?: string;
 };
 
 type adduserType = {
-  addUsers: ReturnType;
-  getGroupData: ReturnType;
+  addUsers: (value: string) => void;
+  getGroupData: () => void;
 };
 
 type shareModal = {
@@ -111,7 +111,6 @@ function AddUsersModal(props: adduserType) {
 
 function ShareGroup({ inviteLink }: shareModal) {
   const [open, setOpen] = React.useState(false);
-  const [text, setText] = React.useState("");
   const handleOpen = () => {
     setOpen(true);
   };

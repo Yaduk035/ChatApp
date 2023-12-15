@@ -1,9 +1,8 @@
 import { RocketLaunchSharp } from "@mui/icons-material";
 import { Button } from "@mui/material";
-import { signOut } from "firebase/auth";
 import { auth, provider } from "../Config/Firebase";
 import { signInWithPopup } from "firebase/auth";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import ChatMenu from "./ChatMenu";
 
 type userType = {
@@ -11,16 +10,6 @@ type userType = {
 };
 
 const Header = ({ user }: userType) => {
-  const navigate = useNavigate();
-  const logOut = async () => {
-    try {
-      await signOut(auth);
-      navigate("/");
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const signIn = async () => {
     await signInWithPopup(auth, provider);
   };

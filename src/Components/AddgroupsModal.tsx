@@ -31,8 +31,8 @@ const style = {
 
 type modalType = {
   openModal: boolean;
-  closeModal: ReturnType;
-  groupNames?: [];
+  closeModal: () => void;
+  groupNames?: object[];
 };
 
 export default function AddgroupModal(props: modalType) {

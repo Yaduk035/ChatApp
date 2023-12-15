@@ -25,10 +25,7 @@ function App() {
               element={<ChatScreen user={user} />}
             />
           )}
-          <Route
-            path="/invite/:groupName/:invId"
-            element={<InvitePage user={user} />}
-          />
+          <Route path="/invite/:groupName/:invId" element={<InvitePage />} />
           <Route path="/*" element={<PageNotFound />} />
         </Route>
       </Routes>
