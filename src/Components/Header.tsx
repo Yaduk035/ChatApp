@@ -5,6 +5,7 @@ import { signInWithPopup } from "firebase/auth";
 import { Link } from "react-router-dom";
 import ChatMenu from "./ChatMenu";
 import { Google } from "@mui/icons-material";
+import AppInfoModal from "./AppInfoModal";
 
 type userType = {
   user: object | undefined | null;
@@ -42,15 +43,21 @@ const Header = ({ user }: userType) => {
               // >
               //   Log Out
               // </Button>
-              <Button
-                variant="outlined"
-                size="large"
-                color="warning"
-                onClick={signIn}
-              >
-                <Google style={{ margin: "0 8px 0 0", fontSize: "1.3rem" }} />
-                Sign In
-              </Button>
+              <div style={{ display: "flex", flexDirection: "row" }}>
+                <span style={{ margin: "10px 10px" }}>
+                  <AppInfoModal />
+                </span>
+
+                <Button
+                  variant="outlined"
+                  size="large"
+                  color="warning"
+                  onClick={signIn}
+                >
+                  <Google style={{ margin: "0 8px 0 0", fontSize: "1.3rem" }} />
+                  Sign In
+                </Button>
+              </div>
             )}
           </div>
         </header>
