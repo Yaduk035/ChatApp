@@ -33,7 +33,7 @@ const style = {
 type modalType = {
   openModal: boolean;
   closeModal: () => void;
-  groupNames?: object[];
+  groupNames: [{ name: string }];
 };
 
 export default function AddgroupModal(props: modalType) {
@@ -41,6 +41,9 @@ export default function AddgroupModal(props: modalType) {
   const [spinner, setSpinner] = React.useState<boolean>(false);
   const [newGroup, setNewGroup] = React.useState<string | null>();
   const [groupType, setGroupType] = React.useState<boolean>(false);
+  const [existingGroups, setExistingGroups] = React.useState<string[]>([]);
+  const [ExistsAlert, setExistsAlert] = React.useState<boolean>(false);
+
   const navigate = useNavigate();
 
   const path = window.location.href;
@@ -50,15 +53,25 @@ export default function AddgroupModal(props: modalType) {
     setOpen(true);
   };
 
+  React.useEffect(() => {
+    if (!props.groupNames) return;
+    const names = props.groupNames.map((item) => item.name);
+    setExistingGroups(names);
+  }, [props.groupNames]);
+
   const checkGroupName = (name: string): void => {
     if (name === "") setTooltipOpen(false);
     if (!name) return;
+
+    if (existingGroups.includes(name)) {
+      setExistsAlert(true);
+    } else setExistsAlert(false);
+
     const hasSpace = name.includes(" ");
     setTooltipOpen(hasSpace);
-    console.log(hasSpace);
     if (hasSpace) {
       const convertSpace = name.replace(/ /g, "_");
-      console.log(convertSpace);
+      // console.log(convertSpace);
       setNewGroup(convertSpace);
     } else {
       setNewGroup(name);
@@ -105,7 +118,7 @@ export default function AddgroupModal(props: modalType) {
       props.closeModal();
       navigate(`/groups/${newGroup}`);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       setSpinner(false);
     }
   };
@@ -162,6 +175,24 @@ export default function AddgroupModal(props: modalType) {
                 <span>
                   <br />
                 </span>
+              )}
+              {ExistsAlert && (
+                <div
+                  style={{
+                    backgroundColor: "gray",
+                    height: "40px",
+                    color: "black",
+                    textAlign: "center",
+                    fontSize: "0.8rem",
+                    fontFamily: "monospace",
+                    borderRadius: "3px 10px 3px 10px",
+                    padding: "5px",
+                  }}
+                >
+                  <span>
+                    This group name is already taken, Try a different name.
+                  </span>
+                </div>
               )}
               <FormGroup>
                 <FormControlLabel

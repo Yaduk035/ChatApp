@@ -46,7 +46,7 @@
 }
 
 .inputDiv form {
-  height: 8vh;
+  height: 7vh;
   position: fixed;
   bottom: 0px;
   background-color: rgb(119, 105, 105);
@@ -65,7 +65,7 @@
 .inputDiv input {
   line-height: 1.5;
   width: 85%;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   background: rgb(87, 33, 33);
   color: white;
   outline: none;
@@ -137,7 +137,7 @@ header {
     max-width: 95%;
   }
   .inputDiv form {
-    height: 10vh;
+    height: 9vh;
   }
   .inputDiv input {
     height: 10vh;

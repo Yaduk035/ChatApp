@@ -23,7 +23,8 @@ const AddGroup = ({ user }: userType) => {
   const [groupNames, setGroupNames] = useState<grpType[]>();
   const [openModal, setOpenModal] = useState<boolean>(false);
   const userEmail: string = auth.currentUser.email;
-
+  // console.log(groupNames);
+  // console.log(typeof groupNames[1].createdAt);
   useEffect(() => {
     document.title = "ChatApp-Home";
   }, []);
