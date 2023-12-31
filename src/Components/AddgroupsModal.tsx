@@ -28,12 +28,13 @@ const style = {
   border: "2px solid #000",
   boxShadow: 24,
   p: 4,
+  borderRadius: "15px",
 };
 
 type modalType = {
   openModal: boolean;
   closeModal: () => void;
-  groupNames: [{ name: string }];
+  existingGps: string[];
 };
 
 export default function AddgroupModal(props: modalType) {
@@ -54,13 +55,16 @@ export default function AddgroupModal(props: modalType) {
   };
 
   React.useEffect(() => {
-    if (!props.groupNames) return;
-    const names = props.groupNames.map((item) => item.name);
+    if (!props.existingGps) return;
+    const names = props.existingGps.map((item) => item);
     setExistingGroups(names);
-  }, [props.groupNames]);
+  }, [props.existingGps]);
 
   const checkGroupName = (name: string): void => {
-    if (name === "") setTooltipOpen(false);
+    if (name === "") {
+      setTooltipOpen(false);
+      setExistsAlert(false);
+    }
     if (!name) return;
 
     if (existingGroups.includes(name)) {
@@ -91,7 +95,7 @@ export default function AddgroupModal(props: modalType) {
 
   const createGroup = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!newGroup || ExistsAlert) return;
+    if (!newGroup) return;
     setSpinner(true);
     try {
       const msgref = collection(db, `${newGroup}`);

@@ -22,6 +22,8 @@ type userType = {
 const AddGroup = ({ user }: userType) => {
   const [groupNames, setGroupNames] = useState<grpType[]>();
   const [openModal, setOpenModal] = useState<boolean>(false);
+  const [existingGroups, setExistingGroups] = useState<string[]>([]);
+
   const userEmail: string = auth.currentUser.email;
   // console.log(groupNames);
   // console.log(typeof groupNames[1].createdAt);
@@ -49,6 +51,12 @@ const AddGroup = ({ user }: userType) => {
 
   // const ob = groupNames[1]?.users?.includes("yduneduvannoor@gmail.com");
   // console.log(ob);
+  useEffect(() => {
+    if (!groupNames) return;
+    const names = groupNames.map((item) => item?.name);
+    setExistingGroups(names);
+  }, [groupNames]);
+
   return (
     <>
       <Header user={user} />
@@ -116,7 +124,7 @@ const AddGroup = ({ user }: userType) => {
           <AddgroupModal
             openModal={openModal}
             closeModal={closeModal}
-            groupNames={groupNames}
+            existingGps={existingGroups}
           />
         </div>
       </Container>
