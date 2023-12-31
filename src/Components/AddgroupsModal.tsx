@@ -91,7 +91,7 @@ export default function AddgroupModal(props: modalType) {
 
   const createGroup = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!newGroup) return;
+    if (!newGroup || ExistsAlert) return;
     setSpinner(true);
     try {
       const msgref = collection(db, `${newGroup}`);
