@@ -42,7 +42,6 @@ export default function AddgroupModal(props: modalType) {
   const [spinner, setSpinner] = React.useState<boolean>(false);
   const [newGroup, setNewGroup] = React.useState<string | null>();
   const [groupType, setGroupType] = React.useState<boolean>(false);
-  const [existingGroups, setExistingGroups] = React.useState<string[]>([]);
   const [ExistsAlert, setExistsAlert] = React.useState<boolean>(false);
 
   const navigate = useNavigate();
@@ -54,20 +53,14 @@ export default function AddgroupModal(props: modalType) {
     setOpen(true);
   };
 
-  React.useEffect(() => {
-    if (!props.existingGps) return;
-    const names = props.existingGps.map((item) => item);
-    setExistingGroups(names);
-  }, [props.existingGps]);
-
   const checkGroupName = (name: string): void => {
     if (name === "") {
       setTooltipOpen(false);
       setExistsAlert(false);
+      setNewGroup("");
     }
     if (!name) return;
-
-    if (existingGroups.includes(name)) {
+    if (props.existingGps.includes(name.toLowerCase())) {
       setExistsAlert(true);
     } else setExistsAlert(false);
 
@@ -95,7 +88,7 @@ export default function AddgroupModal(props: modalType) {
 
   const createGroup = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!newGroup) return;
+    if (!newGroup || ExistsAlert) return;
     setSpinner(true);
     try {
       const msgref = collection(db, `${newGroup}`);

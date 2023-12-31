@@ -423,7 +423,7 @@ export default function GroupInfoModal(props: modalType) {
             <div style={{ margin: "5px 0px 20px 0px" }}>
               <div>
                 <h4 style={{ marginBottom: "10px" }}>Group members</h4>
-                {groupData?.users.map((data) => (
+                {groupData?.users.map((data, i) => (
                   <div
                     style={{
                       margin: "2px",
@@ -433,6 +433,7 @@ export default function GroupInfoModal(props: modalType) {
                       display: "flex",
                       justifyContent: "space-between",
                     }}
+                    key={i}
                   >
                     <span>
                       {data} {data === groupData.createdBy && " (admin)"}{" "}

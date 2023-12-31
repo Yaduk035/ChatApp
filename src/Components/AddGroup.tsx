@@ -53,7 +53,7 @@ const AddGroup = ({ user }: userType) => {
   // console.log(ob);
   useEffect(() => {
     if (!groupNames) return;
-    const names = groupNames.map((item) => item?.name);
+    const names = groupNames.map((item) => item?.name.toLowerCase());
     setExistingGroups(names);
   }, [groupNames]);
 
@@ -88,7 +88,15 @@ const AddGroup = ({ user }: userType) => {
                 groupNames.map(
                   (doc) =>
                     !doc.private && (
-                      <Grid item xs={12} sm={6} md={6} lg={4} xl={3}>
+                      <Grid
+                        item
+                        xs={12}
+                        sm={6}
+                        md={6}
+                        lg={4}
+                        xl={3}
+                        key={doc.id}
+                      >
                         <GroupCard
                           key={doc.id}
                           groupName={doc.name}
@@ -109,7 +117,7 @@ const AddGroup = ({ user }: userType) => {
                   doc.private &&
                   doc.users &&
                   (doc.users as string[]).includes(userEmail) && (
-                    <Grid item xs={12} sm={6} md={6} lg={4} xl={3}>
+                    <Grid item xs={12} sm={6} md={6} lg={4} xl={3} key={doc.id}>
                       <GroupCard
                         key={doc.id}
                         groupName={doc.name}
