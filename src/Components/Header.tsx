@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { RocketLaunchSharp } from "@mui/icons-material";
 import { Button } from "@mui/material";
 import { auth, provider } from "../Config/Firebase";
@@ -6,12 +7,19 @@ import { Link } from "react-router-dom";
 import ChatMenu from "./ChatMenu";
 import { Google } from "@mui/icons-material";
 import AppInfoModal from "./AppInfoModal";
+import { Info } from "@mui/icons-material";
 
 type userType = {
   user: object | undefined | null;
 };
 
 const Header = ({ user }: userType) => {
+  const [modal, setmodal] = useState<boolean>(false);
+
+  const handleModal = (value: boolean) => {
+    setmodal(value);
+  };
+
   const signIn = async () => {
     await signInWithPopup(auth, provider);
   };
@@ -33,7 +41,21 @@ const Header = ({ user }: userType) => {
               </span>
             )} */}
             {user ? (
-              <ChatMenu user={user} />
+              <span style={{ display: "flex" }}>
+                <span style={{ margin: "10px 10px" }}>
+                  <span onClick={() => handleModal(true)}>
+                    <Info
+                      style={{
+                        cursor: "pointer",
+                        fontSize: "1.8rem",
+                        color: "gray",
+                      }}
+                    />
+                  </span>
+                </span>
+
+                <ChatMenu user={user} />
+              </span>
             ) : (
               // <Button
               //   variant="outlined"
@@ -45,7 +67,15 @@ const Header = ({ user }: userType) => {
               // </Button>
               <div style={{ display: "flex", flexDirection: "row" }}>
                 <span style={{ margin: "10px 10px" }}>
-                  <AppInfoModal />
+                  <span onClick={() => handleModal(true)}>
+                    <Info
+                      style={{
+                        cursor: "pointer",
+                        fontSize: "1.8rem",
+                        color: "gray",
+                      }}
+                    />
+                  </span>
                 </span>
 
                 <Button
@@ -59,6 +89,7 @@ const Header = ({ user }: userType) => {
                 </Button>
               </div>
             )}
+            <AppInfoModal modalState={modal} setModal={handleModal} />
           </div>
         </header>
       </div>

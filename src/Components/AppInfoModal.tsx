@@ -3,11 +3,11 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
-import { MenuItem } from "@mui/material";
-import { GitHub, Info } from "@mui/icons-material";
+import { GitHub } from "@mui/icons-material";
 
-type triggerMtd = {
-  loggedIn: boolean;
+type modalType = {
+  modalState: boolean;
+  setModal: (type: boolean) => void;
 };
 
 const style = {
@@ -17,34 +17,28 @@ const style = {
   transform: "translate(-50%, -50%)",
   width: 400,
   bgcolor: "background.paper",
-  border: "2px solid #000",
+  // border: "2px solid #000",
   boxShadow: 24,
   p: 4,
-  backgroundImage: "linear-gradient(rgb(80,80,80),rgb(40,40,40))",
+  backgroundImage: "linear-gradient(rgb(80,50,50),rgb(30,30,30))",
   outline: "none",
+  borderRadius: "4px 15px 4px 15px",
 };
 
-export default function AppInfoModal() {
+export default function AppInfoModal(props: modalType) {
   const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  // const handleOpen = () => setOpen(true);
+  const handleClose = () => {
+    props.setModal(false);
+    setOpen(false);
+  };
+
+  React.useEffect(() => {
+    setOpen(props.modalState);
+  }, [props.modalState]);
 
   return (
     <div>
-      {/* <MenuItem
-          onClick={handleOpen}
-          style={{ fontSize: "0.8rem", color: "GrayText" }}
-        >
-          About app
-        </MenuItem>
-      ) : ( */}
-      <span onClick={handleOpen}>
-        <Info
-          style={{ cursor: "pointer", fontSize: "1.7rem", color: "gray" }}
-        />
-      </span>
-      {/* <Button onClick={handleOpen}></Button> */}
-      {/* )} */}
       <Modal
         open={open}
         onClose={handleClose}
@@ -58,21 +52,26 @@ export default function AppInfoModal() {
               variant="h5"
               component="h2"
               align="center"
+              style={{ fontFamily: "monospace" }}
             >
               About app
             </Typography>
-            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            <Typography
+              id="modal-modal-description"
+              sx={{ mt: 2 }}
+              style={{ fontFamily: "monospace" }}
+              variant="subtitle2"
+            >
               Thank you for checking out my app.
               <br />
-              This app is built with React typescipt and firebase and made
-              solely for learning purposes. You can find my other projects on
-              github.
+              This app is built with React typescipt and firebase, made solely
+              for learning purposes. You can find my other projects on github.
             </Typography>
             <br />
             <div style={{ textAlign: "center" }}>
               <Button
                 variant="outlined"
-                color="error"
+                color="primary"
                 style={{ textTransform: "none" }}
                 href="https://github.com/Yaduk035"
                 target="_blank"

@@ -55,6 +55,7 @@ export default function ChatMenu({ user }: userType) {
               color="warning"
               size="small"
               onClick={() => navigate("/")}
+              style={{ textTransform: "none" }}
             >
               More groups
             </Button>
@@ -84,12 +85,12 @@ export default function ChatMenu({ user }: userType) {
             <MenuItem onClick={logOut} style={{ color: "red" }}>
               Logout
             </MenuItem>
-            <MenuItem
+            {/* <MenuItem
               onClick={handleClose}
               style={{ fontSize: "0.8rem", color: "GrayText" }}
             >
               About app
-            </MenuItem>
+            </MenuItem> */}
           </Menu>
         </div>
       ) : (
