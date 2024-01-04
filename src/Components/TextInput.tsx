@@ -20,6 +20,7 @@ export default function TextInput({ scrollRef }: ref) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    inputRef.current.focus();
     setSpinner(true);
     if (!inputMessage) return;
     try {
@@ -30,7 +31,6 @@ export default function TextInput({ scrollRef }: ref) {
       });
       setInputMessage("");
       setSpinner(false);
-      inputRef.current.focus();
       scrollRef.current?.scrollIntoView({ behavior: "smooth" });
     } catch (error) {
       console.log(error);

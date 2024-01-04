@@ -10,6 +10,9 @@ import {
   collection,
   addDoc,
   serverTimestamp,
+  getDocs,
+  writeBatch,
+  getFirestore,
 } from "firebase/firestore";
 import { auth, db } from "../Config/Firebase";
 import { useParams } from "react-router-dom";
@@ -31,7 +34,6 @@ const style = {
   px: 4,
   pb: 3,
 };
-
 type modalType = {
   setOpenModal: (value: boolean) => void;
   openModal: boolean;
@@ -198,10 +200,26 @@ function DeleteGroup({ gpName }: deleteGpModal) {
     setValue("");
   };
 
+  // Delete groups //
+
   const deleteGroup = async () => {
     if (value !== gpName) return;
     try {
+      //// delete group from the index.
       await deleteDoc(doc(db, "groupNames", `${gpName}`));
+
+      ////delete group messages collection.
+      const collectionRef = collection(db, `${gpName}`);
+
+      const querySnapshot = await getDocs(collectionRef);
+      // querySnapshot.forEach((doc) => {
+      //   deleteDoc(doc.ref)
+      // });
+      const batch = writeBatch(getFirestore());
+      querySnapshot.docs.forEach((doc) => {
+        batch.delete(doc.ref);
+      });
+      await batch.commit();
 
       handleClose();
       navigate("/");
@@ -230,7 +248,10 @@ function DeleteGroup({ gpName }: deleteGpModal) {
                 lineHeight: "1.5",
                 background: "rgb(80,80,80)",
                 outline: "none",
-                border: "none",
+                border: "none", // querySnapshot.forEach((doc) => {
+                //   deleteDoc(doc.ref)
+                // });
+
                 padding: "0 10px",
                 height: "6vh",
                 color: "white",

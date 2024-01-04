@@ -26,7 +26,9 @@ type userType = {
 };
 
 type groupType = {
-  createdAt?: string;
+  createdAt?: {
+    seconds: string;
+  };
   createdBy?: string;
   users?: string[];
   name?: string;
@@ -91,7 +93,10 @@ const ChatScreen = ({ user }: userType) => {
       const unsubscribe = onSnapshot(q, (querySnapshot) => {
         let msgArray: object[] = [];
         querySnapshot.forEach((doc) => {
-          msgArray.push({ ...doc.data(), id: doc.id });
+          msgArray.push({
+            ...doc.data(),
+            id: doc.id,
+          });
         });
         setMessages(msgArray);
       });
@@ -105,6 +110,10 @@ const ChatScreen = ({ user }: userType) => {
   useEffect(() => {
     scrollRef.current.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
+
+  // const timestamp = messages[1].createdAt;
+  // const converted_time = new Date(timestamp.seconds * 1000);
+  // console.log(converted_time.toLocaleString());
 
   return (
     <>
