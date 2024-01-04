@@ -153,9 +153,18 @@ header:not(.GroupBadge) {
   display: inline;
 }
 
+/* Media queries */
+
 @media screen and (max-width: 320px) {
   header {
     min-width: 100%;
+    min-height: 50px;
+  }
+  .inputDiv input {
+    min-height: 60px;
+  }
+  .inputDiv form {
+    min-height: 60px;
   }
   .chatDiv {
     box-sizing: border-box;
@@ -182,7 +191,15 @@ header:not(.GroupBadge) {
 @media screen and (min-width: 320px) {
   header {
     min-width: 100%;
+    min-height: 60px;
   }
+  .inputDiv input {
+    min-height: 60px;
+  }
+  .inputDiv form {
+    min-height: 60px;
+  }
+
   .chatDiv {
     box-sizing: border-box;
     min-width: 90%;

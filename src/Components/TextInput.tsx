@@ -1,6 +1,6 @@
 import { Send } from "@mui/icons-material";
 import { CircularProgress } from "@mui/material";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { db } from "../Config/Firebase";
 import { auth } from "../Config/Firebase";
@@ -16,6 +16,7 @@ export default function TextInput({ scrollRef }: ref) {
   const { groupName } = useParams();
 
   const msgRef = collection(db, `${groupName}`);
+  const inputRef = useRef<HTMLInputElement | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -29,6 +30,7 @@ export default function TextInput({ scrollRef }: ref) {
       });
       setInputMessage("");
       setSpinner(false);
+      inputRef.current.focus();
       scrollRef.current?.scrollIntoView({ behavior: "smooth" });
     } catch (error) {
       console.log(error);
@@ -41,9 +43,10 @@ export default function TextInput({ scrollRef }: ref) {
         <input
           onChange={(e) => setInputMessage(e.target.value)}
           value={inputMessage}
+          ref={inputRef}
         />
 
-        <button type="submit" disabled={spinner}>
+        <button type="button" onClick={handleSubmit} disabled={spinner}>
           {!spinner ? (
             <span
               style={{
