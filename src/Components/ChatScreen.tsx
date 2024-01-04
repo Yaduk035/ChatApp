@@ -131,6 +131,7 @@ const ChatScreen = ({ user }: userType) => {
             style={{
               // border: "1px solid gray",
               overflowY: "auto",
+              overflowX: "hidden",
             }}
             sx={{ padding: "10px" }}
           >
@@ -155,17 +156,17 @@ const ChatScreen = ({ user }: userType) => {
                     margin: i === 0 ? "10px 0px 10px 0px" : "1px",
                     borderRadius:
                       i === 1
-                        ? "2px 10px 10px 10px"
+                        ? "4px 10px 10px 10px"
                         : // : i + 1 === messages.length
                         // ? "10px 10px 0px 10px"
                         msg.user !== messages[i - 1]?.user &&
                           msg.user !== messages[i + 1]?.user
-                        ? "2px 10px 2px 10px"
+                        ? "4px 10px 4px 10px"
                         : msg.user !== messages[i + 1]?.user
-                        ? "10px 10px 2px 10px"
+                        ? "10px 10px 4px 10px"
                         : i > 0 && msg.user == messages[i - 1].user
                         ? "10px 10px 10px 10px"
-                        : "2px 10px 10px 10px",
+                        : "4px 10px 10px 10px",
                     paddingLeft: "8px",
                     paddingRight: "8px",
                     backgroundColor:

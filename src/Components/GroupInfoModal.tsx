@@ -400,7 +400,7 @@ export default function GroupInfoModal(props: modalType) {
       >
         <Box
           sx={{ ...style, width: 400 }}
-          style={{ backgroundColor: "rgb(40,40,40)" }}
+          style={{ backgroundColor: "rgb(40,40,40)", outline: "none" }}
         >
           <span style={{ textAlign: "center" }}>
             <h2

@@ -48,6 +48,7 @@ const Header = ({ user }: userType) => {
                   padding: "0 10px 0 10px",
                   fontSize: "1rem",
                   color: "rgb(200 200 200)",
+                  fontWeight: "bolder",
                   // color: "rgb(100 108 180)",
                 }}
               >
@@ -107,11 +108,11 @@ const Header = ({ user }: userType) => {
 
                 <Button
                   variant="outlined"
-                  size="large"
                   color="warning"
                   onClick={signIn}
+                  style={{ textTransform: "none" }}
                 >
-                  <Google style={{ margin: "0 8px 0 0", fontSize: "1.3rem" }} />
+                  <Google style={{ margin: "0 5px 0 0", fontSize: "1.3rem" }} />
                   Sign In
                 </Button>
               </div>

@@ -8,6 +8,7 @@ import AddGroup from "./Components/AddGroup";
 import Layout from "./Components/Layout";
 import PageNotFound from "./Components/PageNotFound";
 import InvitePage from "./Components/InvitePage";
+import LoginScreen from "./Components/LoginScreen";
 
 function App() {
   const [user] = useAuthState(auth);
@@ -18,7 +19,11 @@ function App() {
       {/* {user && <ChatScreen />} */}
       <Routes>
         <Route path="/" element={<Layout />}>
-          {user && <Route path="/" element={<AddGroup user={user} />} />}
+          {user ? (
+            <Route path="/" element={<AddGroup user={user} />} />
+          ) : (
+            <Route path="/" element={<LoginScreen />} />
+          )}
           {user && (
             <Route
               path="/groups/:groupName"

@@ -83,7 +83,7 @@ const AddGroup = ({ user }: userType) => {
         <div>
           <h2 style={{ fontFamily: "monospace" }}>Public groups</h2>
           <Stack direction={{ sm: "column", md: "row" }} spacing={2}>
-            <Grid container spacing={2}>
+            <Grid container spacing={1}>
               {groupNames &&
                 groupNames.map(
                   (doc) =>
@@ -92,8 +92,8 @@ const AddGroup = ({ user }: userType) => {
                         item
                         xs={12}
                         sm={6}
-                        md={6}
-                        lg={4}
+                        md={4}
+                        lg={3}
                         xl={3}
                         key={doc.id}
                       >
@@ -111,13 +111,13 @@ const AddGroup = ({ user }: userType) => {
           <br />
           <h2 style={{ fontFamily: "monospace" }}>Private groups</h2>
           <Stack direction={{ sm: "column", md: "row" }} spacing={2}>
-            <Grid container spacing={2}>
+            <Grid container spacing={1}>
               {groupNames?.map(
                 (doc) =>
                   doc.private &&
                   doc.users &&
                   (doc.users as string[]).includes(userEmail) && (
-                    <Grid item xs={12} sm={6} md={6} lg={4} xl={3} key={doc.id}>
+                    <Grid item xs={12} sm={6} md={4} lg={3} xl={3} key={doc.id}>
                       <GroupCard
                         key={doc.id}
                         groupName={doc.name}
