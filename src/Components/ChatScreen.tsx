@@ -151,7 +151,7 @@ const ChatScreen = ({ user }: userType) => {
                 <span
                   className="msgDiv"
                   style={{
-                    border: "1px solid gray",
+                    // border: "1px solid gray",
                     margin: i === 0 ? "10px 0px 10px 0px" : "1px",
                     borderRadius:
                       i === 1
