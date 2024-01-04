@@ -166,6 +166,7 @@ export default function AddgroupModal(props: modalType) {
                     borderRadius: "5px",
                     fontSize: "1.2rem",
                   }}
+                  autoFocus
                 />
               </Tooltip>
               {tooltipOpen && (

@@ -108,6 +108,7 @@ function AddUsersModal(props: adduserType) {
               }}
               placeholder="Enter gmail id here"
               onChange={(e) => setNewUser(e.target.value)}
+              autoFocus
             />
           </form>
           <br />
@@ -238,6 +239,7 @@ function DeleteGroup({ gpName }: deleteGpModal) {
               value={value}
               onChange={(e) => setValue(e.target.value)}
               placeholder={gpName}
+              autoFocus
             />
           </form>
           <p style={{ marginTop: "5px", color: "gray", fontSize: "0.8rem" }}>

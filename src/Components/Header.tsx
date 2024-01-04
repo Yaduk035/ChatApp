@@ -21,7 +21,6 @@ const Header = ({ user }: userType) => {
 
   const path = location.pathname;
   const { groupName } = useParams();
-  console.log(groupName);
 
   const handleModal = (value: boolean) => {
     setmodal(value);
@@ -38,21 +37,24 @@ const Header = ({ user }: userType) => {
           <Link to={"/"}>
             <RocketLaunchSharp
               fontSize="large"
-              style={{ margin: "0 0 0 10px" }}
+              style={{ margin: "0 10px 0 10px" }}
             />
           </Link>
-          <div className="GroupBadge" onClick={() => setOpenModal(true)}>
-            <span
-              style={{
-                fontFamily: "monospace",
-                padding: "0 10px 0 10px",
-                fontSize: "1rem",
-                color: "rgb(100 108 180)",
-              }}
-            >
-              {groupName}
-            </span>
-          </div>
+          {groupName && (
+            <div className="GroupBadge" onClick={() => setOpenModal(true)}>
+              <span
+                style={{
+                  fontFamily: "monospace",
+                  padding: "0 10px 0 10px",
+                  fontSize: "1rem",
+                  color: "rgb(200 200 200)",
+                  // color: "rgb(100 108 180)",
+                }}
+              >
+                {groupName}
+              </span>
+            </div>
+          )}
           <div>
             {/* {user && (
               <span style={{ marginRight: "0.9rem" }}>

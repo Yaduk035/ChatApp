@@ -66,7 +66,7 @@
   line-height: 1.5;
   width: 85%;
   font-size: 1.5rem;
-  background: rgb(87, 33, 33);
+  background: rgb(14, 87, 87);
   color: white;
   outline: none;
   border: none;
@@ -113,11 +113,12 @@ header {
   align-items: center;
   justify-content: center;
   flex-grow: 1;
+  backdrop-filter: opacity(0.35);
 }
 
 .GroupBadge:hover {
   /* border: 1px solid white; */
-  background-color: rgb(25, 42, 75);
+  background-color: rgba(25, 42, 75, 0.4);
   cursor: pointer;
 }
 
