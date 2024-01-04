@@ -8,6 +8,8 @@ import ChatMenu from "./ChatMenu";
 import { Google } from "@mui/icons-material";
 import AppInfoModal from "./AppInfoModal";
 import { Info } from "@mui/icons-material";
+import { useParams } from "react-router-dom";
+import GroupInfoModal from "./GroupInfoModal";
 
 type userType = {
   user: object | undefined | null;
@@ -15,6 +17,11 @@ type userType = {
 
 const Header = ({ user }: userType) => {
   const [modal, setmodal] = useState<boolean>(false);
+  const [openModal, setOpenModal] = useState<boolean>(false);
+
+  const path = location.pathname;
+  const { groupName } = useParams();
+  console.log(groupName);
 
   const handleModal = (value: boolean) => {
     setmodal(value);
@@ -23,13 +30,29 @@ const Header = ({ user }: userType) => {
   const signIn = async () => {
     await signInWithPopup(auth, provider);
   };
+
   return (
     <>
       <div style={{ display: "flex", justifyContent: "center" }}>
         <header>
           <Link to={"/"}>
-            <RocketLaunchSharp fontSize="large" />
+            <RocketLaunchSharp
+              fontSize="large"
+              style={{ margin: "0 0 0 10px" }}
+            />
           </Link>
+          <div className="GroupBadge" onClick={() => setOpenModal(true)}>
+            <span
+              style={{
+                fontFamily: "monospace",
+                padding: "0 10px 0 10px",
+                fontSize: "1rem",
+                color: "rgb(100 108 180)",
+              }}
+            >
+              {groupName}
+            </span>
+          </div>
           <div>
             {/* {user && (
               <span style={{ marginRight: "0.9rem" }}>
@@ -42,17 +65,19 @@ const Header = ({ user }: userType) => {
             )} */}
             {user ? (
               <span style={{ display: "flex" }}>
-                <span style={{ margin: "10px 10px" }}>
-                  <span onClick={() => handleModal(true)}>
-                    <Info
-                      style={{
-                        cursor: "pointer",
-                        fontSize: "1.8rem",
-                        color: "gray",
-                      }}
-                    />
+                {path === "/" && (
+                  <span style={{ margin: "10px 10px" }}>
+                    <span onClick={() => handleModal(true)}>
+                      <Info
+                        style={{
+                          cursor: "pointer",
+                          fontSize: "1.7rem",
+                          color: "gray",
+                        }}
+                      />
+                    </span>
                   </span>
-                </span>
+                )}
 
                 <ChatMenu user={user} />
               </span>
@@ -92,6 +117,7 @@ const Header = ({ user }: userType) => {
             <AppInfoModal modalState={modal} setModal={handleModal} />
           </div>
         </header>
+        <GroupInfoModal openModal={openModal} setOpenModal={setOpenModal} />
       </div>
     </>
   );

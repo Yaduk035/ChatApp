@@ -50,15 +50,17 @@ export default function ChatMenu({ user }: userType) {
       {user ? (
         <div>
           {path !== "/" && (
-            <Button
-              variant="outlined"
-              color="warning"
-              size="small"
-              onClick={() => navigate("/")}
-              style={{ textTransform: "none" }}
-            >
-              More groups
-            </Button>
+            <span id="moreGroupsButton">
+              <Button
+                variant="outlined"
+                color="warning"
+                size="small"
+                onClick={() => navigate("/")}
+                style={{ textTransform: "none" }}
+              >
+                More groups
+              </Button>
+            </span>
           )}
           <Button
             id="basic-button"
@@ -80,7 +82,12 @@ export default function ChatMenu({ user }: userType) {
             }}
           >
             {path !== "/" && (
-              <MenuItem onClick={handleModalOpen}>Group Info</MenuItem>
+              <>
+                <MenuItem onClick={handleModalOpen}>Group Info</MenuItem>
+                <span id="showGroupsMenu">
+                  <MenuItem onClick={() => navigate("/")}>More Groups</MenuItem>
+                </span>
+              </>
             )}
             <MenuItem onClick={logOut} style={{ color: "red" }}>
               Logout
