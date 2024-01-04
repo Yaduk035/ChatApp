@@ -54,7 +54,6 @@ export default function TextInput({ scrollRef }: ref) {
         <input
           onChange={(e) => setInputMessage(e.target.value)}
           value={inputMessage}
-          autoFocus
         />
 
         <button onClick={handleSubmit} disabled={spinner}>
