@@ -38,25 +38,12 @@ export default function TextInput({ scrollRef }: ref) {
   return (
     <div className="inputDiv">
       <form onSubmit={handleSubmit}>
-        {/* <TextField
-              id="input-basic"
-              variant="outlined"
-              placeholder="Type you message here"
-              sx={{
-                color: "wheat",
-                "& fieldset": { borderColor: "gray" }, // Border color for the TextField
-                "& input": { color: "white" }, // Text color for the TextField
-                "& .MuiInputLabel-root": { color: "white" }, // Text color for the label
-              }}
-              onChange={(e) => setInputMessage(e.target.value)}
-              value={inputMessage}
-            /> */}
         <input
           onChange={(e) => setInputMessage(e.target.value)}
           value={inputMessage}
         />
 
-        <button onClick={handleSubmit} disabled={spinner}>
+        <button type="submit" disabled={spinner}>
           {!spinner ? (
             <span
               style={{
