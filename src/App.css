@@ -194,10 +194,10 @@ header:not(.GroupBadge) {
     min-height: 60px;
   }
   .inputDiv input {
-    min-height: 60px;
+    min-height: 50px;
   }
   .inputDiv form {
-    min-height: 60px;
+    min-height: 50px;
   }
 
   .chatDiv {
@@ -210,10 +210,10 @@ header:not(.GroupBadge) {
     max-width: 95%;
   }
   .inputDiv form {
-    height: 9vh;
+    height: 60px;
   }
   .inputDiv input {
-    height: 10vh;
+    height: 60px;
   }
   .GroupBadge {
     flex-grow: 1;
@@ -239,10 +239,10 @@ header:not(.GroupBadge) {
     max-width: 90%;
   }
   .inputDiv form {
-    height: 9vh;
+    height: 60px;
   }
   .inputDiv input {
-    height: 9vh;
+    height: 60px;
   }
   .GroupBadge {
     flex-grow: 0.5;
@@ -268,10 +268,10 @@ header:not(.GroupBadge) {
     max-width: 85%;
   }
   .inputDiv form {
-    height: 8vh;
+    height: 60px;
   }
   .inputDiv input {
-    height: 8vh;
+    height: 60px;
   }
   .GroupmaxBadge {
     flex-grow: 0;
