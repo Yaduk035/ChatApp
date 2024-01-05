@@ -127,14 +127,6 @@ const ChatScreen = ({ user }: userType) => {
     console.log(messages);
   }, [messages]);
 
-  useEffect(() => {
-    scrollRef.current.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
-
-  // const timestamp = messages[1].createdAt;
-  // const converted_time = new Date(timestamp.seconds * 1000);
-  // console.log(converted_time.toLocaleString());
-
   return (
     <>
       {/* <div>
@@ -168,63 +160,125 @@ const ChatScreen = ({ user }: userType) => {
             {messages.map((msg, i) => (
               <div
                 key={msg.id}
-                style={{
-                  display: "flex",
-                  justifyContent:
-                    i === 0
-                      ? "center"
-                      : msg.user === currentUser
-                      ? "flex-end"
-                      : "flex-start",
-                }}
+                // style={{
+                //   display: "flex",
+                //   justifyContent:
+                //     i === 0
+                //       ? "center"
+                //       : msg.user === currentUser
+                //       ? "flex-end"
+                //       : "flex-start",
+                // }}
               >
-                <span
-                  className="msgDiv"
+                {i === 0 ? (
+                  <div style={{ margin: "15px 0 15px 0" }}>
+                    <span
+                      style={{
+                        fontSize: "0.75rem",
+                        backgroundColor: "rgb(30,30,30)",
+                        padding: "10px",
+                        borderRadius: "3px 10px 3px 10px",
+                        color: "rgb(100,160,150)",
+                      }}
+                    >
+                      {msg.formattedDate.split(",")[0]}
+                    </span>
+                  </div>
+                ) : msg.formattedDate.split(",")[0] !==
+                  messages[i - 1].formattedDate.split(",")[0] ? (
+                  <div style={{ margin: "15px 0 15px 0" }}>
+                    <span
+                      style={{
+                        fontSize: "0.75rem",
+                        backgroundColor: "rgb(30,30,30)",
+                        padding: "10px",
+                        borderRadius: "3px 10px 3px 10px",
+                        color: "rgb(100,160,150)",
+                      }}
+                    >
+                      {msg.formattedDate.split(",")[0]}
+                    </span>
+                  </div>
+                ) : (
+                  <div></div>
+                )}
+                <div
                   style={{
-                    // border: "1px solid gray",
-                    margin: i === 0 ? "10px 0px 10px 0px" : "1px",
-                    borderRadius:
-                      i === 1
-                        ? "4px 10px 10px 10px"
-                        : // : i + 1 === messages.length
-                        // ? "10px 10px 0px 10px"
-                        msg.user !== messages[i - 1]?.user &&
-                          msg.user !== messages[i + 1]?.user
-                        ? "4px 10px 4px 10px"
-                        : msg.user !== messages[i + 1]?.user
-                        ? "10px 10px 4px 10px"
-                        : i > 0 && msg.user == messages[i - 1].user
-                        ? "10px 10px 10px 10px"
-                        : "4px 10px 10px 10px",
-                    paddingLeft: "8px",
-                    paddingRight: "8px",
-                    backgroundColor:
+                    display: "flex",
+                    justifyContent:
                       i === 0
-                        ? "black"
+                        ? "center"
                         : msg.user === currentUser
-                        ? "cornflowerblue"
-                        : "cadetblue",
+                        ? "flex-end"
+                        : "flex-start",
                   }}
                 >
-                  <p style={{ margin: "5px", fontSize: "0.9rem" }}>
-                    {i > 1 && msg.user == messages[i - 1].user ? (
-                      <div></div>
-                    ) : i === 0 ? (
-                      <div></div>
-                    ) : (
+                  <span
+                    className="msgDiv"
+                    style={{
+                      // border: "1px solid gray",
+                      margin: i === 0 ? "10px 0px 10px 0px" : "1px",
+                      borderRadius:
+                        i === 1
+                          ? "4px 10px 10px 10px"
+                          : // : i + 1 === messages.length
+                          // ? "10px 10px 0px 10px"
+                          msg.user !== messages[i - 1]?.user &&
+                            msg.user !== messages[i + 1]?.user
+                          ? "4px 10px 4px 10px"
+                          : msg.user !== messages[i + 1]?.user
+                          ? "10px 10px 4px 10px"
+                          : i > 0 && msg.user == messages[i - 1].user
+                          ? "10px 10px 10px 10px"
+                          : "4px 10px 10px 10px",
+                      paddingLeft: "8px",
+                      paddingRight: "8px",
+                      backgroundColor:
+                        i === 0
+                          ? "black"
+                          : msg.user === currentUser
+                          ? "cornflowerblue"
+                          : "cadetblue",
+                    }}
+                  >
+                    <p style={{ margin: "5px", fontSize: "0.9rem" }}>
+                      {i > 1 && msg.user == messages[i - 1].user ? (
+                        <div></div>
+                      ) : i === 0 ? (
+                        <div></div>
+                      ) : (
+                        <div
+                          style={{
+                            color: "rgb(30,60,50)",
+                            textAlign:
+                              msg.user === currentUser ? "right" : "left",
+                            fontSize: "0.8rem",
+                          }}
+                        >
+                          {msg.user}
+                        </div>
+                      )}
                       <div
                         style={{
-                          color: "black",
-                          textAlign:
-                            msg.user === currentUser ? "right" : "left",
+                          textAlign: i === 0 ? "center" : "left",
+                          color: i === 0 ? "rgb(100,160,150)" : "black",
+                          fontSize: i === 0 ? "0.85rem" : "1rem",
                         }}
                       >
-                        {msg.user}
+                        {msg.text}
                       </div>
-                    )}
-                    <div style={{ textAlign: "left" }}>{msg.text}</div>
-                  </p>
-                </span>
+                      <div
+                        style={{
+                          color: i === 0 ? "rgb(100,160,150)" : "rgb(30,60,50)",
+                          fontSize: "0.75rem",
+                          textAlign: "end",
+                        }}
+                      >
+                        {msg.formattedDate.split(",")[1]}
+                      </div>
+                    </p>
+                  </span>
+                </div>
               </div>
             ))}
             <div ref={scrollRef} style={{ height: "30px" }}></div>

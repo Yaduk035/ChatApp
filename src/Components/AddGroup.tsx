@@ -14,9 +14,13 @@ type grpType = {
   id?: string;
   private?: boolean;
   users?: [];
+  formattedDate?: string;
 };
 type userType = {
   user: object;
+};
+type formatType = {
+  createdAt: { seconds: number };
 };
 
 const AddGroup = ({ user }: userType) => {
@@ -32,25 +36,38 @@ const AddGroup = ({ user }: userType) => {
   }, []);
 
   useEffect(() => {
-    const q = query(collection(db, "groupNames"), orderBy("createdAt"));
-    const unSub = onSnapshot(q, (snapshot) => {
-      let groups: object[] = [];
-      snapshot.forEach((doc) => {
-        groups.push({ ...doc.data(), id: doc.id });
+    try {
+      const q = query(collection(db, "groupNames"), orderBy("createdAt"));
+      const unSub = onSnapshot(q, (snapshot) => {
+        let groups: object[] = [];
+        snapshot.forEach((doc) => {
+          groups.push({ ...doc.data(), id: doc.id });
+        });
+        let formattedData: object[] = [];
+        groups.map((doc: formatType) => {
+          formattedData.push({
+            ...doc,
+            formattedDate: new Date(
+              doc.createdAt?.seconds * 1000
+            ).toLocaleString(),
+          });
+        });
+        setGroupNames(formattedData);
       });
-      setGroupNames(groups);
-    });
-    return () => unSub();
+      return () => unSub();
+    } catch (error) {
+      console.log(error);
+    }
   }, []);
+
+  // useEffect(() => {
+  //   console.log(groupNames);
+  // }, [groupNames]);
 
   const closeModal = (): void => {
     setOpenModal(false);
   };
 
-  // console.log(groupNames[1].users.includes("skdjfh"));
-
-  // const ob = groupNames[1]?.users?.includes("yduneduvannoor@gmail.com");
-  // console.log(ob);
   useEffect(() => {
     if (!groupNames) return;
     const names = groupNames.map((item) => item?.name.toLowerCase());
@@ -102,6 +119,7 @@ const AddGroup = ({ user }: userType) => {
                           groupName={doc.name}
                           createdBy={doc.createdBy}
                           private={doc.private}
+                          formattedDate={doc.formattedDate}
                         />
                       </Grid>
                     )
@@ -123,6 +141,7 @@ const AddGroup = ({ user }: userType) => {
                         groupName={doc.name}
                         createdBy={doc.createdBy}
                         private={doc.private}
+                        formattedDate={doc.formattedDate}
                       />
                     </Grid>
                   )
