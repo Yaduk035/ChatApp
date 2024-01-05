@@ -19,6 +19,7 @@ type msgType = {
   text?: string;
   id?: string;
   user?: string;
+  formattedDate?: string;
 };
 
 type userType = {
@@ -34,6 +35,10 @@ type groupType = {
   name?: string;
   private?: boolean;
   inviteLink?: string;
+};
+
+type formatType = {
+  createdAt: { seconds: number };
 };
 
 const ChatScreen = ({ user }: userType) => {
@@ -98,7 +103,17 @@ const ChatScreen = ({ user }: userType) => {
             id: doc.id,
           });
         });
-        setMessages(msgArray);
+        let formattedMsgArr: object[] = [];
+        msgArray.map((doc: formatType) => {
+          formattedMsgArr.push({
+            ...doc,
+            formattedDate: new Date(
+              doc.createdAt?.seconds * 1000
+            ).toLocaleString(),
+          });
+        });
+
+        setMessages(formattedMsgArr);
       });
       return () => {
         unsubscribe();
@@ -107,6 +122,11 @@ const ChatScreen = ({ user }: userType) => {
       console.log(error);
     }
   }, []);
+
+  useEffect(() => {
+    console.log(messages);
+  }, [messages]);
+
   useEffect(() => {
     scrollRef.current.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
@@ -202,7 +222,7 @@ const ChatScreen = ({ user }: userType) => {
                         {msg.user}
                       </div>
                     )}
-                    {msg.text}
+                    <div style={{ textAlign: "left" }}>{msg.text}</div>
                   </p>
                 </span>
               </div>
