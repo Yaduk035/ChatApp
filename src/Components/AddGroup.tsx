@@ -60,10 +60,6 @@ const AddGroup = ({ user }: userType) => {
     }
   }, []);
 
-  // useEffect(() => {
-  //   console.log(groupNames);
-  // }, [groupNames]);
-
   const closeModal = (): void => {
     setOpenModal(false);
   };

@@ -202,12 +202,12 @@ header:not(.GroupBadge) {
 
   .chatDiv {
     box-sizing: border-box;
-    min-width: 90%;
+    min-width: 95%;
     /* background-color: rgba(231, 22, 22, 0.404); */
   }
   .msgDiv {
     box-sizing: border-box;
-    max-width: 95%;
+    max-width: 90%;
   }
   .inputDiv form {
     height: 60px;
@@ -231,12 +231,12 @@ header:not(.GroupBadge) {
   }
   .chatDiv {
     box-sizing: border-box;
-    min-width: 80vw;
+    min-width: 95vw;
     /* background-color: rgba(17, 38, 235, 0.404); */
   }
   .msgDiv {
     box-sizing: border-box;
-    max-width: 90%;
+    max-width: 85%;
   }
   .inputDiv form {
     height: 60px;

@@ -124,7 +124,7 @@ const ChatScreen = ({ user }: userType) => {
   }, []);
 
   useEffect(() => {
-    console.log(messages);
+    scrollRef.current.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
   return (
@@ -153,6 +153,7 @@ const ChatScreen = ({ user }: userType) => {
               // border: "1px solid gray",
               overflowY: "auto",
               overflowX: "hidden",
+              flex: "none",
             }}
             sx={{ padding: "10px" }}
           >
@@ -167,7 +168,10 @@ const ChatScreen = ({ user }: userType) => {
                 //       ? "center"
                 //       : msg.user === currentUser
                 //       ? "flex-end"
-                //       : "flex-start",
+                //       : "flex-start",  // useEffect(() => {
+                //   console.log(groupNames);
+                // }, [groupNames]);
+
                 // }}
               >
                 {i === 0 ? (
