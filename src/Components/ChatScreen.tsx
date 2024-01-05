@@ -194,8 +194,7 @@ const ChatScreen = ({ user }: userType) => {
                         color: "rgb(100,160,150)",
                       }}
                     >
-                      {/* {msg.formattedDate.split(",")[0]} */}
-                      {convertDate(msg.formattedDate.split(",")[0])}
+                      {msg.formattedDate.split(",")[0]}
                     </span>
                   </div>
                 ) : msg.formattedDate.split(",")[0] !==
@@ -210,8 +209,7 @@ const ChatScreen = ({ user }: userType) => {
                         color: "rgb(100,160,150)",
                       }}
                     >
-                      {/* {msg.formattedDate.split(",")[0]} */}
-                      {convertDate(msg.formattedDate.split(",")[0])}
+                      {msg.formattedDate.split(",")[0]}
                     </span>
                   </div>
                 ) : (
