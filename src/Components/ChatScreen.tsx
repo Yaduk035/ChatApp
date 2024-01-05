@@ -13,6 +13,7 @@ import { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import Header from "./Header";
 import LoadingScreen from "./LoadingScreen";
+import { format, parse } from "date-fns";
 
 type msgType = {
   createdAt?: string;
@@ -127,6 +128,14 @@ const ChatScreen = ({ user }: userType) => {
     scrollRef.current.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
+  function convertDate(value: string) {
+    if (!value) return;
+    const parsedDate = parse(value, "d/M/yyyy", new Date());
+    const formattedDate = format(parsedDate, "EEEE, d MMM yyyy");
+    // console.log("Date: ", formattedDate);
+    return formattedDate;
+  }
+
   return (
     <>
       {/* <div>
@@ -185,7 +194,8 @@ const ChatScreen = ({ user }: userType) => {
                         color: "rgb(100,160,150)",
                       }}
                     >
-                      {msg.formattedDate.split(",")[0]}
+                      {/* {msg.formattedDate.split(",")[0]} */}
+                      {convertDate(msg.formattedDate.split(",")[0])}
                     </span>
                   </div>
                 ) : msg.formattedDate.split(",")[0] !==
@@ -200,7 +210,8 @@ const ChatScreen = ({ user }: userType) => {
                         color: "rgb(100,160,150)",
                       }}
                     >
-                      {msg.formattedDate.split(",")[0]}
+                      {/* {msg.formattedDate.split(",")[0]} */}
+                      {convertDate(msg.formattedDate.split(",")[0])}
                     </span>
                   </div>
                 ) : (
