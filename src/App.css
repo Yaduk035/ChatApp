@@ -107,7 +107,7 @@ header {
 }
 
 .msgDiv {
-  animation: slideIn 150ms cubic-bezier(0.49, 0.07, 0.29, 0.96);
+  animation: slideIn 200ms cubic-bezier(0.49, 0.07, 0.29, 0.96);
 }
 
 @keyframes slideIn {
@@ -116,7 +116,7 @@ header {
     opacity: 50%;
   }
   50% {
-    transform: translateX(-10%);
+    transform: translateX(-40%);
     opacity: 75%;
   }
   100% {
