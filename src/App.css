@@ -53,7 +53,7 @@
   width: 100%;
   max-width: 600px;
   display: flex;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   border-radius: 10px 10px 0 0;
 }
 .inputDiv form button {
@@ -63,9 +63,9 @@
 }
 
 .inputDiv input {
-  line-height: 1.5;
+  line-height: 1.2;
   width: 85%;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   background: rgb(14, 87, 87);
   color: white;
   outline: none;

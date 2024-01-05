@@ -253,7 +253,7 @@ const ChatScreen = ({ user }: userType) => {
                       ) : (
                         <div
                           style={{
-                            color: "rgb(30,60,50)",
+                            color: "rgb(30,50,40)",
                             textAlign:
                               msg.user === currentUser ? "right" : "left",
                             fontSize: "0.8rem",
@@ -265,17 +265,20 @@ const ChatScreen = ({ user }: userType) => {
                       <div
                         style={{
                           textAlign: i === 0 ? "center" : "left",
-                          color: i === 0 ? "rgb(100,160,150)" : "black",
-                          fontSize: i === 0 ? "0.85rem" : "1rem",
+                          color: i === 0 ? "rgb(100,160,150)" : "rgb(10,20,10)",
+                          fontSize: i === 0 ? "0.85rem" : "0.95rem",
+                          lineHeight: "18px",
                         }}
                       >
                         {msg.text}
                       </div>
                       <div
                         style={{
-                          color: i === 0 ? "rgb(100,160,150)" : "rgb(30,60,50)",
-                          fontSize: "0.75rem",
+                          color: i === 0 ? "rgb(100,160,150)" : "rgb(30,50,40)",
+                          fontSize: "0.7rem",
                           textAlign: "end",
+                          margin: "-2px 0 -5px 0",
+                          padding: "0px",
                         }}
                       >
                         {msg.formattedDate.split(",")[1]}

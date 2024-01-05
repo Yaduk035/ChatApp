@@ -396,7 +396,7 @@ export default function GroupInfoModal(props: modalType) {
           users: updatedArr,
         });
         await addDoc(msgRef, {
-          text: `${auth.currentUser.email} added ${removeUser}`,
+          text: `${auth.currentUser.email} removed ${removeUser}`,
           createdAt: serverTimestamp(),
           user: auth.currentUser?.email,
         });
