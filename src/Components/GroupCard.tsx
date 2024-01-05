@@ -9,7 +9,6 @@ type cardType = {
   createdAt?: string;
   createdBy?: string;
   private?: boolean;
-  formattedDate?: string;
 };
 
 export default function GroupCard(props: cardType) {
@@ -42,7 +41,7 @@ export default function GroupCard(props: cardType) {
                 cursor: "pointer",
               }
         }
-        sx={{ minWidth: 190, height: "100px" }}
+        sx={{ minWidth: 190, height: "80px" }}
       >
         <CardContent style={{ padding: "3px 0 0 0" }}>
           {/* <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
@@ -52,12 +51,14 @@ export default function GroupCard(props: cardType) {
             {props.groupName}
           </Typography>
           <Typography sx={{ fontSize: 9 }}>Created by:</Typography>
-          <Typography sx={{ mb: 0.5, fontSize: 11 }}>
+          <Typography sx={{ mb: 1.5, fontSize: 11 }}>
             {props.createdBy}
           </Typography>
-          <Typography sx={{ mb: 0.5, fontSize: 10 }}>
-            @{props.formattedDate}
-          </Typography>
+          {/* <Typography variant="body2">
+          well meaning and kindly.
+          <br />
+          {'"a benevolent smile"'}
+        </Typography> */}
         </CardContent>
       </Card>
     </span>
