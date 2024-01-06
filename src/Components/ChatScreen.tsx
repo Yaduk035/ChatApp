@@ -13,7 +13,7 @@ import { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import Header from "./Header";
 import LoadingScreen from "./LoadingScreen";
-import { format, parse } from "date-fns";
+import { format } from "date-fns";
 
 type msgType = {
   createdAt?: string;
@@ -21,6 +21,7 @@ type msgType = {
   id?: string;
   user?: string;
   formattedDate?: string;
+  dateString?: string;
 };
 
 type userType = {
@@ -111,9 +112,9 @@ const ChatScreen = ({ user }: userType) => {
             formattedDate: new Date(
               doc.createdAt?.seconds * 1000
             ).toLocaleString(),
+            dateString: convertDate(doc.createdAt.seconds),
           });
         });
-
         setMessages(formattedMsgArr);
       });
       return () => {
@@ -128,13 +129,16 @@ const ChatScreen = ({ user }: userType) => {
     scrollRef.current.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  function convertDate(value: string) {
+  function convertDate(value: number) {
     if (!value) return;
-    const parsedDate = parse(value, "d/M/yyyy", new Date());
-    const formattedDate = format(parsedDate, "EEEE, d MMM yyyy");
-    // console.log("Date: ", formattedDate);
+    const firebaseServerTime = value * 1000;
+    const serverDate = new Date(firebaseServerTime);
+    const formattedDate = format(serverDate, "EEEE, d MMM yyyy");
+
     return formattedDate;
   }
+
+  // console.log(convertDate(1704520568));
 
   return (
     <>
@@ -194,7 +198,8 @@ const ChatScreen = ({ user }: userType) => {
                         color: "rgb(100,160,150)",
                       }}
                     >
-                      {msg.formattedDate.split(",")[0]}
+                      {/* {msg.formattedDate.split(",")[0]} */}
+                      {msg.dateString}
                     </span>
                   </div>
                 ) : msg.formattedDate.split(",")[0] !==
@@ -209,7 +214,8 @@ const ChatScreen = ({ user }: userType) => {
                         color: "rgb(100,160,150)",
                       }}
                     >
-                      {msg.formattedDate.split(",")[0]}
+                      {/* {msg.formattedDate.split(",")[0]} */}
+                      {msg.dateString}
                     </span>
                   </div>
                 ) : (
