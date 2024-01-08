@@ -232,7 +232,7 @@ function ShareGroup({
           <div style={{ display: "flex", justifyContent: "space-around" }}>
             <Button
               variant="outlined"
-              color="error"
+              color="inherit"
               size="small"
               onClick={handleClose}
             >
@@ -241,7 +241,11 @@ function ShareGroup({
             <Button
               variant="contained"
               color="error"
-              onClick={generateNewLink}
+              onClick={() => {
+                if (confirm("Regenerate new invite link?") == true) {
+                  generateNewLink();
+                }
+              }}
               size="small"
               style={{ textTransform: "none" }}
             >
