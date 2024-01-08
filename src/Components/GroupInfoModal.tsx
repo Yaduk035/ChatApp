@@ -279,7 +279,8 @@ function DeleteGroup({ gpName }: deleteGpModal) {
 
   // Delete groups //
 
-  const deleteGroup = async () => {
+  const deleteGroup = async (e) => {
+    e.preventDefault();
     if (value !== gpName) return;
     try {
       //// delete group from the index.
@@ -339,19 +340,23 @@ function DeleteGroup({ gpName }: deleteGpModal) {
               placeholder={gpName}
               autoFocus
             />
+            <p style={{ marginTop: "5px", color: "gray", fontSize: "0.8rem" }}>
+              Type group name here
+            </p>
+            <div style={{ display: "flex", justifyContent: "space-around" }}>
+              <Button variant="outlined" color="inherit" onClick={handleClose}>
+                Close
+              </Button>
+              <Button
+                variant="contained"
+                color="error"
+                onClick={deleteGroup}
+                type="submit"
+              >
+                Delete
+              </Button>
+            </div>
           </form>
-          <p style={{ marginTop: "5px", color: "gray", fontSize: "0.8rem" }}>
-            Type group name here
-          </p>
-          <br />
-          <div style={{ display: "flex", justifyContent: "space-around" }}>
-            <Button variant="outlined" color="inherit" onClick={handleClose}>
-              Close
-            </Button>
-            <Button variant="contained" color="error" onClick={deleteGroup}>
-              Delete
-            </Button>
-          </div>
         </Box>
       </Modal>
     </React.Fragment>
