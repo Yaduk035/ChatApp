@@ -14,7 +14,7 @@ import {
 import { db } from "../Config/Firebase";
 import { useEffect, useState } from "react";
 import { CircularProgress } from "@mui/material";
-import { Google } from "@mui/icons-material";
+import { Google, Home } from "@mui/icons-material";
 type groupType = {
   createdAt?: string;
   createdBy?: string;
@@ -198,6 +198,7 @@ const InvitePage = () => {
             onClick={() => navigate("/")}
             style={{ textTransform: "none" }}
           >
+            <Home />
             Go home
           </Button>
         </div>
