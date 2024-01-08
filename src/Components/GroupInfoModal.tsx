@@ -13,7 +13,6 @@ import {
   getDocs,
   writeBatch,
   getFirestore,
-  setDoc,
 } from "firebase/firestore";
 import { auth, db } from "../Config/Firebase";
 import { useParams } from "react-router-dom";

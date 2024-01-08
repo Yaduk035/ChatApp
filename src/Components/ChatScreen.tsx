@@ -10,7 +10,7 @@ import {
 } from "firebase/firestore";
 import { db, auth } from "../Config/Firebase";
 import { useEffect, useState, useRef } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Header from "./Header";
 import LoadingScreen from "./LoadingScreen";
 import { format } from "date-fns";
@@ -52,8 +52,6 @@ const ChatScreen = ({ user }: userType) => {
   const [userExists, setUserExists] = useState<boolean | undefined>(false);
   const [privateGp, setPrivateGp] = useState<boolean>(false);
   const [showChats, setShowChats] = useState<boolean>(false);
-
-  const navigate = useNavigate();
 
   const { groupName } = useParams();
   useEffect(() => {
