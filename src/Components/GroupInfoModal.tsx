@@ -74,7 +74,7 @@ type shareModal = {
   groupName?: string;
   getGroupData: () => void;
   groupData: {
-    createdBy: string;
+    createdBy?: string;
   };
 };
 type deleteGpModal = {
