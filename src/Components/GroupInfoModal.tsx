@@ -454,7 +454,7 @@ export default function GroupInfoModal(props: modalType) {
         user: auth.currentUser?.email,
         alertMsg: true,
       });
-      alert(`${newUser} is added to the group`);
+      alert(`${newUser} has been added to the group`);
     } catch (error) {
       console.log(error);
     }
@@ -486,7 +486,7 @@ export default function GroupInfoModal(props: modalType) {
             ...commonData,
             text: `${auth.currentUser.email} removed ${removeUser}`,
           });
-          alert(`${removeUser} removed from ${groupName}`);
+          alert(`${removeUser} has been removed from ${groupName}`);
         } else if (delType === "user") {
           await addDoc(msgRef, {
             ...commonData,
