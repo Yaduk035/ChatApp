@@ -14,6 +14,7 @@ import {
 import { db } from "../Config/Firebase";
 import { useEffect, useState } from "react";
 import { CircularProgress } from "@mui/material";
+import { Google } from "@mui/icons-material";
 type groupType = {
   createdAt?: string;
   createdBy?: string;
@@ -32,6 +33,7 @@ const InvitePage = () => {
   const currentUser: string | null | undefined = user?.email;
   const [spinner, setSpinner] = useState<boolean>(false);
   const [userExists, setUserExists] = useState<boolean>(false);
+  const [redirectToGp, setredirectToGp] = useState(false);
 
   useEffect(() => {
     if (currentUser) {
@@ -64,7 +66,10 @@ const InvitePage = () => {
   }, []);
 
   useEffect(() => {
-    if (userExists) setErrMsg(`You are already a member of group ${groupName}`);
+    if (userExists) {
+      setErrMsg(`You are already a member of group ${groupName}`);
+      setredirectToGp(true);
+    }
   }, [userExists, groupData]);
 
   const addUsers = async (value: string | null | undefined) => {
@@ -113,15 +118,38 @@ const InvitePage = () => {
     <>
       <div>
         <div>{ErrMsg && <p>{ErrMsg}</p>}</div>
-        <Button variant="contained" onClick={signIn}>
+        <Button
+          variant="contained"
+          onClick={signIn}
+          style={{ textTransform: "none" }}
+        >
+          <Google style={{ margin: "0 10px 0 0" }} />
           Sign in with google
         </Button>
         <div>
+          {redirectToGp && (
+            <>
+              <br />
+              <Button
+                variant="contained"
+                color="info"
+                size="large"
+                onClick={() => navigate("/")}
+                style={{ textTransform: "none" }}
+              >
+                Go to {groupName}
+              </Button>
+            </>
+          )}
           <br />
           <br />
           {!user && <p>Sign in to continue</p>}
           {user && userExists ? (
-            <Button variant="outlined" color="warning">
+            <Button
+              variant="outlined"
+              color="warning"
+              style={{ textTransform: "none" }}
+            >
               {spinner ? (
                 <span style={{ paddingRight: "10px" }}>
                   <CircularProgress size={20} />
@@ -132,7 +160,12 @@ const InvitePage = () => {
               )}
             </Button>
           ) : user ? (
-            <Button onClick={() => addUsers(currentUser)} variant="outlined">
+            <Button
+              onClick={() => addUsers(currentUser)}
+              color="error"
+              variant="contained"
+              style={{ textTransform: "none" }}
+            >
               {spinner ? (
                 <span style={{ paddingRight: "10px" }}>
                   <CircularProgress size={20} />
@@ -143,7 +176,11 @@ const InvitePage = () => {
               )}
             </Button>
           ) : (
-            <Button variant="outlined" color="warning">
+            <Button
+              variant="contained"
+              color="error"
+              style={{ textTransform: "none" }}
+            >
               {spinner ? (
                 <span style={{ paddingRight: "10px" }}>
                   <CircularProgress size={20} />
@@ -156,7 +193,11 @@ const InvitePage = () => {
           )}
           <br />
           <br />
-          <Button variant="outlined" onClick={() => navigate("/")}>
+          <Button
+            variant="outlined"
+            onClick={() => navigate("/")}
+            style={{ textTransform: "none" }}
+          >
             Go home
           </Button>
         </div>
