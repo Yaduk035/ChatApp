@@ -73,6 +73,9 @@ type shareModal = {
   privateGp?: boolean;
   groupName?: string;
   getGroupData: () => void;
+  groupData: {
+    createdBy: string;
+  };
 };
 type deleteGpModal = {
   gpName?: string;
@@ -158,6 +161,7 @@ function ShareGroup({
   privateGp,
   groupName,
   getGroupData,
+  groupData,
 }: shareModal) {
   const [open, setOpen] = React.useState(false);
   const [invLink, setinvLink] = React.useState("");
@@ -238,20 +242,22 @@ function ShareGroup({
             >
               <Close />
             </Button>
-            <Button
-              variant="contained"
-              color="error"
-              onClick={() => {
-                if (confirm("Regenerate new invite link?") == true) {
-                  generateNewLink();
-                }
-              }}
-              size="small"
-              style={{ textTransform: "none" }}
-            >
-              <Autorenew />
-              New link
-            </Button>
+            {auth.currentUser.email === groupData.createdBy && (
+              <Button
+                variant="contained"
+                color="error"
+                onClick={() => {
+                  if (confirm("Regenerate new invite link?") == true) {
+                    generateNewLink();
+                  }
+                }}
+                size="small"
+                style={{ textTransform: "none" }}
+              >
+                <Autorenew />
+                New link
+              </Button>
+            )}
             <Button
               variant="contained"
               color="primary"
@@ -626,6 +632,7 @@ export default function GroupInfoModal(props: modalType) {
               privateGp={groupData?.private}
               groupName={groupName}
               getGroupData={getGroupData}
+              groupData={groupData}
             />
             <Button
               variant="outlined"
