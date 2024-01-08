@@ -153,6 +153,16 @@ header:not(.GroupBadge) {
   display: inline;
 }
 
+#refreshButton {
+  color: gray;
+  transition: 200ms ease-out;
+}
+#refreshButton:hover {
+  color: wheat;
+  transform: scale(1.25);
+  cursor: pointer;
+}
+
 /* Media queries */
 
 @media screen and (max-width: 320px) {

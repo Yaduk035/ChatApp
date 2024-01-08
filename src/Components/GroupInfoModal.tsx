@@ -22,6 +22,7 @@ import {
   Close,
   PersonAddAlt,
   ExitToApp,
+  Refresh,
 } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import Menu from "@mui/material/Menu";
@@ -470,7 +471,18 @@ export default function GroupInfoModal(props: modalType) {
           {groupData?.users && groupData.private && (
             <div style={{ margin: "5px 0px 20px 0px" }}>
               <div>
-                <h4 style={{ marginBottom: "10px" }}>Group members</h4>
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <h4>Group members</h4>
+                  <span id="refreshButton" onClick={getGroupData}>
+                    <Refresh />
+                  </span>
+                </div>
                 {groupData?.users.map((data, i) => (
                   <div
                     style={{
