@@ -88,6 +88,7 @@ const InvitePage = () => {
         text: `${auth.currentUser.email} has joined the group through invite link`,
         createdAt: serverTimestamp(),
         user: auth.currentUser?.email,
+        alertMsg: true,
       });
       navigate(`/groups/${groupName}`);
       setSpinner(false);

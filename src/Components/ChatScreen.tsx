@@ -22,6 +22,7 @@ type msgType = {
   user?: string;
   formattedDate?: string;
   dateString?: string;
+  alertMsg?: boolean;
 };
 
 type userType = {
@@ -138,8 +139,7 @@ const ChatScreen = ({ user }: userType) => {
     return formattedDate;
   }
 
-  // console.log(convertDate(1704520568));
-
+  // console.log(messages[1].alertMsg);
   return (
     <>
       {/* <div>
@@ -149,7 +149,6 @@ const ChatScreen = ({ user }: userType) => {
       </div> */}
       <Header user={user} />
       <div style={{ height: "4vh" }}></div>
-
       <div style={{ display: "flex", flexDirection: "column" }}>
         <Container
           maxWidth="md"
@@ -196,6 +195,7 @@ const ChatScreen = ({ user }: userType) => {
                         padding: "10px",
                         borderRadius: "3px 10px 3px 10px",
                         color: "rgb(100,160,150)",
+                        boxShadow: "1px 5px 10px rgb(0,0,0)",
                       }}
                     >
                       {/* {msg.formattedDate.split(",")[0]} */}
@@ -212,6 +212,7 @@ const ChatScreen = ({ user }: userType) => {
                         padding: "10px",
                         borderRadius: "3px 10px 3px 10px",
                         color: "rgb(100,160,150)",
+                        boxShadow: "1px 5px 10px rgb(0,0,0)",
                       }}
                     >
                       {/* {msg.formattedDate.split(",")[0]} */}
@@ -225,7 +226,7 @@ const ChatScreen = ({ user }: userType) => {
                   style={{
                     display: "flex",
                     justifyContent:
-                      i === 0
+                      i === 0 || msg?.alertMsg
                         ? "center"
                         : msg.user === currentUser
                         ? "flex-end"
@@ -235,8 +236,13 @@ const ChatScreen = ({ user }: userType) => {
                   <span
                     className="msgDiv"
                     style={{
-                      // border: "1px solid gray",
-                      margin: i === 0 ? "10px 0px 10px 0px" : "1px",
+                      boxShadow:
+                        i === 0 || msg?.alertMsg
+                          ? "1px 5px 20px -6px rgb(30,50,40)"
+                          : "",
+                      // border: msg?.alertMsg ? "2px solid rgb(30,50,40)" : "",
+                      margin:
+                        i === 0 || msg?.alertMsg ? "10px 0px 10px 0px" : "1px",
                       borderRadius:
                         i === 1
                           ? "4px 10px 10px 10px"
@@ -253,7 +259,7 @@ const ChatScreen = ({ user }: userType) => {
                       paddingLeft: "8px",
                       paddingRight: "8px",
                       backgroundColor:
-                        i === 0
+                        i === 0 || msg?.alertMsg
                           ? "black"
                           : msg.user === currentUser
                           ? "cornflowerblue"
@@ -268,7 +274,9 @@ const ChatScreen = ({ user }: userType) => {
                       ) : (
                         <div
                           style={{
-                            color: "rgb(30,50,40)",
+                            color: msg?.alertMsg
+                              ? "rgb(100,160,150)"
+                              : "rgb(30,50,40)",
                             textAlign:
                               msg.user === currentUser ? "right" : "left",
                             fontSize: "0.8rem",
@@ -280,7 +288,10 @@ const ChatScreen = ({ user }: userType) => {
                       <div
                         style={{
                           textAlign: i === 0 ? "center" : "left",
-                          color: i === 0 ? "rgb(100,160,150)" : "rgb(10,20,10)",
+                          color:
+                            i === 0 || msg?.alertMsg
+                              ? "rgb(100,160,150)"
+                              : "rgb(10,20,10)",
                           fontSize: i === 0 ? "0.85rem" : "0.95rem",
                           lineHeight: "18px",
                         }}
@@ -289,7 +300,10 @@ const ChatScreen = ({ user }: userType) => {
                       </div>
                       <div
                         style={{
-                          color: i === 0 ? "rgb(100,160,150)" : "rgb(30,50,40)",
+                          color:
+                            i === 0 || msg?.alertMsg
+                              ? "rgb(100,160,150)"
+                              : "rgb(30,50,40)",
                           fontSize: "0.7rem",
                           textAlign: "end",
                           margin: "-2px 0 -5px 0",

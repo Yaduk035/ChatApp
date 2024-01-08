@@ -16,7 +16,7 @@ import {
 } from "firebase/firestore";
 import { auth, db } from "../Config/Firebase";
 import { useParams } from "react-router-dom";
-import { Delete, Share, Close } from "@mui/icons-material";
+import { Delete, Share, Close, PersonAddAlt } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
@@ -61,6 +61,7 @@ type deluserType = {
 
 type shareModal = {
   inviteLink?: string;
+  privateGp?: boolean;
 };
 type deleteGpModal = {
   gpName?: string;
@@ -85,7 +86,13 @@ function AddUsersModal(props: adduserType) {
 
   return (
     <React.Fragment>
-      <Button variant="contained" color="error" onClick={handleOpen}>
+      <Button
+        variant="contained"
+        color="error"
+        style={{ textTransform: "none" }}
+        onClick={handleOpen}
+      >
+        <PersonAddAlt />
         Add users
       </Button>
       <Modal
@@ -109,26 +116,32 @@ function AddUsersModal(props: adduserType) {
                 fontSize: "1.1rem",
               }}
               placeholder="Enter gmail id here"
-              onChange={(e) => setNewUser(e.target.value)}
+              onChange={(e) => setNewUser(e.target.value.toLowerCase())}
               autoFocus
             />
+            <br />
+            <br />
+            <div style={{ display: "flex", justifyContent: "space-around" }}>
+              <Button variant="outlined" color="inherit" onClick={handleClose}>
+                Close
+              </Button>
+              <Button
+                variant="contained"
+                color="error"
+                onClick={addUser}
+                type="submit"
+              >
+                Add user
+              </Button>
+            </div>
           </form>
-          <br />
-          <div style={{ display: "flex", justifyContent: "space-around" }}>
-            <Button variant="outlined" color="inherit" onClick={handleClose}>
-              Close
-            </Button>
-            <Button variant="contained" color="error" onClick={addUser}>
-              Add user
-            </Button>
-          </div>
         </Box>
       </Modal>
     </React.Fragment>
   );
 }
 
-function ShareGroup({ inviteLink }: shareModal) {
+function ShareGroup({ inviteLink, privateGp }: shareModal) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => {
     setOpen(true);
@@ -145,9 +158,13 @@ function ShareGroup({ inviteLink }: shareModal) {
 
   return (
     <React.Fragment>
-      <Button variant="contained" onClick={handleOpen}>
+      <Button
+        variant="contained"
+        style={{ textTransform: "none" }}
+        onClick={handleOpen}
+      >
         <Share />
-        Share
+        {privateGp ? "Invite" : "Share"}
       </Button>
       <Modal
         open={open}
@@ -373,8 +390,9 @@ export default function GroupInfoModal(props: modalType) {
         text: `${auth.currentUser.email} added ${newUser}`,
         createdAt: serverTimestamp(),
         user: auth.currentUser?.email,
+        alertMsg: true,
       });
-      alert(`${newUser} added to the group`);
+      alert(`${newUser} is added to the group`);
     } catch (error) {
       console.log(error);
     }
@@ -399,6 +417,7 @@ export default function GroupInfoModal(props: modalType) {
           text: `${auth.currentUser.email} removed ${removeUser}`,
           createdAt: serverTimestamp(),
           user: auth.currentUser?.email,
+          alertMsg: true,
         });
         alert(`${removeUser} removed from ${groupName}`);
       } catch (error) {
@@ -490,7 +509,10 @@ export default function GroupInfoModal(props: modalType) {
                   getGroupData={getGroupData}
                 />
               )}
-            <ShareGroup inviteLink={groupData?.inviteLink} />
+            <ShareGroup
+              inviteLink={groupData?.inviteLink}
+              privateGp={groupData?.private}
+            />
             <Button
               variant="outlined"
               size="small"
