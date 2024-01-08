@@ -13,6 +13,7 @@ import {
   getDocs,
   writeBatch,
   getFirestore,
+  setDoc,
 } from "firebase/firestore";
 import { auth, db } from "../Config/Firebase";
 import { useParams } from "react-router-dom";
@@ -23,6 +24,8 @@ import {
   PersonAddAlt,
   ExitToApp,
   Refresh,
+  ContentCopy,
+  Autorenew,
 } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import Menu from "@mui/material/Menu";
@@ -61,7 +64,7 @@ type adduserType = {
 };
 
 type deluserType = {
-  deleteUsers: (value: string) => void;
+  deleteUsers: (value: string, delType: "admin" | "user") => void;
   getGroupData: () => void;
   userName: string;
 };
@@ -69,6 +72,8 @@ type deluserType = {
 type shareModal = {
   inviteLink?: string;
   privateGp?: boolean;
+  groupName?: string;
+  getGroupData: () => void;
 };
 type deleteGpModal = {
   gpName?: string;
@@ -82,6 +87,7 @@ function AddUsersModal(props: adduserType) {
   };
   const handleClose = () => {
     setOpen(false);
+    props.getGroupData();
   };
 
   const addUser = () => {
@@ -148,19 +154,46 @@ function AddUsersModal(props: adduserType) {
   );
 }
 
-function ShareGroup({ inviteLink, privateGp }: shareModal) {
+function ShareGroup({
+  inviteLink,
+  privateGp,
+  groupName,
+  getGroupData,
+}: shareModal) {
   const [open, setOpen] = React.useState(false);
+  const [invLink, setinvLink] = React.useState("");
+  React.useEffect(() => {
+    setinvLink(inviteLink);
+  }, [inviteLink]);
   const handleOpen = () => {
     setOpen(true);
   };
   const handleClose = () => {
     setOpen(false);
+    getGroupData();
   };
   const path = window.location.href;
+  const url = new URL(path);
+  const baseUrl = `${url.protocol}//${url.host}`;
 
   const copyText = async () => {
     await navigator.clipboard.writeText(inviteLink || path);
     alert("Link copied");
+  };
+
+  const generateNewLink = async () => {
+    const newId = Math.floor(Math.random() * 10000000000);
+
+    const newInviteLink = `${baseUrl}/invite/${groupName}/${newId}`;
+    const groupIndexRef = doc(db, "groupNames", `${groupName}`);
+    setinvLink(invLink);
+    console.log(invLink);
+
+    await updateDoc(groupIndexRef, {
+      users: [auth.currentUser?.email],
+      inviteLink: newInviteLink,
+    });
+    getGroupData();
   };
 
   return (
@@ -193,16 +226,36 @@ function ShareGroup({ inviteLink, privateGp }: shareModal) {
                 color: "white",
                 fontSize: "1.1rem",
               }}
-              value={inviteLink || path}
+              value={invLink}
             />
           </form>
           <br />
           <div style={{ display: "flex", justifyContent: "space-around" }}>
-            <Button variant="outlined" color="inherit" onClick={handleClose}>
-              Close
+            <Button
+              variant="outlined"
+              color="error"
+              size="small"
+              onClick={handleClose}
+            >
+              <Close />
             </Button>
-            <Button variant="outlined" color="inherit" onClick={copyText}>
-              Copy link
+            <Button
+              variant="contained"
+              color="error"
+              onClick={generateNewLink}
+              size="small"
+              style={{ textTransform: "none" }}
+            >
+              <Autorenew />
+              New link
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={copyText}
+              size="small"
+            >
+              <ContentCopy />
             </Button>
           </div>
         </Box>
@@ -339,7 +392,7 @@ function DelMenu(props: deluserType) {
       >
         <MenuItem
           onClick={() => {
-            props.deleteUsers(props.userName);
+            props.deleteUsers(props.userName, "admin");
             props.getGroupData();
           }}
         >
@@ -357,6 +410,8 @@ export default function GroupInfoModal(props: modalType) {
   const [open, setOpen] = React.useState(false);
   const { groupName } = useParams();
   const [groupData, setGroupData] = React.useState<groupType>();
+
+  const navigate = useNavigate();
 
   const handleClose = () => {
     setOpen(false);
@@ -405,8 +460,8 @@ export default function GroupInfoModal(props: modalType) {
     }
   };
 
-  const deleteUsers = async (value: string) => {
-    if (!value) return;
+  const deleteUsers = async (value: string, delType: "admin" | "user") => {
+    if (!value || !delType) return;
     const currentUserArr = groupData?.users;
     console.log(currentUserArr);
     if (currentUserArr?.includes(value)) {
@@ -420,13 +475,25 @@ export default function GroupInfoModal(props: modalType) {
         await updateDoc(docRef, {
           users: updatedArr,
         });
-        await addDoc(msgRef, {
-          text: `${auth.currentUser.email} removed ${removeUser}`,
+        const commonData = {
           createdAt: serverTimestamp(),
           user: auth.currentUser?.email,
           alertMsg: true,
-        });
-        alert(`${removeUser} removed from ${groupName}`);
+        };
+
+        if (delType === "admin") {
+          await addDoc(msgRef, {
+            ...commonData,
+            text: `${auth.currentUser.email} removed ${removeUser}`,
+          });
+          alert(`${removeUser} removed from ${groupName}`);
+        } else if (delType === "user") {
+          await addDoc(msgRef, {
+            ...commonData,
+            text: `${auth.currentUser.email} left ${groupName}`,
+          });
+          navigate("/");
+        }
       } catch (error) {
         console.log(error);
       }
@@ -534,7 +601,12 @@ export default function GroupInfoModal(props: modalType) {
                   variant="contained"
                   color="error"
                   style={{ textTransform: "none" }}
-                  onClick={() => deleteUsers(auth.currentUser.email)}
+                  // onClick={() => deleteUsers(auth.currentUser.email, "user")}
+                  onClick={() => {
+                    if (confirm(`Exit from ${groupName}?`) == true) {
+                      deleteUsers(auth.currentUser.email, "user");
+                    }
+                  }}
                 >
                   <ExitToApp />
                   Exit group
@@ -544,6 +616,8 @@ export default function GroupInfoModal(props: modalType) {
             <ShareGroup
               inviteLink={groupData?.inviteLink}
               privateGp={groupData?.private}
+              groupName={groupName}
+              getGroupData={getGroupData}
             />
             <Button
               variant="outlined"
