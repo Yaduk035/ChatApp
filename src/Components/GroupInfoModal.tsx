@@ -16,7 +16,13 @@ import {
 } from "firebase/firestore";
 import { auth, db } from "../Config/Firebase";
 import { useParams } from "react-router-dom";
-import { Delete, Share, Close, PersonAddAlt } from "@mui/icons-material";
+import {
+  Delete,
+  Share,
+  Close,
+  PersonAddAlt,
+  ExitToApp,
+} from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
@@ -509,6 +515,20 @@ export default function GroupInfoModal(props: modalType) {
                   getGroupData={getGroupData}
                 />
               )}
+
+            {groupData?.private &&
+              groupData.createdBy !== auth.currentUser?.email && (
+                <Button
+                  variant="contained"
+                  color="error"
+                  style={{ textTransform: "none" }}
+                  onClick={() => deleteUsers(auth.currentUser.email)}
+                >
+                  <ExitToApp />
+                  Exit group
+                </Button>
+              )}
+
             <ShareGroup
               inviteLink={groupData?.inviteLink}
               privateGp={groupData?.private}
