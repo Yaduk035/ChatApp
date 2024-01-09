@@ -153,6 +153,7 @@ header:not(.GroupBadge) {
   display: inline;
 }
 
+/* Hover elements with default state */
 #delButton {
   color: gray;
   transition: 200ms ease-out;
@@ -162,6 +163,33 @@ header:not(.GroupBadge) {
   color: wheat;
   transform: scale(1.2);
   cursor: pointer;
+}
+
+#MenuItemInv {
+  background-image: linear-gradient(
+    rgba(39, 32, 131, 0.8),
+    rgba(36, 6, 6, 0.8)
+  );
+  color: whitesmoke;
+  font-family: monospace;
+  border-radius: 4px;
+}
+#MenuItemInv:hover {
+  background-color: rgba(80, 75, 75, 1);
+  transition: 100ms ease-in-out;
+  transform: scale(1.05);
+  border-radius: 8px;
+}
+#MenuItemNorm {
+  background-color: rgb(255, 255, 255);
+  color: black;
+  font-family: monospace;
+}
+#MenuItemNorm:hover {
+  background-color: rgb(248, 204, 204);
+  transition: 100ms ease-in-out;
+  transform: scale(1.05);
+  border-radius: 12px;
 }
 
 /* Media queries */

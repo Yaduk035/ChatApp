@@ -2,15 +2,16 @@ import * as React from "react";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import { Menu as Menuicon } from "@mui/icons-material";
+import { Logout, Menu as Menuicon } from "@mui/icons-material";
 import { signOut } from "firebase/auth";
 import { auth, provider } from "../Config/Firebase";
 import { signInWithPopup } from "firebase/auth";
 import { useNavigate, useLocation } from "react-router-dom";
 import GroupInfoModal from "./GroupInfoModal";
+import { Chip, Divider } from "@mui/material";
 
 type userType = {
-  user: object | undefined | null;
+  user: { email?: string };
 };
 
 export default function ChatMenu({ user }: userType) {
@@ -81,15 +82,35 @@ export default function ChatMenu({ user }: userType) {
               "aria-labelledby": "basic-button",
             }}
           >
+            <Divider>
+              <Chip label="Username" />
+              <MenuItem id="MenuItemInv">{user?.email}</MenuItem>
+            </Divider>
+            <Divider variant="fullWidth" />
             {path !== "/" && (
               <>
-                <MenuItem onClick={handleModalOpen}>Group Info</MenuItem>
+                <MenuItem id="MenuItemNorm" onClick={handleModalOpen}>
+                  Group Info
+                </MenuItem>
                 <span id="showGroupsMenu">
-                  <MenuItem onClick={() => navigate("/")}>More Groups</MenuItem>
+                  <MenuItem
+                    onClick={() => navigate("/")}
+                    style={{ fontFamily: "monospace" }}
+                    id="MenuItemNorm"
+                  >
+                    More Groups
+                  </MenuItem>
                 </span>
+                <Divider variant="middle" />
               </>
             )}
-            <MenuItem onClick={logOut} style={{ color: "red" }}>
+            <MenuItem
+              onClick={logOut}
+              style={{ color: "red", fontFamily: "monospace" }}
+              id="MenuItemNorm"
+            >
+              {" "}
+              <Logout />
               Logout
             </MenuItem>
             {/* <MenuItem
@@ -106,6 +127,8 @@ export default function ChatMenu({ user }: userType) {
           size="large"
           color="inherit"
           onClick={signIn}
+          style={{ fontWeight: 1500, fontFamily: "monospace" }}
+          id="MenuItemNorm"
         >
           Log In
         </Button>

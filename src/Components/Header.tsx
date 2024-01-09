@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { RocketLaunchSharp } from "@mui/icons-material";
+import { Login, RocketLaunchSharp } from "@mui/icons-material";
 import { Button } from "@mui/material";
 import { auth, provider } from "../Config/Firebase";
 import { signInWithPopup } from "firebase/auth";
@@ -112,7 +112,7 @@ const Header = ({ user }: userType) => {
                   onClick={signIn}
                   style={{ textTransform: "none" }}
                 >
-                  <Google style={{ margin: "0 5px 0 0", fontSize: "1.3rem" }} />
+                  <Login style={{ margin: "0 5px 0 0", fontSize: "1.6rem" }} />
                   Sign In
                 </Button>
               </div>

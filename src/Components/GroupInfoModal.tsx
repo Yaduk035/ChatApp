@@ -135,9 +135,15 @@ function AddUsersModal(props: adduserType) {
             <br />
             <br />
             <div style={{ display: "flex", justifyContent: "space-around" }}>
-              <Button variant="outlined" color="inherit" onClick={handleClose}>
-                Close
-              </Button>
+              <Tooltip title="Close" arrow>
+                <Button
+                  variant="outlined"
+                  color="inherit"
+                  onClick={handleClose}
+                >
+                  <Close />
+                </Button>
+              </Tooltip>
               <Button
                 variant="contained"
                 color="error"
