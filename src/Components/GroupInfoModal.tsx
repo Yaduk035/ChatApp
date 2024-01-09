@@ -206,33 +206,38 @@ function ShareGroup({
         aria-labelledby="child-modal-title"
         aria-describedby="child-modal-description"
       >
-        <Box sx={{ ...style, width: 250, backgroundColor: "rgb(40,40,40)" }}>
+        <Box sx={{ ...style, width: 300, backgroundColor: "rgb(40,40,40)" }}>
           <h2 id="child-modal-title">Share group</h2>
-          <form>
-            <input
-              style={{
-                lineHeight: "1.5",
-                background: "rgb(80,80,80)",
-                outline: "none",
-                border: "none",
-                padding: "0 10px",
-                height: "6vh",
-                color: "white",
-                fontSize: "1.1rem",
-              }}
-              value={invLink}
-            />
-          </form>
+          <div style={{ display: "flex", justifyContent: "space-evenly" }}>
+            <form>
+              <input
+                style={{
+                  lineHeight: "1.5",
+                  background: "rgb(80,80,80)",
+                  outline: "none",
+                  border: "none",
+                  padding: "0 10px",
+                  height: "6vh",
+                  color: "white",
+                  fontSize: "1.1rem",
+                }}
+                value={invLink}
+              />
+            </form>
+            <div style={{ alignSelf: "end" }} onClick={copyText} id="delButton">
+              {/* <Button
+                variant="outlined"
+                color="inherit"
+                onClick={copyText}
+                size="small"
+              >
+              </Button> */}
+              <ContentCopy style={{ fontSize: "1.8rem" }} />
+            </div>
+          </div>
+
           <br />
           <div style={{ display: "flex", justifyContent: "space-around" }}>
-            <Button
-              variant="outlined"
-              color="inherit"
-              size="small"
-              onClick={handleClose}
-            >
-              <Close />
-            </Button>
             {auth.currentUser.email === groupData.createdBy && (
               <Button
                 variant="contained"
@@ -246,17 +251,25 @@ function ShareGroup({
                 style={{ textTransform: "none" }}
               >
                 <Autorenew />
-                New link
+                Reset link
               </Button>
             )}
             <Button
+              variant="outlined"
+              color="inherit"
+              size="small"
+              onClick={handleClose}
+            >
+              <Close />
+            </Button>
+            {/* <Button
               variant="contained"
               color="primary"
               onClick={copyText}
               size="small"
             >
               <ContentCopy />
-            </Button>
+            </Button> */}
           </div>
         </Box>
       </Modal>

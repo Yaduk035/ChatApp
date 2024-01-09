@@ -154,7 +154,6 @@ header:not(.GroupBadge) {
 }
 
 #delButton {
-  transform: scale(0.9);
   color: gray;
   transition: 200ms ease-out;
   cursor: pointer;
