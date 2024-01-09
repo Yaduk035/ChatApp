@@ -156,7 +156,7 @@ header:not(.GroupBadge) {
 /* Hover elements with default state */
 #delButton {
   color: gray;
-  transition: 200ms ease-out;
+  transition: 100ms ease-out;
   cursor: pointer;
 }
 #delButton:hover {
