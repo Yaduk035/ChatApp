@@ -42,6 +42,7 @@ const style = {
   pt: 2,
   px: 4,
   pb: 3,
+  borderRadius: "12px",
 };
 type modalType = {
   setOpenModal: (value: boolean) => void;
@@ -89,7 +90,8 @@ function AddUsersModal(props: adduserType) {
     setOpen(false);
   };
 
-  const addUser = () => {
+  const addUser = (e) => {
+    e.preventDefault();
     if (!newUser) return;
     props.addUsers(newUser);
     handleClose();
@@ -104,7 +106,7 @@ function AddUsersModal(props: adduserType) {
         onClick={handleOpen}
       >
         <PersonAddAlt />
-        Add users
+        Add members
       </Button>
       <Modal
         open={open}
@@ -209,7 +211,7 @@ function ShareGroup({
       >
         <Box sx={{ ...style, width: 300, backgroundColor: "rgb(40,40,40)" }}>
           <h2 id="child-modal-title">Share group</h2>
-          <div style={{ display: "flex", justifyContent: "space-evenly" }}>
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
             <form>
               <input
                 style={{
@@ -239,7 +241,10 @@ function ShareGroup({
           <br />
           <div style={{ display: "flex", justifyContent: "space-around" }}>
             {auth.currentUser.email === groupData.createdBy && (
-              <Tooltip title="Generate new invite link.All previous invite links will be obsolete">
+              <Tooltip
+                arrow
+                title="Generate new invite link.All previous invite links will be obsolete"
+              >
                 <Button
                   variant="contained"
                   color="error"
@@ -256,14 +261,16 @@ function ShareGroup({
                 </Button>
               </Tooltip>
             )}
-            <Button
-              variant="outlined"
-              color="inherit"
-              size="small"
-              onClick={handleClose}
-            >
-              <Close />
-            </Button>
+            <Tooltip title="Close" arrow>
+              <Button
+                variant="outlined"
+                color="inherit"
+                size="small"
+                onClick={handleClose}
+              >
+                <Close />
+              </Button>
+            </Tooltip>
             {/* <Button
               variant="contained"
               color="primary"
@@ -324,9 +331,11 @@ function DeleteGroup({ gpName }: deleteGpModal) {
 
   return (
     <React.Fragment>
-      <Button variant="outlined" color="error" onClick={handleOpen}>
-        <Delete />
-      </Button>
+      <Tooltip title="Delete group" arrow>
+        <Button variant="outlined" color="error" onClick={handleOpen}>
+          <Delete />
+        </Button>
+      </Tooltip>
       <Modal
         open={open}
         onClose={handleClose}
@@ -485,7 +494,7 @@ export default function GroupInfoModal(props: modalType) {
         user: auth.currentUser?.email,
         alertMsg: true,
       });
-      alert(`${newUser} has been added to the group`);
+      alert(`${newUser} is added to the group`);
     } catch (error) {
       console.log(error);
     }
@@ -642,14 +651,16 @@ export default function GroupInfoModal(props: modalType) {
               // getGroupData={getGroupData}
               groupData={groupData}
             />
-            <Button
-              variant="outlined"
-              size="small"
-              color="warning"
-              onClick={handleClose}
-            >
-              <Close />
-            </Button>
+            <Tooltip title="Close" arrow>
+              <Button
+                variant="outlined"
+                size="small"
+                color="warning"
+                onClick={handleClose}
+              >
+                <Close />
+              </Button>
+            </Tooltip>
           </div>
         </Box>
       </Modal>
