@@ -153,13 +153,15 @@ header:not(.GroupBadge) {
   display: inline;
 }
 
-#refreshButton {
+#delButton {
+  transform: scale(0.9);
   color: gray;
   transition: 200ms ease-out;
+  cursor: pointer;
 }
-#refreshButton:hover {
+#delButton:hover {
   color: wheat;
-  transform: scale(1.25);
+  transform: scale(1.2);
   cursor: pointer;
 }
 

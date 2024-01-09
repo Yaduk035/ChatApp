@@ -4,7 +4,6 @@ import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
 import {
   doc,
-  getDoc,
   updateDoc,
   deleteDoc,
   collection,
@@ -13,6 +12,7 @@ import {
   getDocs,
   writeBatch,
   getFirestore,
+  onSnapshot,
 } from "firebase/firestore";
 import { auth, db } from "../Config/Firebase";
 import { useParams } from "react-router-dom";
@@ -22,7 +22,6 @@ import {
   Close,
   PersonAddAlt,
   ExitToApp,
-  Refresh,
   ContentCopy,
   Autorenew,
 } from "@mui/icons-material";
@@ -59,12 +58,10 @@ type groupType = {
 
 type adduserType = {
   addUsers: (value: string) => void;
-  getGroupData: () => void;
 };
 
 type deluserType = {
   deleteUsers: (value: string, delType: "admin" | "user") => void;
-  getGroupData: () => void;
   userName: string;
 };
 
@@ -72,9 +69,9 @@ type shareModal = {
   inviteLink?: string;
   privateGp?: boolean;
   groupName?: string;
-  getGroupData: () => void;
   groupData: {
     createdBy?: string;
+    users?: string[];
   };
 };
 type deleteGpModal = {
@@ -89,13 +86,11 @@ function AddUsersModal(props: adduserType) {
   };
   const handleClose = () => {
     setOpen(false);
-    props.getGroupData();
   };
 
   const addUser = () => {
     if (!newUser) return;
     props.addUsers(newUser);
-    props.getGroupData();
     handleClose();
   };
 
@@ -160,7 +155,6 @@ function ShareGroup({
   inviteLink,
   privateGp,
   groupName,
-  getGroupData,
   groupData,
 }: shareModal) {
   const [open, setOpen] = React.useState(false);
@@ -173,7 +167,6 @@ function ShareGroup({
   };
   const handleClose = () => {
     setOpen(false);
-    getGroupData();
   };
   const path = window.location.href;
   const url = new URL(path);
@@ -190,13 +183,11 @@ function ShareGroup({
     const newInviteLink = `${baseUrl}/invite/${groupName}/${newId}`;
     const groupIndexRef = doc(db, "groupNames", `${groupName}`);
     setinvLink(invLink);
-    console.log(invLink);
+    // console.log(invLink);
 
     await updateDoc(groupIndexRef, {
-      users: [auth.currentUser?.email],
       inviteLink: newInviteLink,
     });
-    getGroupData();
   };
 
   return (
@@ -407,7 +398,6 @@ function DelMenu(props: deluserType) {
         <MenuItem
           onClick={() => {
             props.deleteUsers(props.userName, "admin");
-            props.getGroupData();
           }}
         >
           Delete user
@@ -436,14 +426,26 @@ export default function GroupInfoModal(props: modalType) {
     setOpen(props.openModal);
   }, [props.openModal]);
 
-  const getGroupData = async () => {
-    const docRef = doc(db, "groupNames", `${groupName}`);
-    const docSnap = await getDoc(docRef);
-    setGroupData(docSnap.data());
-  };
   React.useEffect(() => {
-    getGroupData();
+    try {
+      const unSub = onSnapshot(doc(db, "groupNames", `${groupName}`), (doc) => {
+        var realTimeGp = doc.data();
+        setGroupData(realTimeGp);
+      });
+      return () => unSub();
+    } catch (error) {
+      console.log(error);
+    }
   }, []);
+
+  // const getGroupData = async () => {
+  //   const docRef = doc(db, "groupNames", `${groupName}`);
+  //   const docSnap = await getDoc(docRef);
+  //   setGroupData(docSnap.data());
+  // };
+  // React.useEffect(() => {
+  //   getGroupData();
+  // }, []);
 
   const addUsers = async (value: string) => {
     if (!value) return;
@@ -514,9 +516,6 @@ export default function GroupInfoModal(props: modalType) {
     }
   };
 
-  // addUsers("test");
-  // deleteUsers("test");
-
   return (
     <div>
       <Modal
@@ -560,9 +559,6 @@ export default function GroupInfoModal(props: modalType) {
                   }}
                 >
                   <h4>Group members</h4>
-                  <span id="refreshButton" onClick={getGroupData}>
-                    <Refresh />
-                  </span>
                 </div>
                 {groupData?.users.map((data, i) => (
                   <div
@@ -581,13 +577,10 @@ export default function GroupInfoModal(props: modalType) {
                     </span>{" "}
                     {groupData.createdBy === auth.currentUser.email &&
                       data !== groupData.createdBy && (
-                        <span
-                          style={{ cursor: "pointer" }}
-                          // onClick={() => deleteUsers(`${data}`)}
-                        >
+                        <span id="delButton">
                           <DelMenu
                             deleteUsers={deleteUsers}
-                            getGroupData={getGroupData}
+                            // getGroupData={getGroupData}
                             userName={data}
                           />
                         </span>
@@ -605,7 +598,7 @@ export default function GroupInfoModal(props: modalType) {
               groupData.createdBy === auth.currentUser?.email && (
                 <AddUsersModal
                   addUsers={addUsers}
-                  getGroupData={getGroupData}
+                  // getGroupData={getGroupData}
                 />
               )}
 
@@ -631,7 +624,7 @@ export default function GroupInfoModal(props: modalType) {
               inviteLink={groupData?.inviteLink}
               privateGp={groupData?.private}
               groupName={groupName}
-              getGroupData={getGroupData}
+              // getGroupData={getGroupData}
               groupData={groupData}
             />
             <Button
