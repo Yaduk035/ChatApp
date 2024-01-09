@@ -24,6 +24,7 @@ import {
   ExitToApp,
   ContentCopy,
   Autorenew,
+  GroupRemoveTwoTone,
 } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import Menu from "@mui/material/Menu";
@@ -135,6 +136,14 @@ function AddUsersModal(props: adduserType) {
             <br />
             <br />
             <div style={{ display: "flex", justifyContent: "space-around" }}>
+              <Button
+                variant="contained"
+                color="error"
+                onClick={addUser}
+                type="submit"
+              >
+                Add user
+              </Button>
               <Tooltip title="Close" arrow>
                 <Button
                   variant="outlined"
@@ -144,14 +153,6 @@ function AddUsersModal(props: adduserType) {
                   <Close />
                 </Button>
               </Tooltip>
-              <Button
-                variant="contained"
-                color="error"
-                onClick={addUser}
-                type="submit"
-              >
-                Add user
-              </Button>
             </div>
           </form>
         </Box>
@@ -374,17 +375,26 @@ function DeleteGroup({ gpName }: deleteGpModal) {
               Type group name here
             </p>
             <div style={{ display: "flex", justifyContent: "space-around" }}>
-              <Button variant="outlined" color="inherit" onClick={handleClose}>
-                Close
-              </Button>
               <Button
                 variant="contained"
                 color="error"
                 onClick={deleteGroup}
                 type="submit"
+                size="small"
+                sx={{ textTransform: "none" }}
               >
+                <GroupRemoveTwoTone sx={{ margin: "0 5px 0 0" }} />
                 Delete
               </Button>
+              <Tooltip title="Close">
+                <Button
+                  variant="outlined"
+                  color="inherit"
+                  onClick={handleClose}
+                >
+                  <Close />
+                </Button>
+              </Tooltip>
             </div>
           </form>
         </Box>
@@ -579,7 +589,7 @@ export default function GroupInfoModal(props: modalType) {
             )} */}
           </span>
           {groupData?.users && groupData.private && (
-            <div style={{ margin: "5px 0px 20px 0px" }}>
+            <div style={{ margin: "0px 0px 20px 0px" }}>
               <div>
                 <div
                   style={{
