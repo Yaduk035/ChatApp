@@ -28,6 +28,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
+import { Tooltip } from "@mui/material";
 
 const style = {
   position: "absolute" as "absolute",
@@ -224,35 +225,36 @@ function ShareGroup({
                 value={invLink}
               />
             </form>
-            <div style={{ alignSelf: "end" }} onClick={copyText} id="delButton">
-              {/* <Button
-                variant="outlined"
-                color="inherit"
+            <Tooltip title="Copy link" arrow>
+              <div
+                style={{ alignSelf: "end" }}
                 onClick={copyText}
-                size="small"
+                id="delButton"
               >
-              </Button> */}
-              <ContentCopy style={{ fontSize: "1.8rem" }} />
-            </div>
+                <ContentCopy style={{ fontSize: "1.8rem" }} />
+              </div>
+            </Tooltip>
           </div>
 
           <br />
           <div style={{ display: "flex", justifyContent: "space-around" }}>
             {auth.currentUser.email === groupData.createdBy && (
-              <Button
-                variant="contained"
-                color="error"
-                onClick={() => {
-                  if (confirm("Regenerate new invite link?") == true) {
-                    generateNewLink();
-                  }
-                }}
-                size="small"
-                style={{ textTransform: "none" }}
-              >
-                <Autorenew />
-                Reset link
-              </Button>
+              <Tooltip title="Generate new invite link.All previous invite links will be obsolete">
+                <Button
+                  variant="contained"
+                  color="error"
+                  onClick={() => {
+                    if (confirm("Regenerate new invite link?") == true) {
+                      generateNewLink();
+                    }
+                  }}
+                  size="small"
+                  style={{ textTransform: "none" }}
+                >
+                  <Autorenew />
+                  Reset link
+                </Button>
+              </Tooltip>
             )}
             <Button
               variant="outlined"
