@@ -5,7 +5,6 @@ import { auth, provider } from "../Config/Firebase";
 import { signInWithPopup } from "firebase/auth";
 import { Link } from "react-router-dom";
 import ChatMenu from "./ChatMenu";
-import { Google } from "@mui/icons-material";
 import AppInfoModal from "./AppInfoModal";
 import { Info } from "@mui/icons-material";
 import { useParams } from "react-router-dom";
