@@ -166,24 +166,24 @@ header:not(.GroupBadge) {
 }
 
 #MenuItemInv {
-  background-image: linear-gradient(
-    rgba(39, 32, 131, 0.8),
-    rgba(36, 6, 6, 0.8)
-  );
+  background-image: linear-gradient(rgb(16, 0, 243), rgb(88, 0, 0));
   color: whitesmoke;
   font-family: monospace;
-  border-radius: 4px;
+  border-radius: 5px;
+  cursor: default;
 }
-#MenuItemInv:hover {
+/* #MenuItemInv:hover {
   background-color: rgba(80, 75, 75, 1);
   transition: 100ms ease-in-out;
   transform: scale(1.05);
   border-radius: 8px;
-}
+} */
 #MenuItemNorm {
   background-color: rgb(255, 255, 255);
   color: black;
   font-family: monospace;
+  display: flex;
+  justify-content: center;
 }
 #MenuItemNorm:hover {
   background-color: rgba(22, 2, 110, 0.2);
