@@ -192,6 +192,11 @@ header:not(.GroupBadge) {
   border-radius: 15px;
 }
 
+.imageDiv {
+  margin: 10px 0 0 0;
+  border-radius: 6px;
+}
+
 /* Media queries */
 
 @media screen and (max-width: 320px) {
