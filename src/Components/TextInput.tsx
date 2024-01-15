@@ -49,15 +49,14 @@ export default function TextInput({ scrollRef }: ref) {
     const imgRef = ref(storage, `images/${groupName}/${imgName}`);
     uploadBytes(imgRef, image).then((item) => {
       getDownloadURL(item.ref).then((url) => {
-        settempUrl(url);
         console.log(url);
+        addDoc(msgRef, {
+          image: url,
+          createdAt: serverTimestamp(),
+          user: auth.currentUser?.email,
+        });
       });
     });
-    // await addDoc(msgRef, {
-    //   image: imgName,
-    //   createdAt: serverTimestamp(),
-    //   user: auth.currentUser?.email,
-    // });
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
     alert("Image uploaded");
   };

@@ -226,6 +226,9 @@ header:not(.GroupBadge) {
   #showGroupsMenu {
     display: inline;
   }
+  .imageDiv {
+    width: 80vw;
+  }
 }
 @media screen and (min-width: 320px) {
   header {
@@ -263,6 +266,9 @@ header:not(.GroupBadge) {
   #showGroupsMenu {
     display: inline;
   }
+  .imageDiv {
+    width: 70vw;
+  }
 }
 @media screen and (min-width: 481px) {
   header {
@@ -291,6 +297,9 @@ header:not(.GroupBadge) {
   }
   #showGroupsMenu {
     display: inline;
+  }
+  .imageDiv {
+    width: 55vw;
   }
 }
 @media screen and (min-width: 769px) {
@@ -322,6 +331,9 @@ header:not(.GroupBadge) {
   #showGroupsMenu {
     display: none;
   }
+  .imageDiv {
+    width: 400px;
+  }
 }
 @media screen and (min-width: 1025px) {
   header {
@@ -351,5 +363,8 @@ header:not(.GroupBadge) {
   }
   #showGroupsMenu {
     display: none;
+  }
+  .imageDiv {
+    width: 400px;
   }
 }

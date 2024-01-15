@@ -23,6 +23,7 @@ type msgType = {
   formattedDate?: string;
   dateString?: string;
   alertMsg?: boolean;
+  image?: string;
 };
 
 type userType = {
@@ -284,6 +285,11 @@ const ChatScreen = ({ user }: userType) => {
                           }}
                         >
                           {msg.user}
+                        </div>
+                      )}
+                      {msg.image && (
+                        <div>
+                          <img className="imageDiv" src={msg?.image} />
                         </div>
                       )}
                       <div
