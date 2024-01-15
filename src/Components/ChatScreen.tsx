@@ -45,6 +45,10 @@ type formatType = {
   createdAt: { seconds: number };
 };
 
+type imageCompType = {
+  imageUrl: string;
+};
+
 const ChatScreen = ({ user }: userType) => {
   const currentUser: string | null | undefined = auth.currentUser?.email;
   const [messages, setMessages] = useState<msgType[]>([]);
@@ -288,9 +292,10 @@ const ChatScreen = ({ user }: userType) => {
                         </div>
                       )}
                       {msg.image && (
-                        <div>
-                          <img className="imageDiv" src={msg?.image} />
-                        </div>
+                        <ImageComponent imageUrl={msg.image} />
+                        // <div>
+                        //   <img className="imageDiv" src={msg?.image} />
+                        // </div>
                       )}
                       <div
                         style={{
@@ -340,3 +345,38 @@ const ChatScreen = ({ user }: userType) => {
 };
 
 export default ChatScreen;
+
+function ImageComponent({ imageUrl }: imageCompType) {
+  const [showImage, setshowImage] = useState(false);
+  const [image, setimage] = useState("");
+  const [spinner, setspinner] = useState(false);
+
+  const handleClick = async () => {
+    setshowImage(true);
+    try {
+      const response = await fetch(imageUrl);
+      const blob = await response.blob();
+      const dataUrl = await new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve(reader.result);
+        reader.readAsDataURL(blob);
+      });
+      setimage(dataUrl);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  // useEffect(() => {
+  //   handleClick();
+  // }, []);
+
+  return (
+    <div onClick={handleClick}>
+      {showImage ? (
+        <img className="imageDiv" src={imageUrl} />
+      ) : (
+        <div style={{ cursor: "pointer" }}>Click to load image</div>
+      )}
+    </div>
+  );
+}
