@@ -351,31 +351,51 @@ function ImageComponent({ imageUrl }: imageCompType) {
   const [image, setimage] = useState("");
   const [spinner, setspinner] = useState(false);
 
-  const handleClick = async () => {
-    setshowImage(true);
-    try {
-      const response = await fetch(imageUrl);
-      const blob = await response.blob();
-      const dataUrl = await new Promise((resolve) => {
-        const reader = new FileReader();
-        reader.onloadend = () => resolve(reader.result);
-        reader.readAsDataURL(blob);
-      });
-      setimage(dataUrl);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const imageState = document.querySelector("image");
+  // if (imageState.load)
+  // const handleClick = async () => {
+  //   setshowImage(true);
+  //   try {
+  //     const response = await fetch(imageUrl);
+  //     const blob = await response.blob();
+  //     const dataUrl = await new Promise((resolve) => {
+  //       const reader = new FileReader();
+  //       reader.onloadend = () => resolve(reader.result);
+  //       reader.readAsDataURL(blob);
+  //     });
+  //     setimage(dataUrl);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
   // useEffect(() => {
   //   handleClick();
   // }, []);
+  useEffect(() => {
+    console.log(spinner);
+  }, [spinner]);
 
   return (
-    <div onClick={handleClick}>
+    <div>
       {showImage ? (
-        <img className="imageDiv" src={imageUrl} />
+        <img
+          className="imageDiv"
+          src={imageUrl}
+          loading="lazy"
+          onLoad={() => {
+            setspinner(false);
+          }}
+        />
       ) : (
-        <div style={{ cursor: "pointer" }}>Click to load image</div>
+        <div
+          style={{ cursor: "pointer" }}
+          onClick={() => {
+            setspinner(true);
+            setshowImage(true);
+          }}
+        >
+          Click to load image
+        </div>
       )}
     </div>
   );
