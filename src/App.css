@@ -193,8 +193,8 @@ header:not(.GroupBadge) {
 }
 
 .imageDiv {
-  margin: 10px 0 0 0;
-  border-radius: 6px;
+  margin: 0.4em 0 0 0;
+  border-radius: 0.5em;
 }
 
 /* Media queries */
