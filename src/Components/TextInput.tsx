@@ -5,6 +5,10 @@ import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { db } from "../Config/Firebase";
 import { auth } from "../Config/Firebase";
 import { useParams } from "react-router-dom";
+import { storage } from "../Config/Firebase";
+import { ref, uploadBytes, getDownloadURL, list } from "firebase/storage";
+import { v4 } from "uuid";
+import { PermMedia } from "@mui/icons-material";
 
 type ref = {
   scrollRef: React.RefObject<HTMLDivElement>;
@@ -12,7 +16,9 @@ type ref = {
 
 export default function TextInput({ scrollRef }: ref) {
   const [inputMessage, setInputMessage] = useState<string | null>(null);
+  const [image, setimage] = useState<File | null>(null);
   const [spinner, setSpinner] = useState<boolean>(false);
+  const [tempUrl, settempUrl] = useState();
   const { groupName } = useParams();
 
   const msgRef = collection(db, `${groupName}`);
@@ -37,9 +43,35 @@ export default function TextInput({ scrollRef }: ref) {
       setSpinner(false);
     }
   };
+
+  const uploadImg = async () => {
+    const imgName = `${image.name + v4()}`;
+    const imgRef = ref(storage, `images/${groupName}/${imgName}`);
+    uploadBytes(imgRef, image).then((item) => {
+      getDownloadURL(item.ref).then((url) => {
+        settempUrl(url);
+        console.log(url);
+      });
+    });
+    // await addDoc(msgRef, {
+    //   image: imgName,
+    //   createdAt: serverTimestamp(),
+    //   user: auth.currentUser?.email,
+    // });
+    scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+    alert("Image uploaded");
+  };
   return (
     <div className="inputDiv">
       <form onSubmit={handleSubmit}>
+        <input type="file" onChange={(e) => setimage(e.target.files[0])} />
+        <span
+          style={{ cursor: "pointer", backgroundColor: "transparent" }}
+          onClick={uploadImg}
+        >
+          <PermMedia />
+        </span>
+        {/* <button onClick={uploadImg}>Upload</button> */}
         <input
           onChange={(e) => setInputMessage(e.target.value)}
           value={inputMessage}
