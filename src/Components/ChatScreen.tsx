@@ -139,7 +139,8 @@ const ChatScreen = ({ user }: userType) => {
     return formattedDate;
   }
 
-  // console.log(messages[1].alertMsg);
+  // console.log(messages[1].formattedDate);
+  // console.log(messages[1].formattedDate.split(" ")[1]);
   return (
     <>
       {/* <div>
@@ -310,7 +311,11 @@ const ChatScreen = ({ user }: userType) => {
                           padding: "0px",
                         }}
                       >
-                        {msg.formattedDate.split(",")[1]}
+                        {/* {msg.formattedDate.split(",")[1]} */}
+                        {msg.formattedDate.split(" ")[1]}
+                        <span style={{ fontWeight: "350" }}>
+                          {msg.formattedDate.split(" ")[2]}
+                        </span>
                       </div>
                     </p>
                   </span>
