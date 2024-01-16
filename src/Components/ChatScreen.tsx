@@ -16,6 +16,7 @@ import LoadingScreen from "./LoadingScreen";
 import { format } from "date-fns";
 import { SyncAlt } from "@mui/icons-material";
 import { Sync } from "@mui/icons-material";
+import { ClassNames } from "@emotion/react";
 
 type msgType = {
   createdAt?: string;
@@ -357,13 +358,22 @@ function ImageComponent({ imageUrl }: imageCompType) {
         <img className="imageDiv" src={imageUrl} />
       ) : (
         <div
-          style={{ cursor: "pointer", color: "rgb(10,20,10)" }}
+          id="placeHolderImgDiv"
           onClick={() => {
             setshowImage(true);
           }}
         >
-          <Sync />
-          Load image
+          <div
+            style={{
+              backgroundColor: "rgba(20,20,20,0.5)",
+              padding: "10px",
+              borderRadius: "50px",
+              color: "wheat",
+            }}
+          >
+            <Sync />
+            Load image
+          </div>
         </div>
       )}
     </div>
