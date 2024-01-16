@@ -271,11 +271,12 @@ header:not(.GroupBadge) {
   }
   .inputDiv input {
     min-height: 50px;
+    height: 60px;
   }
   .inputDiv form {
     min-height: 50px;
+    height: 60px;
   }
-
   .chatDiv {
     box-sizing: border-box;
     min-width: 95%;
@@ -284,12 +285,6 @@ header:not(.GroupBadge) {
   .msgDiv {
     box-sizing: border-box;
     max-width: 90%;
-  }
-  .inputDiv form {
-    height: 60px;
-  }
-  .inputDiv input {
-    height: 60px;
   }
   .GroupBadge {
     flex-grow: 1;

@@ -32,7 +32,11 @@ function ImageDragDrop({ setImage, uploadImg, handleClose }: imageComp) {
     <>
       {file ? (
         <div style={{ textAlign: "center" }}>
-          <img src={displayImg} width="300px" />
+          <img
+            src={displayImg}
+            width="300px"
+            style={{ borderRadius: "10px" }}
+          />
           <div style={{ textAlign: "end" }}>
             <Button
               variant="outlined"

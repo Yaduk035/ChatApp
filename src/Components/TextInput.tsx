@@ -26,8 +26,8 @@ export default function TextInput({ scrollRef }: ref) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     inputRef.current.focus();
-    setSpinner(true);
     if (!inputMessage) return;
+    setSpinner(true);
     try {
       await addDoc(msgRef, {
         text: inputMessage,
@@ -58,7 +58,6 @@ export default function TextInput({ scrollRef }: ref) {
       });
     });
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
-    alert("Image uploaded");
   };
   return (
     <div className="inputDiv">
