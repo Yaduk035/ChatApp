@@ -14,6 +14,8 @@ import { useParams } from "react-router-dom";
 import Header from "./Header";
 import LoadingScreen from "./LoadingScreen";
 import { format } from "date-fns";
+import { SyncAlt } from "@mui/icons-material";
+import { Sync } from "@mui/icons-material";
 
 type msgType = {
   createdAt?: string;
@@ -348,53 +350,20 @@ export default ChatScreen;
 
 function ImageComponent({ imageUrl }: imageCompType) {
   const [showImage, setshowImage] = useState(false);
-  const [image, setimage] = useState("");
-  const [spinner, setspinner] = useState(false);
-
-  // const imageState = document.querySelector("image");
-  // if (imageState.load)
-  // const handleClick = async () => {
-  //   setshowImage(true);
-  //   try {
-  //     const response = await fetch(imageUrl);
-  //     const blob = await response.blob();
-  //     const dataUrl = await new Promise((resolve) => {
-  //       const reader = new FileReader();
-  //       reader.onloadend = () => resolve(reader.result);
-  //       reader.readAsDataURL(blob);
-  //     });
-  //     setimage(dataUrl);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-  // useEffect(() => {
-  //   handleClick();
-  // }, []);
-  useEffect(() => {
-    console.log(spinner);
-  }, [spinner]);
 
   return (
     <div>
       {showImage ? (
-        <img
-          className="imageDiv"
-          src={imageUrl}
-          loading="lazy"
-          onLoad={() => {
-            setspinner(false);
-          }}
-        />
+        <img className="imageDiv" src={imageUrl} />
       ) : (
         <div
-          style={{ cursor: "pointer" }}
+          style={{ cursor: "pointer", color: "rgb(10,20,10)" }}
           onClick={() => {
-            setspinner(true);
             setshowImage(true);
           }}
         >
-          Click to load image
+          <Sync />
+          Load image
         </div>
       )}
     </div>
