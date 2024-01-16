@@ -1,5 +1,5 @@
 import { Send } from "@mui/icons-material";
-import { CircularProgress } from "@mui/material";
+import { CircularProgress, Tooltip } from "@mui/material";
 import React, { useState, useRef } from "react";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { db } from "../Config/Firebase";
@@ -63,18 +63,11 @@ export default function TextInput({ scrollRef }: ref) {
   return (
     <div className="inputDiv">
       <form onSubmit={handleSubmit}>
-        {/* <input type="file" onChange={(e) => setimage(e.target.files[0])} /> */}
-        <div
-          style={{
-            backgroundImage:
-              "linear-gradient(to right,rgb(17, 29, 53),rgb(92, 35, 35))",
-            width: "60px",
-            borderRadius: "10px 0 0 0",
-          }}
-        >
-          <ImageSelectComponent setImage={setimage} uploadImg={uploadImg} />
-        </div>
-        {/* <button onClick={uploadImg}>Upload</button> */}
+        <Tooltip title="Send image" arrow>
+          <div id="imageMsgIcon">
+            <ImageSelectComponent setImage={setimage} uploadImg={uploadImg} />
+          </div>
+        </Tooltip>
         <input
           onChange={(e) => setInputMessage(e.target.value)}
           value={inputMessage}

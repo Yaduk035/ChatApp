@@ -210,6 +210,15 @@ header:not(.GroupBadge) {
   font-size: 1.3rem;
   font-weight: bolder;
 }
+#imageMsgIcon {
+  background-image: linear-gradient(to right, rgb(17, 29, 53), rgb(92, 35, 35));
+  width: 60px;
+  border-radius: 10px 0 0 0;
+}
+#imageMsgIcon:hover div {
+  transition: all 80ms ease-in-out;
+  transform: scale(1.2);
+}
 
 /* Media queries */
 
