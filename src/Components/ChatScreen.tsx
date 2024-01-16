@@ -14,9 +14,7 @@ import { useParams } from "react-router-dom";
 import Header from "./Header";
 import LoadingScreen from "./LoadingScreen";
 import { format } from "date-fns";
-import { SyncAlt } from "@mui/icons-material";
-import { Sync } from "@mui/icons-material";
-import { ClassNames } from "@emotion/react";
+import { Download } from "@mui/icons-material";
 
 type msgType = {
   createdAt?: string;
@@ -365,14 +363,13 @@ function ImageComponent({ imageUrl }: imageCompType) {
         >
           <div
             style={{
-              backgroundColor: "rgba(20,20,20,0.5)",
+              backgroundColor: "rgba(20,20,20,0.7)",
               padding: "10px",
-              borderRadius: "50px",
+              borderRadius: "20px",
               color: "wheat",
             }}
           >
-            <Sync />
-            Load image
+            <Download style={{ margin: "10px 10px 0 10px" }} />
           </div>
         </div>
       )}
