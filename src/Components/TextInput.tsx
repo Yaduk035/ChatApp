@@ -66,7 +66,8 @@ export default function TextInput({ scrollRef }: ref) {
         {/* <input type="file" onChange={(e) => setimage(e.target.files[0])} /> */}
         <div
           style={{
-            backgroundColor: "rgb(119, 105, 105)",
+            backgroundImage:
+              "linear-gradient(rgb(17, 29, 53),rgb(119,105,105))",
             width: "60px",
             borderRadius: "10px 0 0 0",
           }}
