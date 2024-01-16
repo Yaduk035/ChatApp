@@ -6,9 +6,10 @@ import { db } from "../Config/Firebase";
 import { auth } from "../Config/Firebase";
 import { useParams } from "react-router-dom";
 import { storage } from "../Config/Firebase";
-import { ref, uploadBytes, getDownloadURL, list } from "firebase/storage";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { v4 } from "uuid";
 import { PermMedia } from "@mui/icons-material";
+import ImageSelectComponent from "./ImageSelectComponent";
 
 type ref = {
   scrollRef: React.RefObject<HTMLDivElement>;
@@ -18,7 +19,6 @@ export default function TextInput({ scrollRef }: ref) {
   const [inputMessage, setInputMessage] = useState<string | null>(null);
   const [image, setimage] = useState<File | null>(null);
   const [spinner, setSpinner] = useState<boolean>(false);
-  const [tempUrl, settempUrl] = useState();
   const { groupName } = useParams();
 
   const msgRef = collection(db, `${groupName}`);
@@ -45,6 +45,7 @@ export default function TextInput({ scrollRef }: ref) {
   };
 
   const uploadImg = async () => {
+    if (!image) return;
     const imgName = `${image.name + v4()}`;
     const imgRef = ref(storage, `images/${groupName}/${imgName}`);
     uploadBytes(imgRef, image).then((item) => {
@@ -63,12 +64,13 @@ export default function TextInput({ scrollRef }: ref) {
   return (
     <div className="inputDiv">
       <form onSubmit={handleSubmit}>
-        <input type="file" onChange={(e) => setimage(e.target.files[0])} />
+        {/* <input type="file" onChange={(e) => setimage(e.target.files[0])} /> */}
         <span
           style={{ cursor: "pointer", backgroundColor: "transparent" }}
-          onClick={uploadImg}
+          // onClick={uploadImg}
         >
-          <PermMedia />
+          {/* <PermMedia /> */}
+          <ImageSelectComponent setImage={setimage} uploadImg={uploadImg} />
         </span>
         {/* <button onClick={uploadImg}>Upload</button> */}
         <input

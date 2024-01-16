@@ -353,7 +353,7 @@ function ImageComponent({ imageUrl }: imageCompType) {
   return (
     <div>
       {showImage ? (
-        <img className="imageDiv" src={imageUrl} />
+        <img className="imageDiv" src={imageUrl} loading="lazy" />
       ) : (
         <div
           id="placeHolderImgDiv"
