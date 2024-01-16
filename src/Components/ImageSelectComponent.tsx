@@ -7,7 +7,7 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { Close, Delete, PermMedia, Send } from "@mui/icons-material";
 
-const fileTypes = ["JPG", "PNG", "GIF"];
+const fileTypes = ["JPG", "PNG", "GIF", "Jpeg", "Webp"];
 
 type imageComp = {
   setImage: React.Dispatch<React.SetStateAction<File>>;
