@@ -5,7 +5,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
-import { Close, PermMedia, Send } from "@mui/icons-material";
+import { Close, Delete, PermMedia, Send } from "@mui/icons-material";
 
 const fileTypes = ["JPG", "PNG", "GIF"];
 
@@ -17,25 +17,48 @@ type imageComp = {
 
 function ImageDragDrop({ setImage, uploadImg, handleClose }: imageComp) {
   const [file, setFile] = useState(null);
+  const [displayImg, setdisplayImg] = useState<string | undefined>();
   const handleChange = (file) => {
     setFile(file);
     setImage(file);
+
+    if (file) {
+      // Convert the File object to a URL
+      const imageUrl = URL.createObjectURL(file);
+      setdisplayImg(imageUrl);
+    }
   };
   return (
     <>
-      <div
-        style={{
-          backgroundImage:
-            "linear-gradient(to right, rgb(17, 29, 53),rgb(10,10,10))",
-        }}
-      >
-        <FileUploader
-          handleChange={handleChange}
-          name="file"
-          types={fileTypes}
-        />
+      {file ? (
+        <div style={{ textAlign: "center" }}>
+          <img src={displayImg} width="400px" />
+        </div>
+      ) : (
+        <div
+          style={{
+            backgroundImage:
+              "linear-gradient(to right, rgb(17, 29, 53),rgb(10,10,10))",
+            margin: "0 0 10px 0",
+          }}
+        >
+          <FileUploader
+            handleChange={handleChange}
+            name="file"
+            types={fileTypes}
+          />
+        </div>
+      )}
+      <div style={{ textAlign: "end" }}>
+        <Button
+          variant="outlined"
+          color="error"
+          onClick={() => setFile(null)}
+          size="small"
+        >
+          <Delete />
+        </Button>
       </div>
-      <br />
       <div style={{ display: "flex", justifyContent: "space-evenly" }}>
         <Button
           variant="outlined"
