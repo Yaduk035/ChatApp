@@ -67,7 +67,7 @@ export default function TextInput({ scrollRef }: ref) {
         <div
           style={{
             backgroundImage:
-              "linear-gradient(rgb(17, 29, 53),rgb(119,105,105))",
+              "linear-gradient(to right,rgb(17, 29, 53),rgb(92, 35, 35))",
             width: "60px",
             borderRadius: "10px 0 0 0",
           }}

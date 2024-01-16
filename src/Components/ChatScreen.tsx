@@ -1,4 +1,4 @@
-import { Container } from "@mui/material";
+import { CircularProgress, Container } from "@mui/material";
 import TextInput from "./TextInput";
 import {
   onSnapshot,
@@ -349,6 +349,7 @@ export default ChatScreen;
 
 function ImageComponent({ imageUrl }: imageCompType) {
   const [showImage, setshowImage] = useState(false);
+  const [spinner, setspinner] = useState(false);
 
   return (
     <div>
@@ -358,7 +359,11 @@ function ImageComponent({ imageUrl }: imageCompType) {
         <div
           id="placeHolderImgDiv"
           onClick={() => {
-            setshowImage(true);
+            setspinner(true);
+            setTimeout(() => {
+              setspinner(false);
+              setshowImage(true);
+            }, 1500);
           }}
         >
           <div
@@ -369,7 +374,14 @@ function ImageComponent({ imageUrl }: imageCompType) {
               color: "wheat",
             }}
           >
-            <Download style={{ margin: "10px 10px 0 10px" }} />
+            {spinner ? (
+              <CircularProgress
+                color="inherit"
+                style={{ margin: "10px 10px 0 10px" }}
+              />
+            ) : (
+              <Download style={{ margin: "10px 10px 0 10px" }} />
+            )}
           </div>
         </div>
       )}

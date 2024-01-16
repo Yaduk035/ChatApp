@@ -58,7 +58,7 @@
 }
 .inputDiv form button {
   width: 15%;
-  background-color: rgb(25, 42, 75);
+  background-image: linear-gradient(to left, rgb(17, 29, 53), rgb(92, 35, 35));
   border-radius: 0px 10px 0px 0px;
 }
 
@@ -197,7 +197,7 @@ header:not(.GroupBadge) {
   border-radius: 0.5em;
 }
 #placeHolderImgDiv {
-  margin: 0.1em -0.25em 0.1em -0.25em;
+  margin: 0.1em -0.25em 0.2em -0.25em;
   border-radius: 0.5em;
   background-image: url("./assets/placeholder-img.jpg");
   background-position: center;
