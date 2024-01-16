@@ -32,14 +32,24 @@ function ImageDragDrop({ setImage, uploadImg, handleClose }: imageComp) {
     <>
       {file ? (
         <div style={{ textAlign: "center" }}>
-          <img src={displayImg} width="400px" />
+          <img src={displayImg} width="300px" />
+          <div style={{ textAlign: "end" }}>
+            <Button
+              variant="outlined"
+              color="error"
+              onClick={() => setFile(null)}
+              size="small"
+            >
+              <Delete />
+            </Button>
+          </div>
         </div>
       ) : (
         <div
           style={{
             backgroundImage:
               "linear-gradient(to right, rgb(17, 29, 53),rgb(10,10,10))",
-            margin: "0 0 10px 0",
+            margin: "0 0 15px 0",
           }}
         >
           <FileUploader
@@ -49,16 +59,6 @@ function ImageDragDrop({ setImage, uploadImg, handleClose }: imageComp) {
           />
         </div>
       )}
-      <div style={{ textAlign: "end" }}>
-        <Button
-          variant="outlined"
-          color="error"
-          onClick={() => setFile(null)}
-          size="small"
-        >
-          <Delete />
-        </Button>
-      </div>
       <div style={{ display: "flex", justifyContent: "space-evenly" }}>
         <Button
           variant="outlined"
@@ -89,7 +89,7 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 400,
+  width: 350,
   bgcolor: "rgb(30,30,30)",
   border: "2px solid #000",
   boxShadow: 24,
