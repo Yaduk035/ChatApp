@@ -72,6 +72,7 @@ const style = {
   boxShadow: 24,
   p: 4,
   outline: "none",
+  borderRadius: "15px",
 };
 
 export default function BasicModal({ setImage, uploadImg }: imageComp) {
