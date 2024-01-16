@@ -199,7 +199,7 @@ header:not(.GroupBadge) {
 #placeHolderImgDiv {
   margin: 0.1em -0.25em 0.1em -0.25em;
   border-radius: 0.5em;
-  background-image: url("./assets/placeholderImg.jpg");
+  background-image: url("./assets/placeholder-img.jpg");
   background-position: center;
   background-size: cover;
   display: grid;

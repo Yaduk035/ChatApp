@@ -23,7 +23,18 @@ function ImageDragDrop({ setImage, uploadImg, handleClose }: imageComp) {
   };
   return (
     <>
-      <FileUploader handleChange={handleChange} name="file" types={fileTypes} />
+      <div
+        style={{
+          backgroundImage:
+            "linear-gradient(to right, rgb(17, 29, 53),rgb(10,10,10))",
+        }}
+      >
+        <FileUploader
+          handleChange={handleChange}
+          name="file"
+          types={fileTypes}
+        />
+      </div>
       <br />
       <div style={{ display: "flex", justifyContent: "space-evenly" }}>
         <Button
