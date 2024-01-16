@@ -81,9 +81,14 @@ export default function BasicModal({ setImage, uploadImg }: imageComp) {
 
   return (
     <div>
-      <span onClick={handleOpen}>
-        <PermMedia />
-      </span>
+      <div
+        onClick={handleOpen}
+        style={{ cursor: "pointer", transform: "translateY(-10px)" }}
+      >
+        <span style={{ fontSize: "3rem" }}>
+          <PermMedia />
+        </span>
+      </div>
       {/* <Button onClick={handleOpen}>Open modal</Button> */}
       <Modal
         open={open}

@@ -8,7 +8,6 @@ import { useParams } from "react-router-dom";
 import { storage } from "../Config/Firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { v4 } from "uuid";
-import { PermMedia } from "@mui/icons-material";
 import ImageSelectComponent from "./ImageSelectComponent";
 
 type ref = {
@@ -65,13 +64,15 @@ export default function TextInput({ scrollRef }: ref) {
     <div className="inputDiv">
       <form onSubmit={handleSubmit}>
         {/* <input type="file" onChange={(e) => setimage(e.target.files[0])} /> */}
-        <span
-          style={{ cursor: "pointer", backgroundColor: "transparent" }}
-          // onClick={uploadImg}
+        <div
+          style={{
+            backgroundColor: "rgb(119, 105, 105)",
+            width: "60px",
+            borderRadius: "10px 0 0 0",
+          }}
         >
-          {/* <PermMedia /> */}
           <ImageSelectComponent setImage={setimage} uploadImg={uploadImg} />
-        </span>
+        </div>
         {/* <button onClick={uploadImg}>Upload</button> */}
         <input
           onChange={(e) => setInputMessage(e.target.value)}
