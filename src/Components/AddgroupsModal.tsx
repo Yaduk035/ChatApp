@@ -35,6 +35,7 @@ type modalType = {
   openModal: boolean;
   closeModal: () => void;
   existingGps: string[];
+  privateGp: boolean;
 };
 
 export default function AddgroupModal(props: modalType) {
@@ -52,6 +53,10 @@ export default function AddgroupModal(props: modalType) {
   const handleTooltipOpen = () => {
     setOpen(true);
   };
+
+  React.useEffect(() => {
+    setGroupType(props.privateGp);
+  }, [props.privateGp]);
 
   const checkGroupName = (name: string): void => {
     if (name === "") {
