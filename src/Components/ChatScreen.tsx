@@ -343,12 +343,15 @@ const ChatScreen = ({ user }: userType) => {
               <div ref={scrollRef} style={{ height: "30px" }}></div>
             </Container>
             <div style={{ height: "5vh" }}></div>
-            <TextInput scrollRef={scrollRef} />
+            <TextInput
+              scrollRef={scrollRef}
+              setbackdropOpen={setbackdropOpen}
+            />
           </Container>
         </div>
         <LoadingScreen showModal={showChats} />
       </div>
-      <BackDrop setbackdropOpen={setbackdropOpen} />
+      <BackDrop setbackdropOpen={setbackdropOpen} openBackdrop={backdropOpen} />
     </>
   );
 };

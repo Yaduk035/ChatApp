@@ -12,9 +12,10 @@ import ImageSelectComponent from "./ImageSelectComponent";
 
 type ref = {
   scrollRef: React.RefObject<HTMLDivElement>;
+  setbackdropOpen?: (value: boolean) => void;
 };
 
-export default function TextInput({ scrollRef }: ref) {
+export default function TextInput({ scrollRef, setbackdropOpen }: ref) {
   const [inputMessage, setInputMessage] = useState<string | null>(null);
   const [image, setimage] = useState<File | null>(null);
   const [spinner, setSpinner] = useState<boolean>(false);
@@ -58,6 +59,7 @@ export default function TextInput({ scrollRef }: ref) {
       });
     });
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+    setbackdropOpen(true);
   };
   return (
     <div className="inputDiv">
