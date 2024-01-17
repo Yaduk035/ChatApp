@@ -25,6 +25,8 @@ import {
   ContentCopy,
   Autorenew,
   GroupRemoveTwoTone,
+  Public,
+  Lock,
 } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import Menu from "@mui/material/Menu";
@@ -581,21 +583,23 @@ export default function GroupInfoModal(props: modalType) {
           <span style={{ textAlign: "center" }}>
             <h2
               id="parent-modal-title"
-              style={{ padding: "0", margin: "10px" }}
+              style={{ padding: "0", margin: "10px 0 0 0" }}
             >
               {groupData?.name}
             </h2>
-            <span style={{ color: "gray" }}>
-              <p>{groupData?.private ? "Private group" : "Public group"}</p>
-            </span>
-            <p id="parent-modal-title" style={{ color: "gray" }}>
+            <div style={{ color: "gray", textAlign: "center" }}>
+              {groupData?.private ? (
+                <span>
+                  <Lock style={{ transform: "translateY(5px)" }} />
+                  <span>Private group</span>
+                </span>
+              ) : (
+                "Public group"
+              )}
+            </div>
+            <p id="parent-modal-title" style={{ color: "gray", margin: "7px" }}>
               Created by: {groupData?.createdBy}
             </p>
-            {/* {groupData?.inviteLink && (
-              <p id="parent-modal-title" style={{ color: "gray" }}>
-                Invite link: {groupData?.inviteLink}
-              </p>
-            )} */}
           </span>
           {groupData?.users && groupData.private && (
             <div style={{ margin: "0px 0px 20px 0px" }}>
@@ -607,7 +611,7 @@ export default function GroupInfoModal(props: modalType) {
                     justifyContent: "space-between",
                   }}
                 >
-                  <h4>Group members</h4>
+                  <h4 style={{ margin: "13px 0 8px 0" }}>Group members</h4>
                 </div>
                 {groupData?.users.map((data, i) => (
                   <div
