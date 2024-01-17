@@ -62,7 +62,7 @@ export default function TextInput({ scrollRef }: ref) {
   return (
     <div className="inputDiv">
       <form onSubmit={handleSubmit}>
-        <Tooltip title="Send image" arrow>
+        <Tooltip title="Select an image" arrow>
           <div id="imageMsgIcon">
             <ImageSelectComponent setImage={setimage} uploadImg={uploadImg} />
           </div>

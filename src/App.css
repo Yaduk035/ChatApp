@@ -222,6 +222,13 @@ header:not(.GroupBadge) {
   transform: scale(1.2);
 }
 
+#CloseButton:hover :first-child {
+  cursor: pointer;
+  transform: scale(1.1);
+  transition: all 50ms ease-in-out;
+  color: red;
+}
+
 /* Media queries */
 
 @media screen and (max-width: 320px) {

@@ -6,6 +6,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { Close, Delete, PermMedia, Send } from "@mui/icons-material";
+import { Tooltip } from "@mui/material";
 
 const fileTypes = ["JPG", "PNG", "GIF", "Jpeg", "Webp"];
 
@@ -37,16 +38,8 @@ function ImageDragDrop({ setImage, uploadImg, handleClose }: imageComp) {
             width="300px"
             style={{ borderRadius: "10px" }}
           />
-          <div style={{ textAlign: "end" }}>
-            <Button
-              variant="outlined"
-              color="error"
-              onClick={() => setFile(null)}
-              size="small"
-            >
-              <Delete />
-            </Button>
-          </div>
+          <br />
+          <br />
         </div>
       ) : (
         <div
@@ -63,27 +56,42 @@ function ImageDragDrop({ setImage, uploadImg, handleClose }: imageComp) {
           />
         </div>
       )}
-      <div style={{ display: "flex", justifyContent: "space-evenly" }}>
-        <Button
-          variant="outlined"
+      {file && (
+        <div style={{ display: "flex", justifyContent: "space-evenly" }}>
+          <Tooltip title="Clear image" arrow>
+            <Button
+              variant="outlined"
+              color="error"
+              onClick={() => setFile(null)}
+              size="small"
+            >
+              <Delete />
+            </Button>
+          </Tooltip>
+
+          {/* <Button
+        variant="outlined"
           color="inherit"
           size="small"
           onClick={handleClose}
         >
           <Close />
-        </Button>
-        <Button
-          onClick={() => {
-            if (!file) return;
-            uploadImg();
-            handleClose();
-          }}
-          variant="contained"
-          color="error"
-        >
-          <Send />
-        </Button>
-      </div>
+        </Button> */}
+          <Tooltip title="Send image" arrow>
+            <Button
+              onClick={() => {
+                if (!file) return;
+                uploadImg();
+                handleClose();
+              }}
+              variant="contained"
+              color="error"
+            >
+              <Send />
+            </Button>
+          </Tooltip>
+        </div>
+      )}
     </>
   );
 }
@@ -125,9 +133,16 @@ export default function BasicModal({ setImage, uploadImg }: imageComp) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
+          <div style={{ textAlign: "end" }}>
+            <Tooltip title="Close" arrow>
+              <span id="CloseButton" onClick={handleClose}>
+                <Close />
+              </span>
+            </Tooltip>
+          </div>
+          {/* <Typography id="modal-modal-title" variant="h6" component="h2">
             Send image
-          </Typography>
+          </Typography> */}
           <br />
           <ImageDragDrop
             setImage={setImage}
