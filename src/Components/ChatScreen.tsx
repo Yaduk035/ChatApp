@@ -1,4 +1,4 @@
-import { CircularProgress, Container } from "@mui/material";
+import { CircularProgress, Container, Tooltip } from "@mui/material";
 import TextInput from "./TextInput";
 import {
   onSnapshot,
@@ -14,8 +14,9 @@ import { useParams } from "react-router-dom";
 import Header from "./Header";
 import LoadingScreen from "./LoadingScreen";
 import { format } from "date-fns";
-import { Download } from "@mui/icons-material";
+import { ArrowDropDown, Download } from "@mui/icons-material";
 import BackDrop from "./BackDrop";
+import MsgDelMenu from "./MsgDelMenu";
 
 type msgType = {
   createdAt?: string;
@@ -148,7 +149,7 @@ const ChatScreen = ({ user }: userType) => {
     return formattedDate;
   }
 
-  // console.log(messages[1]?.formattedDate);
+  console.log(messages[1]?.id);
   // console.log(messages[1]?.dateString);
   // console.log(messages[1].formattedDate.split(" ")[1]);
   return (
@@ -323,13 +324,41 @@ const ChatScreen = ({ user }: userType) => {
                             textAlign: "end",
                             margin: "-2px 0 -5px 0",
                             padding: "0px",
+                            display: "flex",
+                            flexDirection: "row-reverse",
+                            justifyContent:
+                              msg.user === currentUser
+                                ? "space-between"
+                                : "end",
                           }}
                         >
                           {/* {msg.formattedDate.split(",")[1]} */}
-                          {msg.formattedDate.split(" ")[1]}
-                          <span style={{ fontWeight: "350" }}>
-                            {msg.formattedDate.split(" ")[2]}
+                          <span>
+                            {msg.formattedDate.split(" ")[1]}
+                            <span style={{ fontWeight: "350" }}>
+                              {msg.formattedDate.split(" ")[2]}
+                            </span>
                           </span>
+                          {msg.user === currentUser && (
+                            <span id="menuArrowIcon">
+                              <Tooltip
+                                title="More options"
+                                arrow
+                                id="menuArrowIcon"
+                              >
+                                {/* <ArrowDropDown
+                                  style={{
+                                    transform: "translateY(2px)",
+                                    cursor: "pointer",
+                                    color: "inherit",
+                                    margin: "-8px 0 -5px 0",
+                                  }}
+                                  fontSize="medium"
+                                /> */}
+                                <MsgDelMenu />
+                              </Tooltip>
+                            </span>
+                          )}
                         </div>
                       </p>
                     </span>
@@ -348,6 +377,7 @@ const ChatScreen = ({ user }: userType) => {
         <LoadingScreen showModal={showChats} />
       </div>
       <BackDrop setbackdropOpen={setbackdropOpen} openBackdrop={backdropOpen} />
+      <MsgDelMenu />
     </>
   );
 };
