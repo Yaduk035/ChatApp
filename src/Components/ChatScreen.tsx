@@ -374,7 +374,7 @@ function ImageComponent({ imageUrl }: imageCompType) {
             setTimeout(() => {
               setspinner(false);
               setshowImage(true);
-            }, 1500);
+            }, 500);
           }}
         >
           <div
