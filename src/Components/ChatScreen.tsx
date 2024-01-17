@@ -15,6 +15,7 @@ import Header from "./Header";
 import LoadingScreen from "./LoadingScreen";
 import { format } from "date-fns";
 import { Download } from "@mui/icons-material";
+import BackDrop from "./BackDrop";
 
 type msgType = {
   createdAt?: string;
@@ -58,6 +59,7 @@ const ChatScreen = ({ user }: userType) => {
   const [userExists, setUserExists] = useState<boolean | undefined>(false);
   const [privateGp, setPrivateGp] = useState<boolean>(false);
   const [showChats, setShowChats] = useState<boolean>(false);
+  const [backdropOpen, setbackdropOpen] = useState<boolean>(false);
 
   const { groupName } = useParams();
   useEffect(() => {
@@ -134,6 +136,7 @@ const ChatScreen = ({ user }: userType) => {
 
   useEffect(() => {
     scrollRef.current.scrollIntoView({ behavior: "smooth" });
+    if (backdropOpen) setbackdropOpen(false);
   }, [messages]);
 
   function convertDate(value: number) {
@@ -345,6 +348,7 @@ const ChatScreen = ({ user }: userType) => {
         </div>
         <LoadingScreen showModal={showChats} />
       </div>
+      <BackDrop setbackdropOpen={setbackdropOpen} />
     </>
   );
 };
