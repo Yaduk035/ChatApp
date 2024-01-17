@@ -38,15 +38,13 @@ function ImageDragDrop({ setImage, uploadImg, handleClose }: imageComp) {
             width="300px"
             style={{ borderRadius: "10px" }}
           />
-          <br />
-          <br />
         </div>
       ) : (
         <div
           style={{
             backgroundImage:
               "linear-gradient(to right, rgb(17, 29, 53),rgb(10,10,10))",
-            margin: "0 0 15px 0",
+            margin: "15px 0 20px 0",
           }}
         >
           <FileUploader
@@ -72,7 +70,7 @@ function ImageDragDrop({ setImage, uploadImg, handleClose }: imageComp) {
           {/* <Button
         variant="outlined"
           color="inherit"
-          size="small"
+          size="small"Send
           onClick={handleClose}
         >
           <Close />
@@ -105,7 +103,7 @@ const style = {
   bgcolor: "rgb(30,30,30)",
   border: "2px solid #000",
   boxShadow: 24,
-  p: 4,
+  p: 2,
   outline: "none",
   borderRadius: "15px",
 };
@@ -133,17 +131,26 @@ export default function BasicModal({ setImage, uploadImg }: imageComp) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <div style={{ textAlign: "end" }}>
+          <span style={{ position: "absolute", right: "2r0px" }}>
             <Tooltip title="Close" arrow>
               <span id="CloseButton" onClick={handleClose}>
                 <Close />
               </span>
             </Tooltip>
+          </span>
+          <div
+            style={{
+              textAlign: "center",
+              fontFamily: "monospace",
+              fontWeight: "bolder",
+              margin: 0,
+              paddingTop: 0,
+            }}
+          >
+            <Typography id="modal-modal-title" variant="h6" component="h5">
+              Select an image
+            </Typography>
           </div>
-          {/* <Typography id="modal-modal-title" variant="h6" component="h2">
-            Send image
-          </Typography> */}
-          <br />
           <ImageDragDrop
             setImage={setImage}
             uploadImg={uploadImg}
