@@ -434,6 +434,13 @@ function DelMenu(props: deluserType) {
         MenuListProps={{
           "aria-labelledby": "basic-button",
         }}
+        sx={{
+          mt: "1px",
+          "& .MuiMenu-paper": {
+            backgroundColor: "rgb(60,60,60)",
+            color: "wheat",
+          },
+        }}
       >
         <MenuItem
           onClick={() => {
@@ -567,7 +574,11 @@ export default function GroupInfoModal(props: modalType) {
       >
         <Box
           sx={{ ...style, width: 400 }}
-          style={{ backgroundColor: "rgb(40,40,40)", outline: "none" }}
+          style={{
+            backgroundImage:
+              "linear-gradient(to top,rgb(17, 29, 53), rgb(92, 35, 35))",
+            outline: "none",
+          }}
         >
           <span style={{ textAlign: "center" }}>
             <h2

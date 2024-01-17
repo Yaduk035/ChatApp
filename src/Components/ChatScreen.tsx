@@ -377,7 +377,6 @@ const ChatScreen = ({ user }: userType) => {
         <LoadingScreen showModal={showChats} />
       </div>
       <BackDrop setbackdropOpen={setbackdropOpen} openBackdrop={backdropOpen} />
-      <MsgDelMenu />
     </>
   );
 };

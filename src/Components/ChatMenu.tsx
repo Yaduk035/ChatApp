@@ -90,7 +90,7 @@ export default function ChatMenu({ user }: userType) {
             }}
           >
             <Divider>
-              <Chip label="Username" color="success" />
+              <Chip label="Username" color="primary" variant="outlined" />
               <MenuItem id="MenuItemInv">{user?.email}</MenuItem>
             </Divider>
             <Divider variant="fullWidth" />
