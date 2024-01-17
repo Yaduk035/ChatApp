@@ -74,7 +74,7 @@ const AddGroup = ({ user }: userType) => {
   return (
     <>
       <Header user={user} />
-      <div style={{ height: "12vh" }}></div>
+      <div style={{ height: "80px" }}></div>
       <Button
         variant="outlined"
         color="warning"
