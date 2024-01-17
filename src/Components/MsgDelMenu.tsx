@@ -2,8 +2,17 @@ import * as React from "react";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { ArrowDropDown } from "@mui/icons-material";
+import { deleteDoc, doc } from "firebase/firestore";
+import { db, storage } from "../Config/Firebase";
+import { ref } from "firebase/storage";
 
-export default function MsgDelMenu() {
+type msgMenu = {
+  msgId: string;
+  groupName: string;
+  imagePath?: string;
+};
+
+export default function MsgDelMenu({ msgId, groupName, imagePath }: msgMenu) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -11,6 +20,16 @@ export default function MsgDelMenu() {
   };
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const deleteMessage = async () => {
+    if (!msgId) console.log("Error deleting message.");
+    try {
+      await deleteDoc(doc(db, groupName, msgId));
+      //   const pathRef = ref(storage,imagePath)
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -52,9 +71,7 @@ export default function MsgDelMenu() {
           },
         }}
       >
-        <MenuItem onClick={handleClose}>Profile</MenuItem>
-        <MenuItem onClick={handleClose}>My account</MenuItem>
-        <MenuItem onClick={handleClose}>Logout</MenuItem>
+        <MenuItem onClick={deleteMessage}>Delete</MenuItem>
       </Menu>
     </div>
   );

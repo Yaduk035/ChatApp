@@ -47,12 +47,14 @@ export default function TextInput({ scrollRef, setbackdropOpen }: ref) {
   const uploadImg = async () => {
     if (!image) return;
     const imgName = `${image.name + v4()}`;
-    const imgRef = ref(storage, `images/${groupName}/${imgName}`);
+    const imgPath = `images/${groupName}/${imgName}`;
+    const imgRef = ref(storage, imgPath);
     uploadBytes(imgRef, image).then((item) => {
       getDownloadURL(item.ref).then((url) => {
         console.log(url);
         addDoc(msgRef, {
           image: url,
+          imagePath: imgPath,
           createdAt: serverTimestamp(),
           user: auth.currentUser?.email,
         });

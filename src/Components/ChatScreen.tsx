@@ -149,7 +149,6 @@ const ChatScreen = ({ user }: userType) => {
     return formattedDate;
   }
 
-  console.log(messages[1]?.id);
   // console.log(messages[1]?.dateString);
   // console.log(messages[1].formattedDate.split(" ")[1]);
   return (
@@ -355,7 +354,10 @@ const ChatScreen = ({ user }: userType) => {
                                   }}
                                   fontSize="medium"
                                 /> */}
-                                <MsgDelMenu />
+                                <MsgDelMenu
+                                  msgId={msg.id}
+                                  groupName={groupName}
+                                />
                               </Tooltip>
                             </span>
                           )}
