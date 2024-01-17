@@ -185,6 +185,7 @@ header:not(.GroupBadge) {
   font-family: monospace;
   border-radius: 5px;
   cursor: default;
+  margin-top: 10px;
 }
 /* #MenuItemInv:hover {
   background-color: rgba(80, 75, 75, 1);
@@ -193,8 +194,6 @@ header:not(.GroupBadge) {
   border-radius: 8px;
 } */
 #MenuItemNorm {
-  background-color: rgb(255, 255, 255);
-  color: black;
   font-family: monospace;
   display: flex;
   justify-content: center;

@@ -81,9 +81,16 @@ export default function ChatMenu({ user }: userType) {
             MenuListProps={{
               "aria-labelledby": "basic-button",
             }}
+            sx={{
+              mt: "1px",
+              "& .MuiMenu-paper": {
+                backgroundColor: "rgb(60,60,60)",
+                color: "wheat",
+              },
+            }}
           >
             <Divider>
-              <Chip label="Username" />
+              <Chip label="Username" color="success" />
               <MenuItem id="MenuItemInv">{user?.email}</MenuItem>
             </Divider>
             <Divider variant="fullWidth" />

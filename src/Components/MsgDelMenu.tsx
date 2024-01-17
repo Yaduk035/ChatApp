@@ -44,6 +44,13 @@ export default function MsgDelMenu() {
         MenuListProps={{
           "aria-labelledby": "basic-button",
         }}
+        sx={{
+          mt: "1px",
+          "& .MuiMenu-paper": {
+            backgroundColor: "rgb(60,60,60)",
+            color: "wheat",
+          },
+        }}
       >
         <MenuItem onClick={handleClose}>Profile</MenuItem>
         <MenuItem onClick={handleClose}>My account</MenuItem>
