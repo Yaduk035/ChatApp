@@ -594,7 +594,10 @@ export default function GroupInfoModal(props: modalType) {
                   <span>Private group</span>
                 </span>
               ) : (
-                "Public group"
+                <span>
+                  <Public style={{ transform: "translateY(6px)" }} />
+                  <span>Public group</span>
+                </span>
               )}
             </div>
             <p id="parent-modal-title" style={{ color: "gray", margin: "7px" }}>
