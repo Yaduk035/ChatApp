@@ -194,7 +194,7 @@ const ChatScreen = ({ user }: userType) => {
                   // }}
                 >
                   {i === 0 ? (
-                    <div style={{ margin: "15px 0 15px 0" }}>
+                    <div style={{ margin: "0.5rem 0 0.5rem 0" }}>
                       <span
                         style={{
                           fontSize: "0.75rem",
@@ -265,8 +265,8 @@ const ChatScreen = ({ user }: userType) => {
                             : i > 0 && msg.user == messages[i - 1].user
                             ? "10px 10px 10px 10px"
                             : "4px 10px 10px 10px",
-                        paddingLeft: "8px",
-                        paddingRight: "8px",
+                        paddingLeft: "0.3rem",
+                        paddingRight: "0.3rem",
                         backgroundColor:
                           i === 0 || msg?.alertMsg
                             ? "black"
