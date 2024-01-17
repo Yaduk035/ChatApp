@@ -27,6 +27,7 @@ type msgType = {
   dateString?: string;
   alertMsg?: boolean;
   image?: string;
+  imagePath?: string;
 };
 
 type userType = {
@@ -357,6 +358,7 @@ const ChatScreen = ({ user }: userType) => {
                                 <MsgDelMenu
                                   msgId={msg.id}
                                   groupName={groupName}
+                                  imagePath={msg.imagePath}
                                 />
                               </Tooltip>
                             </span>

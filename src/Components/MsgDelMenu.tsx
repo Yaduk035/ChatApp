@@ -4,7 +4,7 @@ import MenuItem from "@mui/material/MenuItem";
 import { ArrowDropDown } from "@mui/icons-material";
 import { deleteDoc, doc } from "firebase/firestore";
 import { db, storage } from "../Config/Firebase";
-import { ref } from "firebase/storage";
+import { deleteObject, ref } from "firebase/storage";
 
 type msgMenu = {
   msgId: string;
@@ -26,7 +26,10 @@ export default function MsgDelMenu({ msgId, groupName, imagePath }: msgMenu) {
     if (!msgId) console.log("Error deleting message.");
     try {
       await deleteDoc(doc(db, groupName, msgId));
-      //   const pathRef = ref(storage,imagePath)
+      if (imagePath) {
+        const pathRef = ref(storage, imagePath);
+        await deleteObject(pathRef);
+      }
     } catch (error) {
       console.log(error);
     }
