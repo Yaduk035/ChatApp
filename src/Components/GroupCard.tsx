@@ -42,13 +42,13 @@ export default function GroupCard(props: cardType) {
                 cursor: "pointer",
               }
         }
-        sx={{ minWidth: 190, height: "100px" }}
+        sx={{ minWidth: 190, height: "90px" }}
       >
         <CardContent style={{ padding: "3px 0 0 0" }}>
           {/* <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
           {props.createdAt}
         </Typography> */}
-          <Typography variant="h6" component="div">
+          <Typography style={{ textTransform: "none" }} variant="button">
             {props.groupName}
           </Typography>
           <Typography sx={{ fontSize: 9 }}>Created by:</Typography>
