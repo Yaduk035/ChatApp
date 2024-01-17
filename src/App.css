@@ -221,7 +221,10 @@ header:not(.GroupBadge) {
   transition: all 80ms ease-in-out;
   transform: scale(1.2);
 }
-
+#CloseButton {
+  position: absolute;
+  right: 20px;
+}
 #CloseButton:hover :first-child {
   cursor: pointer;
   transform: scale(1.1);

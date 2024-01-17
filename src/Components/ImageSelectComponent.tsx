@@ -131,11 +131,9 @@ export default function BasicModal({ setImage, uploadImg }: imageComp) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <span style={{ position: "absolute", right: "2r0px" }}>
+          <span id="CloseButton" onClick={handleClose}>
             <Tooltip title="Close" arrow>
-              <span id="CloseButton" onClick={handleClose}>
-                <Close />
-              </span>
+              <Close />
             </Tooltip>
           </span>
           <div
