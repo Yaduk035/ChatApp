@@ -120,7 +120,7 @@ const ChatScreen = ({ user }: userType) => {
             ...doc,
             formattedDate: new Date(
               doc.createdAt?.seconds * 1000
-            ).toLocaleString(),
+            ).toLocaleString("en-IN"),
             dateString: convertDate(doc.createdAt.seconds),
           });
         });
@@ -148,16 +148,11 @@ const ChatScreen = ({ user }: userType) => {
     return formattedDate;
   }
 
-  console.log(messages[1]?.formattedDate);
-  console.log(messages[1]?.dateString);
+  // console.log(messages[1]?.formattedDate);
+  // console.log(messages[1]?.dateString);
   // console.log(messages[1].formattedDate.split(" ")[1]);
   return (
     <>
-      {/* <div>
-        <Button variant="contained" color="primary" onClick={logOut}>
-          Sign out
-        </Button>
-      </div> */}
       <div className="parentChatDiv">
         <Header user={user} />
         <div style={{ height: "4vh" }}></div>
