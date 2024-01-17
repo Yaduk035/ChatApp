@@ -5,6 +5,7 @@ import { ArrowDropDown } from "@mui/icons-material";
 import { deleteDoc, doc } from "firebase/firestore";
 import { db, storage } from "../Config/Firebase";
 import { deleteObject, ref } from "firebase/storage";
+import { Divider } from "@mui/material";
 
 type msgMenu = {
   msgId: string;
@@ -74,7 +75,21 @@ export default function MsgDelMenu({ msgId, groupName, imagePath }: msgMenu) {
           },
         }}
       >
-        <MenuItem onClick={deleteMessage}>Delete</MenuItem>
+        <MenuItem
+          onClick={() => {
+            if (confirm("Delete message?") == true) {
+              deleteMessage();
+            }
+          }}
+        >
+          <span style={{ fontSize: "0.9rem" }}>Delete</span>
+        </MenuItem>
+        <Divider variant="middle" sx={{ backgroundColor: "gray" }} />
+        <MenuItem onClick={handleClose}>
+          <span style={{ color: "rgb(170,180,160)", fontSize: "0.7rem" }}>
+            Close
+          </span>
+        </MenuItem>
       </Menu>
     </div>
   );

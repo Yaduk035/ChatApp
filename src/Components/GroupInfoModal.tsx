@@ -526,11 +526,9 @@ export default function GroupInfoModal(props: modalType) {
   const deleteUsers = async (value: string, delType: "admin" | "user") => {
     if (!value || !delType) return;
     const currentUserArr = groupData?.users;
-    console.log(currentUserArr);
     if (currentUserArr?.includes(value)) {
       const removeUser = value;
       const updatedArr = currentUserArr?.filter((item) => item !== removeUser);
-      console.log(updatedArr);
 
       try {
         const docRef = doc(db, "groupNames", `${groupName}`);
