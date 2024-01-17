@@ -84,7 +84,7 @@ header {
   position: fixed;
   top: 0px;
   width: 90vw;
-  height: 10vh;
+  height: 60px;
   box-sizing: border-box;
   padding: 20px;
   z-index: 10;
