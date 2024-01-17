@@ -141,7 +141,6 @@ const AddGroup = ({ user }: userType) => {
               </Grid>
             </Stack>
           </div>
-          <br />
           <div className="privateDiv">
             <h2 style={{ fontFamily: "monospace" }}>
               <Lock style={{ transform: "translateY(3px)" }} />

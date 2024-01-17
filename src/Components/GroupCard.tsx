@@ -48,7 +48,10 @@ export default function GroupCard(props: cardType) {
           {/* <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
           {props.createdAt}
         </Typography> */}
-          <Typography style={{ textTransform: "none" }} variant="button">
+          <Typography
+            style={{ textTransform: "none", fontWeight: "bold" }}
+            variant="button"
+          >
             {props.groupName}
           </Typography>
           <Typography sx={{ fontSize: 9 }}>Created by:</Typography>
