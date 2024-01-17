@@ -148,7 +148,8 @@ const ChatScreen = ({ user }: userType) => {
     return formattedDate;
   }
 
-  // console.log(messages[1].formattedDate);
+  console.log(messages[1]?.formattedDate);
+  console.log(messages[1]?.dateString);
   // console.log(messages[1].formattedDate.split(" ")[1]);
   return (
     <>
