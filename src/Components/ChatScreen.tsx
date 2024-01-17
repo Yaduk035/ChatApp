@@ -339,14 +339,16 @@ const ChatScreen = ({ user }: userType) => {
                               {msg.formattedDate.split(" ")[2]}
                             </span>
                           </span>
-                          {msg.user === currentUser && (
-                            <span id="menuArrowIcon">
-                              <Tooltip
-                                title="More options"
-                                arrow
-                                id="menuArrowIcon"
-                              >
-                                {/* <ArrowDropDown
+                          {msg.user === currentUser &&
+                            !msg.alertMsg &&
+                            i !== 0 && (
+                              <span id="menuArrowIcon">
+                                <Tooltip
+                                  title="More options"
+                                  arrow
+                                  id="menuArrowIcon"
+                                >
+                                  {/* <ArrowDropDown
                                   style={{
                                     transform: "translateY(2px)",
                                     cursor: "pointer",
@@ -355,14 +357,14 @@ const ChatScreen = ({ user }: userType) => {
                                   }}
                                   fontSize="medium"
                                 /> */}
-                                <MsgDelMenu
-                                  msgId={msg.id}
-                                  groupName={groupName}
-                                  imagePath={msg.imagePath}
-                                />
-                              </Tooltip>
-                            </span>
-                          )}
+                                  <MsgDelMenu
+                                    msgId={msg.id}
+                                    groupName={groupName}
+                                    imagePath={msg.imagePath}
+                                  />
+                                </Tooltip>
+                              </span>
+                            )}
                         </div>
                       </p>
                     </span>
