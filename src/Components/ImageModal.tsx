@@ -1,6 +1,6 @@
 import * as React from "react";
 import Modal from "@mui/material/Modal";
-import { Close } from "@mui/icons-material";
+import { Close, DisabledByDefault } from "@mui/icons-material";
 
 type imgModalType = {
   openModal: boolean;
@@ -37,11 +37,12 @@ export default function ImageModal({
               position: "absolute",
               right: "5%",
               top: "8%",
-              border: "1px solid white",
-              padding: "2px",
+              cursor: "pointer",
+              color: "wheat",
             }}
+            onClick={handleClose}
           >
-            <Close />
+            <DisabledByDefault fontSize="large" />
           </span>
           <img src={imageUrl} id="ImageModal" />
         </div>

@@ -404,6 +404,7 @@ function ImageComponent({ imageUrl }: imageCompType) {
             src={imageUrl}
             loading="lazy"
             onClick={() => setopenModal(true)}
+            style={{ cursor: "pointer" }}
           />
         ) : (
           <div
