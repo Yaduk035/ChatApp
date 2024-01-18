@@ -1,6 +1,6 @@
 import * as React from "react";
 import Modal from "@mui/material/Modal";
-import { Close, DisabledByDefault } from "@mui/icons-material";
+import { DisabledByDefault } from "@mui/icons-material";
 
 type imgModalType = {
   openModal: boolean;
