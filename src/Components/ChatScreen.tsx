@@ -344,12 +344,7 @@ const ChatScreen = ({ user }: userType) => {
                             !msg.alertMsg &&
                             i !== 0 && (
                               <span id="menuArrowIcon">
-                                <Tooltip
-                                  title="More options"
-                                  arrow
-                                  id="menuArrowIcon"
-                                >
-                                  {/* <ArrowDropDown
+                                {/* <ArrowDropDown
                                   style={{
                                     transform: "translateY(2px)",
                                     cursor: "pointer",
@@ -358,12 +353,11 @@ const ChatScreen = ({ user }: userType) => {
                                   }}
                                   fontSize="medium"
                                 /> */}
-                                  <MsgDelMenu
-                                    msgId={msg.id}
-                                    groupName={groupName}
-                                    imagePath={msg.imagePath}
-                                  />
-                                </Tooltip>
+                                <MsgDelMenu
+                                  msgId={msg.id}
+                                  groupName={groupName}
+                                  imagePath={msg.imagePath}
+                                />
                               </span>
                             )}
                         </div>

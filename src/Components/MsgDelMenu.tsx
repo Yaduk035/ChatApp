@@ -5,7 +5,7 @@ import { ArrowDropDown } from "@mui/icons-material";
 import { deleteDoc, doc } from "firebase/firestore";
 import { db, storage } from "../Config/Firebase";
 import { deleteObject, ref } from "firebase/storage";
-import { Divider } from "@mui/material";
+import { Divider, Tooltip } from "@mui/material";
 
 type msgMenu = {
   msgId: string;
@@ -48,15 +48,17 @@ export default function MsgDelMenu({ msgId, groupName, imagePath }: msgMenu) {
         Dashboard
       </Button> */}
       <span onClick={handleClick}>
-        <ArrowDropDown
-          style={{
-            transform: "translateY(2px)",
-            cursor: "pointer",
-            color: "inherit",
-            margin: "-8px 0 -5px 0",
-          }}
-          fontSize="medium"
-        />
+        <Tooltip title="More options" arrow>
+          <ArrowDropDown
+            style={{
+              transform: "translateY(-8px)",
+              cursor: "pointer",
+              color: "inherit",
+              margin: "-8px 0 -0.5em 0",
+            }}
+            fontSize="large"
+          />
+        </Tooltip>
       </span>
 
       <Menu
