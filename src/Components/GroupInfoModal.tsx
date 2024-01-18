@@ -249,7 +249,7 @@ function ShareGroup({
 
           <br />
           <div style={{ display: "flex", justifyContent: "space-around" }}>
-            {auth.currentUser.email === groupData.createdBy && (
+            {auth.currentUser.email === groupData.createdBy && privateGp && (
               <Tooltip
                 arrow
                 title="Generate new invite link.All previous invite links will be obsolete"
