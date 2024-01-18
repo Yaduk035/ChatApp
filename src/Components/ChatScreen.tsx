@@ -17,6 +17,7 @@ import { format } from "date-fns";
 import { Download } from "@mui/icons-material";
 import BackDrop from "./BackDrop";
 import MsgDelMenu from "./MsgDelMenu";
+import ImageModal from "./ImageModal";
 
 type msgType = {
   createdAt?: string;
@@ -392,41 +393,54 @@ export default ChatScreen;
 function ImageComponent({ imageUrl }: imageCompType) {
   const [showImage, setshowImage] = useState(false);
   const [spinner, setspinner] = useState(false);
+  const [openModal, setopenModal] = useState(false);
 
   return (
-    <div>
-      {showImage ? (
-        <img className="imageDiv" src={imageUrl} loading="lazy" />
-      ) : (
-        <div
-          id="placeHolderImgDiv"
-          onClick={() => {
-            setspinner(true);
-            setTimeout(() => {
-              setspinner(false);
-              setshowImage(true);
-            }, 500);
-          }}
-        >
+    <>
+      <div>
+        {showImage ? (
+          <img
+            className="imageDiv"
+            src={imageUrl}
+            loading="lazy"
+            onClick={() => setopenModal(true)}
+          />
+        ) : (
           <div
-            style={{
-              backgroundColor: "rgba(20,20,20,0.7)",
-              padding: "10px",
-              borderRadius: "20px",
-              color: "wheat",
+            id="placeHolderImgDiv"
+            onClick={() => {
+              setspinner(true);
+              setTimeout(() => {
+                setspinner(false);
+                setshowImage(true);
+              }, 500);
             }}
           >
-            {spinner ? (
-              <CircularProgress
-                color="inherit"
-                style={{ margin: "10px 10px 0 10px" }}
-              />
-            ) : (
-              <Download style={{ margin: "10px 10px 0 10px" }} />
-            )}
+            <div
+              style={{
+                backgroundColor: "rgba(20,20,20,0.7)",
+                padding: "10px",
+                borderRadius: "20px",
+                color: "wheat",
+              }}
+            >
+              {spinner ? (
+                <CircularProgress
+                  color="inherit"
+                  style={{ margin: "10px 10px 0 10px" }}
+                />
+              ) : (
+                <Download style={{ margin: "10px 10px 0 10px" }} />
+              )}
+            </div>
           </div>
-        </div>
-      )}
-    </div>
+        )}
+      </div>
+      <ImageModal
+        openModal={openModal}
+        setopenModal={setopenModal}
+        imageUrl={imageUrl}
+      />
+    </>
   );
 }

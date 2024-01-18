@@ -272,6 +272,14 @@ header:not(.GroupBadge) {
 .privateDiv {
   margin: 30px 0 0 0;
 }
+#ImageModal {
+  width: 400px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 15px;
+}
 
 /* Media queries */
 
@@ -314,6 +322,9 @@ header:not(.GroupBadge) {
     width: 70vw;
     height: 200px;
   }
+  #ImageModal {
+    width: 95vw;
+  }
 }
 @media screen and (min-width: 320px) {
   header {
@@ -353,6 +364,9 @@ header:not(.GroupBadge) {
     width: 70vw;
     height: 400px;
   }
+  #ImageModal {
+    width: 85vw;
+  }
 }
 @media screen and (min-width: 481px) {
   header {
@@ -388,6 +402,9 @@ header:not(.GroupBadge) {
   #placeHolderImgDiv {
     width: 35vw;
     height: 20vh;
+  }
+  #ImageModal {
+    width: 400px;
   }
 }
 @media screen and (min-width: 769px) {
@@ -426,6 +443,9 @@ header:not(.GroupBadge) {
     width: 250px;
     height: 300px;
   }
+  #ImageModal {
+    width: 430px;
+  }
 }
 @media screen and (min-width: 1025px) {
   header {
@@ -462,5 +482,8 @@ header:not(.GroupBadge) {
   #placeHolderImgDiv {
     width: 300px;
     height: 400px;
+  }
+  #ImageModal {
+    width: 450px;
   }
 }
