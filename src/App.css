@@ -130,7 +130,7 @@ header {
     opacity: 50%;
   }
   50% {
-    transform: translateX(-40%);
+    transform: translateX(-50%);
     opacity: 75%;
   }
   100% {
