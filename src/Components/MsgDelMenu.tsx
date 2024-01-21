@@ -11,9 +11,15 @@ type msgMenu = {
   msgId: string;
   groupName: string;
   imagePath?: string;
+  setisMsgDeleted: (value: boolean) => void;
 };
 
-export default function MsgDelMenu({ msgId, groupName, imagePath }: msgMenu) {
+export default function MsgDelMenu({
+  msgId,
+  groupName,
+  imagePath,
+  setisMsgDeleted,
+}: msgMenu) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -27,6 +33,7 @@ export default function MsgDelMenu({ msgId, groupName, imagePath }: msgMenu) {
     if (!msgId) console.log("Error deleting message.");
     try {
       await deleteDoc(doc(db, groupName, msgId));
+      setisMsgDeleted(true);
       if (imagePath) {
         const pathRef = ref(storage, imagePath);
         await deleteObject(pathRef);

@@ -63,6 +63,7 @@ const ChatScreen = ({ user }: userType) => {
   const [privateGp, setPrivateGp] = useState<boolean>(false);
   const [showChats, setShowChats] = useState<boolean>(false);
   const [backdropOpen, setbackdropOpen] = useState<boolean>(false);
+  const [isMsgDeleted, setisMsgDeleted] = useState(false);
 
   const { groupName } = useParams();
   useEffect(() => {
@@ -357,6 +358,7 @@ const ChatScreen = ({ user }: userType) => {
                                   msgId={msg.id}
                                   groupName={groupName}
                                   imagePath={msg.imagePath}
+                                  setisMsgDeleted={setisMsgDeleted}
                                 />
                               </span>
                             )}
