@@ -13,9 +13,16 @@ import ImageSelectComponent from "./ImageSelectComponent";
 type ref = {
   scrollRef: React.RefObject<HTMLDivElement>;
   setbackdropOpen?: (value: boolean) => void;
+  isMsgDeleted: boolean;
+  setisMsgDeleted: (value: boolean) => void;
 };
 
-export default function TextInput({ scrollRef, setbackdropOpen }: ref) {
+export default function TextInput({
+  scrollRef,
+  setbackdropOpen,
+  isMsgDeleted,
+  setisMsgDeleted,
+}: ref) {
   const [inputMessage, setInputMessage] = useState<string | null>(null);
   const [image, setimage] = useState<File | null>(null);
   const [spinner, setSpinner] = useState<boolean>(false);
@@ -37,7 +44,8 @@ export default function TextInput({ scrollRef, setbackdropOpen }: ref) {
       });
       setInputMessage("");
       setSpinner(false);
-      scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+      if (isMsgDeleted) setisMsgDeleted(false);
+      // scrollRef.current?.scrollIntoView({ behavior: "smooth" });
     } catch (error) {
       console.log(error);
       setSpinner(false);

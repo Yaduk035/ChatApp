@@ -139,7 +139,9 @@ const ChatScreen = ({ user }: userType) => {
   }, []);
 
   useEffect(() => {
+    if (isMsgDeleted) return;
     scrollRef.current.scrollIntoView({ behavior: "smooth" });
+    setisMsgDeleted(false);
     if (backdropOpen) setbackdropOpen(false);
   }, [messages]);
 
@@ -374,6 +376,8 @@ const ChatScreen = ({ user }: userType) => {
             <TextInput
               scrollRef={scrollRef}
               setbackdropOpen={setbackdropOpen}
+              isMsgDeleted={isMsgDeleted}
+              setisMsgDeleted={setisMsgDeleted}
             />
           </Container>
         </div>

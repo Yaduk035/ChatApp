@@ -32,8 +32,8 @@ export default function MsgDelMenu({
   const deleteMessage = async () => {
     if (!msgId) console.log("Error deleting message.");
     try {
-      await deleteDoc(doc(db, groupName, msgId));
       setisMsgDeleted(true);
+      await deleteDoc(doc(db, groupName, msgId));
       if (imagePath) {
         const pathRef = ref(storage, imagePath);
         await deleteObject(pathRef);
